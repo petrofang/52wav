@@ -308,15 +308,15 @@
         <td class="px-3 py-2.5">${r.difficulty ? badge(r.difficulty, DIFFICULTY_STYLE[r.difficulty]) : ''}</td>
         <td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${p.view_rating ? `${p.view_rating}/10${viewStar(p)}` : '<span class="text-stone-300">&mdash;</span>'}</td>
         <td class="px-3 py-2.5">
-          <div class="whitespace-nowrap">${escapeHtml(p.town || '')}</div>
+          <div>${escapeHtml(p.town || '')}</div>
           <div class="text-xs text-stone-400">${escapeHtml(p.county || '')} County</div>
         </td>
-        <td class="whitespace-nowrap px-3 py-2.5">${escapeHtml(p.range || '')}</td>
+        <td class="px-3 py-2.5">${escapeHtml(p.range || '')}</td>
         <td class="px-3 py-2.5"><span class="text-xs text-stone-500" title="${escapeHtml(p.land?.manager || '')}">${escapeHtml(LAND_LABEL[p.land?.owner_type] || '')}</span></td>
         <td class="px-3 py-2.5">${statusBadge(p)}</td>
-        <td class="whitespace-nowrap px-3 py-2.5 text-sm">
-          ${p.trailhead ? `<a class="font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(p.trailhead.address || p.trailhead.name)}" href="${mapsDirections(p.trailhead.lat, p.trailhead.lon)}">Trailhead</a><span class="text-stone-300"> &middot; </span>` : ''}
-          <a class="font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsSearch(p.summit.lat, p.summit.lon)}">Summit</a>
+        <td class="px-3 py-2.5 text-sm leading-tight">
+          ${p.trailhead ? `<a class="block whitespace-nowrap font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(p.trailhead.address || p.trailhead.name)}" href="${mapsDirections(p.trailhead.lat, p.trailhead.lon)}">Trailhead</a>` : ''}
+          <a class="block whitespace-nowrap font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsSearch(p.summit.lat, p.summit.lon)}">Summit</a>
         </td>
       </tr>`;
   }
