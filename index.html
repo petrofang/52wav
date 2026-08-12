@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>52 With a View &mdash; a friendly guide to New Hampshire's best small mountains</title>
+  <meta name="description" content="Browse, filter and print the New Hampshire 52 With a View peak list. Trail distances, elevation gain, drive-to trailheads and a printable checklist.">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127956;</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body { -webkit-font-smoothing: antialiased; }
+    .print-sheet { display: none; }
+
+    @media print {
+      @page { size: letter; margin: 0.55in 0.5in 0.45in; }
+      .no-print { display: none !important; }
+      .print-sheet { display: block !important; }
+      body { background: #fff !important; }
+      .print-section { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body class="min-h-full bg-stone-50 text-stone-800">
+
+  <div class="no-print">
+    <header class="border-b border-stone-200 bg-gradient-to-b from-emerald-50 to-stone-50">
+      <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <div class="flex items-start gap-4">
+          <svg class="mt-1 hidden h-12 w-12 flex-none text-emerald-700 sm:block" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M4 38h40L30 14l-7 12-4-6L4 38Z" fill="currentColor" opacity=".18"/>
+            <path d="M4 38 19 20l4 6 7-12 14 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="m26.5 19.5 3.5-5.5 4 7-3 1.5-2-1.5-2.5-1.5Z" fill="currentColor"/>
+          </svg>
+          <div>
+            <h1 class="font-display text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">52 With a View</h1>
+            <p class="mt-2 max-w-2xl text-stone-600">
+              Fifty-two New&nbsp;Hampshire mountains under 4,000 feet that are worth the climb &mdash; kept by the
+              <a class="font-medium text-emerald-800 underline decoration-emerald-300 underline-offset-2 hover:decoration-emerald-600" href="https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html" target="_blank" rel="noopener noreferrer">Over&nbsp;the&nbsp;Hill&nbsp;Hikers</a>
+              since 1990. Pick one, find the trailhead, go have a look around.
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+
+      <section class="-mt-1 pt-8" aria-label="Your progress">
+        <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-6">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p id="progress-headline" class="font-display text-2xl font-semibold text-stone-900">Ready when you are</p>
+              <p id="progress-sub" class="mt-1 text-sm text-stone-500">Tick a peak once you've stood on top.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button id="print-btn" type="button"
+                class="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3a1 1 0 0 0-1 1v3H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h1v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2h1a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a1 1 0 0 0-1-1H5Zm1 4V5h8v2H6Zm8 6H6v3h8v-3Z"/></svg>
+                Print or save PDF
+              </button>
+              <button id="share-btn" type="button"
+                class="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.7 11.3a3.5 3.5 0 0 1 0-4.9l2.8-2.8a3.5 3.5 0 0 1 4.9 4.9l-1.2 1.2a1 1 0 0 1-1.4-1.4l1.2-1.2a1.5 1.5 0 1 0-2.1-2.1l-2.8 2.8a1.5 1.5 0 0 0 0 2.1 1 1 0 1 1-1.4 1.4Z"/><path d="M11.3 8.7a3.5 3.5 0 0 1 0 4.9l-2.8 2.8a3.5 3.5 0 0 1-4.9-4.9l1.2-1.2a1 1 0 0 1 1.4 1.4l-1.2 1.2a1.5 1.5 0 1 0 2.1 2.1l2.8-2.8a1.5 1.5 0 0 0 0-2.1 1 1 0 0 1 1.4-1.4Z"/></svg>
+                Save my progress
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <div class="h-3 w-full overflow-hidden rounded-full bg-stone-100" role="progressbar" aria-labelledby="progress-headline" aria-valuemin="0" aria-valuemax="52" id="progress-track">
+              <div id="progress-bar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-700 transition-[width] duration-500" style="width:0%"></div>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-stone-500">
+              <span><span id="stat-current" class="font-semibold text-stone-800">0</span> of 52 on today's list</span>
+              <span><span id="stat-retired" class="font-semibold text-stone-800">0</span> retired peaks (they still count)</span>
+              <span><span id="stat-miles" class="font-semibold text-stone-800">0</span> trail miles still ahead</span>
+            </div>
+          </div>
+
+          <p id="save-hint" class="mt-4 hidden rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-900"></p>
+        </div>
+      </section>
+
+      <section class="mt-8" aria-label="Find a peak">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
+          <div class="relative flex-1">
+            <svg class="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.4 9.9l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6A5.5 5.5 0 0 0 9 3.5ZM5.5 9a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0Z" clip-rule="evenodd"/></svg>
+            <input id="search" type="search" placeholder="Search a peak, town, range or trail&hellip;" autocomplete="off"
+              class="w-full rounded-xl border border-stone-300 bg-white py-2.5 pl-10 pr-3 text-sm shadow-sm placeholder:text-stone-400 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20">
+          </div>
+
+          <label class="sr-only" for="sort">Sort peaks</label>
+          <select id="sort" class="rounded-xl border border-stone-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20">
+            <option value="name:asc">Name A&ndash;Z</option>
+            <option value="name:desc">Name Z&ndash;A</option>
+            <option value="elevation_ft:desc">Tallest first</option>
+            <option value="elevation_ft:asc">Shortest first</option>
+            <option value="round_trip_mi:asc">Shortest hike</option>
+            <option value="gain_ft:asc">Least climbing</option>
+            <option value="difficulty:asc">Easiest first</option>
+            <option value="view_rating:desc">Best views</option>
+          </select>
+
+          <button id="filters-toggle" type="button" aria-expanded="false" aria-controls="filters"
+            class="inline-flex items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 shadow-sm hover:bg-stone-50">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1Zm2 5a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Zm3 5a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Z"/></svg>
+            More filters
+            <span id="filter-count" class="hidden rounded-full bg-emerald-700 px-1.5 text-xs font-semibold text-white"></span>
+          </button>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <div class="inline-flex rounded-full bg-stone-200/70 p-1" role="group" aria-label="How to show the peaks">
+            <button type="button" data-view="cards" class="view-btn inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition">
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3h3A1.5 1.5 0 0 1 9 4.5v3A1.5 1.5 0 0 1 7.5 9h-3A1.5 1.5 0 0 1 3 7.5v-3Zm8 0A1.5 1.5 0 0 1 12.5 3h3A1.5 1.5 0 0 1 17 4.5v3A1.5 1.5 0 0 1 15.5 9h-3A1.5 1.5 0 0 1 11 7.5v-3Zm-8 8A1.5 1.5 0 0 1 4.5 11h3A1.5 1.5 0 0 1 9 12.5v3A1.5 1.5 0 0 1 7.5 17h-3A1.5 1.5 0 0 1 3 15.5v-3Zm8 0A1.5 1.5 0 0 1 12.5 11h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a1.5 1.5 0 0 1-1.5-1.5v-3Z"/></svg>
+              Cards
+            </button>
+            <button type="button" data-view="table" class="view-btn inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition">
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1H2V5Zm0 3h16v2H2V8Zm0 4h16v2H2v-2Zm0 4h16v-1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1Z"/></svg>
+              Table
+            </button>
+          </div>
+
+          <div class="inline-flex rounded-full bg-stone-200/70 p-1" role="group" aria-label="Which list">
+            <button type="button" data-list="current" class="list-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition">Today's 52</button>
+            <button type="button" data-list="delisted" class="list-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition">Retired</button>
+            <button type="button" data-list="all" class="list-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition">Everything</button>
+          </div>
+
+          <div class="inline-flex rounded-full bg-stone-200/70 p-1" role="group" aria-label="Completion">
+            <button type="button" data-status="all" class="status-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition">All</button>
+            <button type="button" data-status="todo" class="status-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition">Still to do</button>
+            <button type="button" data-status="completed" class="status-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition">Climbed</button>
+          </div>
+        </div>
+
+        <div id="filters" class="mt-3 hidden grid-cols-1 gap-3 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
+          <label class="block text-sm">
+            <span class="mb-1 block font-medium text-stone-600">Range</span>
+            <select id="range-filter" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20">
+              <option value="">Anywhere</option>
+            </select>
+          </label>
+          <label class="block text-sm">
+            <span class="mb-1 block font-medium text-stone-600">County</span>
+            <select id="county-filter" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20">
+              <option value="">All counties</option>
+            </select>
+          </label>
+          <label class="block text-sm">
+            <span class="mb-1 block font-medium text-stone-600">Effort</span>
+            <select id="difficulty-filter" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20">
+              <option value="">Any</option>
+              <option value="Easier">Easier</option>
+              <option value="Medium">Medium</option>
+              <option value="Harder">Harder</option>
+            </select>
+          </label>
+          <label class="block text-sm">
+            <span class="mb-1 block font-medium text-stone-600">Whose land</span>
+            <select id="land-filter" class="w-full rounded-xl border border-stone-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20">
+              <option value="">Anyone's</option>
+              <option value="Federal">National forest</option>
+              <option value="State">State land</option>
+              <option value="Private">Private / trust</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between gap-4">
+          <p id="result-count" class="text-sm text-stone-500" role="status" aria-live="polite">&nbsp;</p>
+          <button id="reset" type="button" class="text-sm font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 hover:text-stone-800">Start over</button>
+        </div>
+      </section>
+
+      <section id="cards" class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3" aria-label="Peaks"></section>
+
+      <div id="table-wrap" class="mt-4 hidden overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-stone-200 text-sm">
+            <thead class="bg-stone-100/80 text-left text-xs uppercase tracking-wide text-stone-500">
+              <tr>
+                <th scope="col" class="px-3 py-3 font-semibold"><span class="sr-only">Climbed</span>&#10003;</th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="name">Peak <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 text-right font-semibold hover:text-stone-900" data-sort="elevation_ft">Elev. <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 text-right font-semibold hover:text-stone-900" data-sort="round_trip_mi">Miles <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 text-right font-semibold hover:text-stone-900" data-sort="gain_ft">Ft up <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="difficulty">Effort <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 text-right font-semibold hover:text-stone-900" data-sort="view_rating">View <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="town">Town <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="range">Range <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="land">Land <span class="sort-icon"></span></th>
+                <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="status">List <span class="sort-icon"></span></th>
+                <th scope="col" class="px-3 py-3 font-semibold">Maps</th>
+              </tr>
+            </thead>
+            <tbody id="table-body" class="divide-y divide-stone-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <footer class="border-t border-stone-200 bg-white">
+      <div class="mx-auto max-w-6xl px-4 py-10 text-sm text-stone-500 sm:px-6">
+        <p class="font-medium text-stone-700">About the numbers</p>
+        <p class="mt-2 max-w-3xl">
+          The list and summit elevations come from the
+          <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html" target="_blank" rel="noopener noreferrer">Over the Hill Hikers</a>
+          (June 2025 revision, 2019 statewide LIDAR). Trail distances, climbing and effort ratings are from
+          <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="http://www.nhfamilyhikes.com/52WAV.php" target="_blank" rel="noopener noreferrer">NH Family Hikes</a>;
+          anything marked <em>est.</em> was measured from OpenStreetMap trails and USGS elevation data instead.
+          Coordinates come from OpenStreetMap, towns and counties from the US Census, and landowners from
+          <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.granit.unh.edu/" target="_blank" rel="noopener noreferrer">NH GRANIT</a>.
+          A <span class="font-medium">*</span> on a view score means nobody has rated it yet, so it shows the list median.
+        </p>
+        <p class="mt-4 max-w-3xl">
+          <span class="font-medium text-stone-700">Your ticks stay yours.</span>
+          There is no account and no tracking &mdash; checkmarks live in this browser only. Use
+          <span class="font-medium">Save my progress</span> to turn them into a link you can bookmark or email yourself,
+          which is the safest way to carry a multi-year list between phones and computers. The checklist prints on a single
+          page; choose <span class="font-medium">Save as PDF</span> in your print dialog if you would rather keep a copy on
+          your computer. When you finish, send it to the Over the Hill Hikers for your patch.
+        </p>
+        <p id="source-note" class="mt-4 text-xs text-stone-400">&nbsp;</p>
+      </div>
+    </footer>
+  </div>
+
+  <div class="print-sheet">
+    <div style="font-family: Georgia, serif; color: #1c1917;">
+      <h1 style="font-size: 17pt; margin: 0 0 1pt;">New Hampshire 52 With a View</h1>
+      <p style="margin: 0 0 8pt; font-size: 8pt; color: #57534e;">
+        The official list kept by the Over the Hill Hikers &mdash; June 2025 revision.
+        Any 52 peaks, current or retired, count toward the patch.
+        <span id="print-ticked"></span>
+      </p>
+      <p style="margin: 0 0 4pt; font-size: 9.5pt;">
+        Name <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 210pt;"></span>
+        &nbsp;&nbsp;Finished <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 110pt;"></span>
+      </p>
+      <div id="print-body"></div>
+      <p style="margin-top: 7pt; font-size: 7.5pt; color: #78716c;">
+        Elevations from the 2019 New Hampshire statewide LIDAR survey. Write dates as month / day / year.
+      </p>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
