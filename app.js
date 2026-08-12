@@ -216,7 +216,7 @@
     : '');
 
   const badge = (text, cls, title = '') =>
-    `<span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${cls}"${title ? ` title="${escapeHtml(title)}"` : ''}>${text}</span>`;
+    `<span class="inline-flex items-center whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${cls}"${title ? ` title="${escapeHtml(title)}"` : ''}>${text}</span>`;
 
   function statusBadge(p) {
     if (p.status === 'delisted') {
@@ -315,8 +315,8 @@
         <td class="px-3 py-2.5"><span class="text-xs text-stone-500" title="${escapeHtml(p.land?.manager || '')}">${escapeHtml(LAND_LABEL[p.land?.owner_type] || '')}</span></td>
         <td class="px-3 py-2.5">${statusBadge(p)}</td>
         <td class="whitespace-nowrap px-3 py-2.5 text-sm">
-          ${p.trailhead ? `<a class="font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsDirections(p.trailhead.lat, p.trailhead.lon)}">Drive</a> ` : ''}
-          <a class="font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsSearch(p.summit.lat, p.summit.lon)}">Map</a>
+          ${p.trailhead ? `<a class="font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(p.trailhead.address || p.trailhead.name)}" href="${mapsDirections(p.trailhead.lat, p.trailhead.lon)}">Trailhead</a><span class="text-stone-300"> &middot; </span>` : ''}
+          <a class="font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsSearch(p.summit.lat, p.summit.lon)}">Summit</a>
         </td>
       </tr>`;
   }
