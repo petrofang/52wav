@@ -341,7 +341,9 @@
 
   // --- print ----------------------------------------------------------------
 
-  const dateRule = (w) => `<span style="display:inline-block; width:${w}pt; border-bottom:0.75pt solid #a8a29e;">&nbsp;</span>`;
+  // The rules are empty inline-blocks, so they need an explicit height and a tight
+  // line-height; otherwise each one generates a full line box and inflates every row.
+  const dateRule = (w) => `<span style="display:inline-block; width:${w}pt; height:7pt; line-height:7pt; vertical-align:middle; border-bottom:0.75pt solid #a8a29e;"></span>`;
   const DATE_FIELD = `${dateRule(12)}<span style="color:#a8a29e;">/</span>${dateRule(12)}<span style="color:#a8a29e;">/</span>${dateRule(20)}`;
 
   function printColumn(list) {
@@ -349,7 +351,7 @@
       <table style="width:100%; border-collapse:collapse; font-size:8.5pt;">
         <tr style="font-size:6.5pt; text-transform:uppercase; letter-spacing:.05em; color:#a8a29e;">
           <td style="width:11pt;"></td>
-          <td style="width:58pt; padding:0 6pt 1.5pt 0;">Mo / Day / Year</td>
+          <td style="width:58pt; padding:0 6pt 1.5pt 0; white-space:nowrap;">M / D / Yr</td>
           <td style="padding-bottom:1.5pt;">Peak</td>
           <td style="width:30pt; padding-bottom:1.5pt; text-align:right;">Feet</td>
         </tr>
@@ -357,12 +359,12 @@
           const done = state.completed.has(p.id);
           return `
             <tr>
-              <td style="width:11pt; padding:1.2pt 0; vertical-align:top;">
+              <td style="width:11pt; padding:1pt 0; vertical-align:top;">
                 <span style="display:inline-block; width:8pt; height:8pt; border:0.75pt solid #57534e; text-align:center; line-height:8pt; font-size:7pt;">${done ? '&#10003;' : ''}</span>
               </td>
-              <td style="width:58pt; padding:1.2pt 6pt 1.2pt 0; vertical-align:top; white-space:nowrap;">${DATE_FIELD}</td>
-              <td style="padding:1.2pt 3pt 1.2pt 0; line-height:1.12;">${escapeHtml(displayName(p))}</td>
-              <td style="width:30pt; padding:1.2pt 0; text-align:right; vertical-align:top; color:#57534e;">${p.elevation_ft.toLocaleString()}</td>
+              <td style="width:58pt; padding:1pt 6pt 1pt 0; vertical-align:top; white-space:nowrap;">${DATE_FIELD}</td>
+              <td style="padding:1pt 3pt 1pt 0; line-height:1.12;">${escapeHtml(displayName(p))}</td>
+              <td style="width:30pt; padding:1pt 0; text-align:right; vertical-align:top; color:#57534e;">${p.elevation_ft.toLocaleString()}</td>
             </tr>`;
         }).join('')}
       </table>`;
