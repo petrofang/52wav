@@ -3,6 +3,7 @@
   "list_revision": "2025-06",
   "source": "Over the Hill Hikers official 52 With a View list",
   "canonical": "https://github.com/petrofang/52wav/blob/main/data/peaks.json",
+  "compiled_by": "Giles Cooper (https://github.com/petrofang)",
   "mirror_notice": "The public Gist copy of this file is generated automatically from the repository. Edits made directly to the Gist will be overwritten.",
   "license": "ODbL-1.0 — free to use with attribution; derived databases share alike. Contains OpenStreetMap-derived coordinates.",
   "attribution": {

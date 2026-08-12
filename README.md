@@ -107,6 +107,8 @@ what you send to the Over the Hill Hikers to claim the patch.
 | Summit and trailhead coordinates | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors |
 | Town and county | US Census Bureau geocoder |
 | Landowner and manager | [NH GRANIT](https://www.granit.unh.edu/) Conservation & Public Lands |
+| Official place names | [USGS GNIS](https://www.usgs.gov/tools/geographic-names-information-system-gnis), U.S. Board on Geographic Names |
+| Standard-route cross-check | [New England Waterfalls](https://www.newenglandwaterfalls.com/52withaview.php) |
 | Derived distances and elevation profiles | OpenStreetMap trail geometry + USGS 3DEP/NED |
 
 Two peaks added in 2025 (Bald Peak, Iron Mountain) had no published route statistics, so
@@ -130,3 +132,18 @@ the [Open Database Licence](https://opendatacommons.org/licenses/odbl/) — use 
 attribution and share derived databases alike. The 52 With a View list itself is the work of
 the Over the Hill Hikers, and the route statistics and view ratings are NH Family Hikes'.
 Please credit them rather than this repository.
+
+---
+
+## Who made this
+
+Put together by **Giles Cooper** — [github.com/petrofang](https://github.com/petrofang).
+
+The list belongs to the Over the Hill Hikers, the mountains belong to everyone, and most of
+the numbers here were published freely by people who walked them first. This repository is
+mainly a careful assembly of other people's generosity, kept accurate and easy to use.
+
+Corrections are the most useful thing you can send — the
+[issue forms](https://github.com/petrofang/52wav/issues/new/choose) take about a minute, and
+reports from people who have actually stood at the trailhead have already fixed several
+entries here.
