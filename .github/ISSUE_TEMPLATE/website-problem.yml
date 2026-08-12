@@ -1,0 +1,60 @@
+name: Something on the website is not working
+description: Checkmarks, printing, saving your progress, or anything that looks wrong on screen.
+title: "[Website] "
+labels: ["website"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Sorry it is misbehaving. A plain description of what you did and what happened
+        is genuinely all we need &mdash; you do not have to diagnose it for us.
+
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      placeholder: |
+        I ticked off eleven peaks, then closed the browser. When I came back
+        the next morning they were all unticked again.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+      placeholder: I expected my ticks to still be there.
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: What were you using?
+      description: If you are not sure, pick the closest thing or skip this.
+      options:
+        - iPhone
+        - Android phone
+        - iPad or other tablet
+        - Windows computer
+        - Mac
+        - Not sure
+    validations:
+      required: false
+
+  - type: dropdown
+    id: printing
+    attributes:
+      label: Was this to do with printing the checklist?
+      options:
+        - "No"
+        - "Yes, printing on paper"
+        - "Yes, saving as a PDF"
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: A picture of the problem, if you can
+      description: >
+        Optional but very helpful. Drag an image straight into this box, or take a
+        photo of the screen with another device &mdash; that works fine too.

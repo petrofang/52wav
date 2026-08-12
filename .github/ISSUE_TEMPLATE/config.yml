@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions about the list itself, or claiming your patch
+    url: https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html
+    about: The Over the Hill Hikers keep the official 52 With a View list and award the patch. This site only publishes their list.
+  - name: Current trail conditions
+    url: https://trailsnh.com/lists/New-Hampshire-52-With-A-View.php
+    about: Recent reports on snow, ice, mud and blowdowns, updated far more often than this site.
+  - name: Ask other 52 With a View hikers
+    url: https://www.facebook.com/groups/nh52wav/
+    about: A friendly group for route advice, trip reports and questions about hiking the list.

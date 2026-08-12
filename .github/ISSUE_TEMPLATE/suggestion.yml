@@ -1,0 +1,27 @@
+name: An idea to make this better
+description: Something you wish the site did, or a piece of information you keep having to look up elsewhere.
+title: "[Idea] "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas are welcome, including half-formed ones. If you have found yourself
+        opening another website or a guidebook alongside this one, we would like to
+        know what for.
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to see?
+      placeholder: |
+        It would help to know roughly how busy a peak gets, so I can save the
+        quiet ones for holiday weekends.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: What would that help you do?
+      description: Optional. Knowing the reason often leads to a better answer than the original idea.

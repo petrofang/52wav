@@ -1,0 +1,71 @@
+name: Something on a mountain is wrong
+description: A trailhead, parking spot, distance, gate or anything else on the ground that does not match the page.
+title: "[Peak] "
+labels: ["peak data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time. Reports from people who have actually stood at the
+        trailhead are the most valuable thing this site gets.
+
+        Fill in what you know and leave the rest blank. There are no wrong answers here,
+        and you do not need to be precise or technical.
+
+  - type: input
+    id: peak
+    attributes:
+      label: Which mountain?
+      placeholder: e.g. Mt. Shaw, or North Percy Peak
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong?
+      options:
+        - The driving directions or parking spot
+        - The distance or amount of climbing
+        - The trail or route named
+        - A gate, road closure or seasonal access
+        - The name or spelling
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What did you find?
+      description: In your own words. If you got sent to the wrong place, tell us where you ended up.
+      placeholder: |
+        The page sent me to a gate on Sandwich Notch Road that was locked. The
+        parking hikers actually use is about half a mile further on, on the left,
+        just past the bridge.
+    validations:
+      required: true
+
+  - type: input
+    id: correct_place
+    attributes:
+      label: If you know the right spot, where is it?
+      description: >
+        An address, a road name, or coordinates from your phone all work equally well.
+        On a phone map you can usually press and hold a spot to see its coordinates.
+      placeholder: e.g. end of Sandwich Notch Rd, or 43.7439, -71.2740
+
+  - type: input
+    id: visited
+    attributes:
+      label: When were you there?
+      description: Roughly is fine. It helps us know how fresh this is.
+      placeholder: e.g. last weekend, or October 2025
+
+  - type: textarea
+    id: anything_else
+    attributes:
+      label: Anything else worth knowing?
+      description: >
+        Optional. Photos are welcome and often settle a question instantly &mdash;
+        drag them straight into this box.
