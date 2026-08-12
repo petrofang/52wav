@@ -2,9 +2,9 @@
   'use strict';
 
   const cfg = window.APP_CONFIG || {};
-  const STORAGE_KEY = '52wav.completed.v1';
-  const VIEW_KEY = '52wav.view';
-  const SORT_KEY = '52wav.sort';
+  const STORAGE_KEY = 'os52.completed.v1';
+  const VIEW_KEY = 'os52.view';
+  const SORT_KEY = 'os52.sort';
   const PATCH_TARGET = 52;
 
   const el = (id) => document.getElementById(id);
@@ -561,7 +561,7 @@
     window.addEventListener('afterprint', restoreTitle);
 
     els.printBtn.addEventListener('click', () => {
-      document.title = '52-With-a-View-checklist';
+      document.title = 'OS-52-checklist';
       window.print();
       setTimeout(restoreTitle, 1000);
     });
