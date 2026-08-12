@@ -5,7 +5,7 @@ mountains under 4,000 feet that are worth the climb, kept by the
 [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html)
 since 1990.
 
-**Live site: <https://petrofang.github.io/52wav/>**
+**[Open the live site &rarr; petrofang.github.io/52wav](https://petrofang.github.io/52wav/)**
 
 Browse as cards or as a sortable table, filter by range, county, effort or landowner, get
 driving directions to the trailhead, and print a one-page checklist to fill in by hand.
