@@ -57,8 +57,9 @@
   const escapeHtml = (str) =>
     String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  // Matches how the Over the Hill Hikers alphabetise: "The Horn" files under H.
-  const sortName = (p) => p.name.replace(/^The\s+/i, '').toLowerCase();
+  // Sort on the distinctive part of the name: "Mt. Avalon" files under A, "The Horn"
+  // under H. Half the list is "Mt. something", which otherwise clumps under M.
+  const sortName = (p) => p.name.replace(/^(Mt\.|Mount|The)\s+/i, '').toLowerCase();
 
   // --- progress tokens ------------------------------------------------------
   // Format: 1<fingerprint>-<bitmask>. The fingerprint pins the token to the id
