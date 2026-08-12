@@ -64,10 +64,18 @@ jobs:
         run: |
           # Check the API, not the raw URL: raw gist content is edge-cached and
           # can serve the previous revision for around a minute after a write.
-          gh api "gists/$GIST_ID" --jq '.files["peaks.json"].content' > published.json
-          if diff -q <(jq -S . "$DATA_FILE") <(jq -S . published.json) > /dev/null; then
-            echo "Gist is in sync with $DATA_FILE"
-          else
-            echo "::error::Gist content does not match $DATA_FILE after publishing"
-            exit 1
-          fi
+          # The API itself is only eventually consistent, so a read immediately
+          # after the write can still land on a replica holding the old revision.
+          # Retry before calling it a genuine mismatch.
+          for attempt in 1 2 3 4 5; do
+            gh api "gists/$GIST_ID" --jq '.files["peaks.json"].content' > published.json
+            if diff -q <(jq -S . "$DATA_FILE") <(jq -S . published.json) > /dev/null; then
+              echo "Gist is in sync with $DATA_FILE (attempt $attempt)"
+              exit 0
+            fi
+            echo "Attempt $attempt: Gist has not caught up yet, waiting..."
+            sleep 5
+          done
+          echo "::error::Gist content does not match $DATA_FILE after publishing"
+          exit 1
+
