@@ -135,7 +135,17 @@
       }
     }
     try {
-      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      // Migrate from old storage key (52wav.completed.v1) to new key (os52.completed.v1)
+      const oldKey = '52wav.completed.v1';
+      let raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if ((!raw || raw.length === 0) && localStorage.getItem(oldKey)) {
+        raw = JSON.parse(localStorage.getItem(oldKey) || '[]');
+        // Migrate to new key
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(raw));
+          localStorage.removeItem(oldKey);
+        } catch { /* ignore if migration fails */ }
+      }
       return new Set(Array.isArray(raw) ? raw : []);
     } catch {
       return new Set();
@@ -619,10 +629,30 @@
       if (location.hash.startsWith('#p=')) saveCompleted();
 
       let saved = 'cards';
-      try { saved = localStorage.getItem(VIEW_KEY) || 'cards'; } catch { /* ignore */ }
+      try {
+        const oldViewKey = '52wav.view';
+        const newValue = localStorage.getItem(VIEW_KEY);
+        if (!newValue && localStorage.getItem(oldViewKey)) {
+          saved = localStorage.getItem(oldViewKey) || 'cards';
+          localStorage.setItem(VIEW_KEY, saved);
+          localStorage.removeItem(oldViewKey);
+        } else {
+          saved = newValue || 'cards';
+        }
+      } catch { /* ignore */ }
 
       let sort = 'name:asc';
-      try { sort = localStorage.getItem(SORT_KEY) || 'name:asc'; } catch { /* ignore */ }
+      try {
+        const oldSortKey = '52wav.sort';
+        const newValue = localStorage.getItem(SORT_KEY);
+        if (!newValue && localStorage.getItem(oldSortKey)) {
+          sort = localStorage.getItem(oldSortKey) || 'name:asc';
+          localStorage.setItem(SORT_KEY, sort);
+          localStorage.removeItem(oldSortKey);
+        } else {
+          sort = newValue || 'name:asc';
+        }
+      } catch { /* ignore */ }
       const [sortKey, sortDir] = sort.split(':');
 
       buildRangeOptions();

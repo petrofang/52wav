@@ -7,7 +7,7 @@
   "mirror_notice": "The public Gist copy of this file is generated automatically from the repository. Edits made directly to the Gist will be overwritten.",
   "license": "ODbL-1.0 — free to use with attribution; derived databases share alike. Contains OpenStreetMap-derived coordinates.",
   "attribution": {
-    "peak_list_and_elevations": "Over the Hill Hikers, 52 With a View (OS-52 Data API) (June 2025 revision); elevations from the 2019 NH statewide LIDAR survey",
+    "peak_list_and_elevations": "Over the Hill Hikers, 52 With a View (June 2025 revision); elevations from the 2019 NH statewide LIDAR survey",
     "route_stats_and_view_ratings": "NH Family Hikes (nhfamilyhikes.com)",
     "coordinates": "OpenStreetMap contributors",
     "official_names": "USGS Geographic Names Information System (GNIS), U.S. Board on Geographic Names",
