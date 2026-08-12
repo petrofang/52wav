@@ -4,6 +4,15 @@
   "source": "Over the Hill Hikers official 52 With a View list",
   "canonical": "https://github.com/petrofang/52wav/blob/main/data/peaks.json",
   "mirror_notice": "The public Gist copy of this file is generated automatically from the repository. Edits made directly to the Gist will be overwritten.",
+  "license": "ODbL-1.0 — free to use with attribution; derived databases share alike. Contains OpenStreetMap-derived coordinates.",
+  "attribution": {
+    "peak_list_and_elevations": "Over the Hill Hikers, 52 With a View (June 2025 revision); elevations from the 2019 NH statewide LIDAR survey",
+    "route_stats_and_view_ratings": "NH Family Hikes (nhfamilyhikes.com)",
+    "coordinates": "OpenStreetMap contributors",
+    "town_and_county": "US Census Bureau geocoder",
+    "land_ownership": "NH GRANIT Conservation and Public Lands",
+    "derived_distance_and_gain": "OpenStreetMap trail geometry with USGS 3DEP/NED elevations"
+  },
   "id_policy": "Ids are permanent surrogate keys, NOT positions on the list. They are ordered by the year a peak joined: 1-51 are the original 1990 list, 52 joined in 2001, 53 in 2010, 54-58 in 2020, 59-61 in 2025. Never renumber, never reuse. A peak keeps its id when the list is revised, when it is retired, and if it is later restored (see id 60, retired 2020 and restored 2025). New peaks take next_id. Saved progress links encode these ids, so renumbering would corrupt every hiker's saved list.",
   "next_id": 62,
   "peaks": [
