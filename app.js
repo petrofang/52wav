@@ -61,6 +61,10 @@
   // under H. Half the list is "Mt. something", which otherwise clumps under M.
   const sortName = (p) => p.name.replace(/^(Mt\.|Mount|The)\s+/i, '').toLowerCase();
 
+  // The official list mixes "Mtn." and "Mountain". Normalise for display only, so the
+  // published dataset keeps the names exactly as the Over the Hill Hikers write them.
+  const displayName = (p) => p.name.replace(/\bMountain\b/g, 'Mtn.');
+
   // --- progress tokens ------------------------------------------------------
   // Format: 1<fingerprint>-<bitmask>. The fingerprint pins the token to the id
   // assignment that produced it, so a future renumbering is detected instead of
@@ -177,7 +181,7 @@
       if (state.status === 'todo' && done) return false;
       if (state.status === 'completed' && !done) return false;
       if (!q) return true;
-      return [p.name, p.range, p.town, p.county, p.notes, p.route?.name, p.trailhead?.name, p.land?.manager]
+      return [p.name, p.range, p.town, p.county, p.notes, p.route?.name, p.trailhead?.name, p.land?.manager, displayName(p)]
         .some((f) => String(f || '').toLowerCase().includes(q));
     });
 
@@ -249,9 +253,9 @@
         <div class="flex items-start gap-3 p-4 pb-3">
           <input type="checkbox" data-id="${p.id}" ${done ? 'checked' : ''}
             class="mt-1 h-5 w-5 flex-none cursor-pointer rounded-md border-stone-300 text-emerald-600 focus:ring-emerald-500"
-            aria-label="Mark ${escapeHtml(p.name)} as climbed">
+            aria-label="Mark ${escapeHtml(displayName(p))} as climbed">
           <div class="min-w-0 flex-1">
-            <h2 class="font-display text-lg font-semibold leading-snug text-stone-900">${escapeHtml(p.name)}</h2>
+            <h2 class="font-display text-lg font-semibold leading-snug text-stone-900">${escapeHtml(displayName(p))}</h2>
             <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(p.town || '')} &middot; ${escapeHtml(p.range || '')}</p>
           </div>
           <div class="flex-none font-display text-lg font-semibold text-stone-900">
@@ -297,10 +301,10 @@
         <td class="px-3 py-2.5">
           <input type="checkbox" data-id="${p.id}" ${done ? 'checked' : ''}
             class="h-4 w-4 cursor-pointer rounded border-stone-300 text-emerald-600 focus:ring-emerald-500"
-            aria-label="Mark ${escapeHtml(p.name)} as climbed">
+            aria-label="Mark ${escapeHtml(displayName(p))} as climbed">
         </td>
         <td class="px-3 py-2.5">
-          <div class="font-medium ${done ? 'text-emerald-900' : 'text-stone-900'}">${escapeHtml(p.name)}</div>
+          <div class="font-medium ${done ? 'text-emerald-900' : 'text-stone-900'}">${escapeHtml(displayName(p))}</div>
           ${r.name ? `<div class="text-xs text-stone-400">via ${escapeHtml(r.name)}</div>` : ''}
         </td>
         <td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${p.elevation_ft.toLocaleString()}</td>
@@ -353,7 +357,7 @@
                 <span style="display:inline-block; width:8pt; height:8pt; border:0.75pt solid #57534e; text-align:center; line-height:8pt; font-size:7pt;">${done ? '&#10003;' : ''}</span>
               </td>
               <td style="width:58pt; padding:1.2pt 6pt 1.2pt 0; vertical-align:top; white-space:nowrap;">${DATE_FIELD}</td>
-              <td style="padding:1.2pt 3pt 1.2pt 0; line-height:1.12;">${escapeHtml(p.name)}</td>
+              <td style="padding:1.2pt 3pt 1.2pt 0; line-height:1.12;">${escapeHtml(displayName(p))}</td>
               <td style="width:30pt; padding:1.2pt 0; text-align:right; vertical-align:top; color:#57534e;">${p.elevation_ft.toLocaleString()}</td>
             </tr>`;
         }).join('')}
