@@ -23,7 +23,7 @@ jobs:
       GIST_ID: 46213d7d93292f14ffd54d955b7f3f67
       DATA_FILE: data/peaks.json
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Validate the dataset before publishing
         run: |
