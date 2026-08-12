@@ -35,7 +35,6 @@
     shareBtn: el('share-btn'),
     saveHint: el('save-hint'),
     printBody: el('print-body'),
-    printTicked: el('print-ticked'),
   };
 
   const state = {
@@ -370,13 +369,13 @@
       </table>`;
   }
 
-  function printSection(title, list) {
+  function printSection(title, list, note) {
     if (!list.length) return '';
     const sorted = list.slice().sort((a, b) => sortName(a).localeCompare(sortName(b)));
     const half = Math.ceil(sorted.length / 2);
     return `
       <div class="print-section">
-        <h2 style="font-size:10.5pt; margin:7pt 0 2pt; border-bottom:0.75pt solid #d6d3d1; padding-bottom:1.5pt;">${title}</h2>
+        <h2 style="font-size:10.5pt; margin:7pt 0 2pt; border-bottom:0.75pt solid #d6d3d1; padding-bottom:1.5pt;">${title}${note ? ` <span style="font-weight:normal; font-size:8pt; color:#78716c;">(${escapeHtml(note)})</span>` : ''}</h2>
         <div style="display:flex; justify-content:space-between; align-items:stretch;">
           <div style="flex:0 0 46%; min-width:0;">${printColumn(sorted.slice(0, half))}</div>
           <div style="border-left:0.5pt solid #e7e5e4;" aria-hidden="true"></div>
@@ -388,12 +387,10 @@
   function renderPrintSheet() {
     const current = state.peaks.filter((p) => p.status === 'current');
     const retired = state.peaks.filter((p) => p.status === 'delisted');
+    const revisionYear = String(state.meta?.list_revision || '').slice(0, 4);
     els.printBody.innerHTML =
-      printSection('The current 52', current) +
+      printSection('The current 52', current, revisionYear && `${revisionYear} revision`) +
       printSection('Retired peaks — these still count toward your 52', retired);
-
-    const ticked = state.peaks.filter((p) => state.completed.has(p.id)).length;
-    els.printTicked.textContent = ticked ? `${Math.min(ticked, PATCH_TARGET)} of 52 already ticked.` : '';
   }
 
   // --- render ---------------------------------------------------------------
