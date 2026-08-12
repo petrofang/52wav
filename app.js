@@ -61,9 +61,13 @@
   // under H. Half the list is "Mt. something", which otherwise clumps under M.
   const sortName = (p) => p.name.replace(/^(Mt\.|Mount|The)\s+/i, '').toLowerCase();
 
-  // The official list mixes "Mtn." and "Mountain". Normalise for display only, so the
-  // published dataset keeps the names exactly as the Over the Hill Hikers write them.
-  const displayName = (p) => p.name.replace(/\bMountain\b/g, 'Mtn.');
+  // The official list mixes "Mtn." and "Mountain", and spells combined entries out in
+  // full. Tidy both for display only, so the published dataset keeps the names exactly
+  // as the Over the Hill Hikers write them.
+  const displayName = (p) => p.name
+    .replace(/^(\S+) Mountain and (\S+) Mountain$/, '$1 & $2 Mtns.')
+    .replace(/^North (\S+) and South \1$/, 'North & South $1')
+    .replace(/\bMountain\b/g, 'Mtn.');
 
   // --- progress tokens ------------------------------------------------------
   // Format: 1<fingerprint>-<bitmask>. The fingerprint pins the token to the id
