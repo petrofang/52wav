@@ -59,8 +59,12 @@ jobs:
           gh api -X PATCH "gists/$GIST_ID" --input payload.json --silent
 
       - name: Confirm the Gist matches
+        env:
+          GH_TOKEN: ${{ secrets.GIST_TOKEN }}
         run: |
-          curl -fsSL "https://gist.githubusercontent.com/petrofang/$GIST_ID/raw/peaks.json" -o published.json
+          # Check the API, not the raw URL: raw gist content is edge-cached and
+          # can serve the previous revision for around a minute after a write.
+          gh api "gists/$GIST_ID" --jq '.files["peaks.json"].content' > published.json
           if diff -q <(jq -S . "$DATA_FILE") <(jq -S . published.json) > /dev/null; then
             echo "Gist is in sync with $DATA_FILE"
           else
