@@ -1,0 +1,33 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node/tooling artifacts (if local build tools are used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Android/Java build artifacts (for TWA/Android Studio exports)
+*.keystore
+*.jks
+*.aab
+*.apk
+*.apks
+*.aab.asc
+android/
+
+# Bundles/archives
+*.zip
+*.tar
+*.tgz
+
+# Local env and temporary files
+.env
+.env.*
+*.tmp
+*.temp
+*.bak

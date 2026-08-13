@@ -33,7 +33,8 @@ Use .well-known/assetlinks.json.template and replace:
 
 - Upload signed AAB.
 - Provide 512x512 app icon and feature graphic.
-- Add privacy policy URL (use docs/privacy-policy.md content on a public URL).
+- Add privacy policy URL:
+	- https://petrofang.github.io/52wav/privacy-policy.html
 - Complete Data safety form: declare no data collection if unchanged.
 - Complete App content declarations.
 - Target latest Play-required Android API level.
