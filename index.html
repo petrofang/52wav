@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>52 With a View &mdash; a friendly guide to New Hampshire's best small mountains</title>
   <meta name="description" content="Browse, filter and print the New Hampshire 52 With a View peak list. Trail distances, elevation gain, drive-to trailheads and a printable checklist.">
+  <meta name="theme-color" content="#047857">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="52 With a View">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <meta name="color-scheme" content="light">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127956;</text></svg>">
 
@@ -300,5 +306,14 @@
 
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {
+          // Ignore registration failures and keep app usable online.
+        });
+      });
+    }
+  </script>
 </body>
 </html>

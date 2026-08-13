@@ -147,3 +147,27 @@ Corrections are the most useful thing you can send — the
 [issue forms](https://github.com/petrofang/52wav/issues/new/choose) take about a minute, and
 reports from people who have actually stood at the trailhead have already fixed several
 entries here.
+
+---
+
+## Android and Google Play (simple path)
+
+This repository now includes the baseline PWA files needed for Android packaging with
+**Trusted Web Activity (TWA)**, which is usually simpler than maintaining a full native wrapper.
+
+Added in this repo:
+
+- `manifest.webmanifest`
+- `sw.js`
+- `offline.html`
+- `assets/icons/icon-192.png` and `assets/icons/icon-512.png`
+- `docs/play-store-release-checklist.md`
+- `docs/privacy-policy.md`
+- `.well-known/assetlinks.json.template`
+
+To create a Play upload package (AAB), use [PWABuilder](https://www.pwabuilder.com/) with the
+live site URL:
+
+- <https://petrofang.github.io/52wav/>
+
+Then follow `docs/play-store-release-checklist.md` before publishing.
