@@ -6,6 +6,9 @@ Thumbs.db
 
 # Node/tooling artifacts (if local build tools are used)
 node_modules/
+dist/
+build/
+coverage/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -14,11 +17,22 @@ pnpm-debug.log*
 # Android/Java build artifacts (for TWA/Android Studio exports)
 *.keystore
 *.jks
+*.p12
+*.pfx
+*.der
+*.cer
+*.crt
+*.csr
+*.kdb
 *.aab
 *.apk
 *.apks
 *.aab.asc
 android/
+.gradle/
+local.properties
+*.iml
+captures/
 
 # Bundles/archives
 *.zip
@@ -28,6 +42,19 @@ android/
 # Local env and temporary files
 .env
 .env.*
+.envrc
+*.local
+*.override
+*.secret
+*.secrets
+secrets.*
+*.key
+*.pem
 *.tmp
 *.temp
 *.bak
+
+# Misc local outputs
+*.log
+*.cache
+*.pid
