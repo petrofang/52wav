@@ -58,3 +58,4 @@ secrets.*
 *.log
 *.cache
 *.pid
+/.play/
