@@ -1,7 +1,7 @@
-# OS-52: Open-Source New Hampshire 52 With a View Data API
+# 52 With a View
 
-An open-source, programmatic guide to the New Hampshire **52 With a View** peak list — fifty-two
-mountains under 4,000 feet that are worth the climb, curated by the
+A friendly, printable guide to the New Hampshire **52 With a View** peak list — fifty-two
+mountains under 4,000 feet that are worth the climb, kept by the
 [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html)
 since 1990.
 

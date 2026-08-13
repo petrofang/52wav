@@ -2,9 +2,9 @@
   'use strict';
 
   const cfg = window.APP_CONFIG || {};
-  const STORAGE_KEY = 'os52.completed.v1';
-  const VIEW_KEY = 'os52.view';
-  const SORT_KEY = 'os52.sort';
+  const STORAGE_KEY = '52wav.completed.v1';
+  const VIEW_KEY = '52wav.view';
+  const SORT_KEY = '52wav.sort';
   const PATCH_TARGET = 52;
 
   const el = (id) => document.getElementById(id);
@@ -135,17 +135,7 @@
       }
     }
     try {
-      // Migrate from old storage key (52wav.completed.v1) to new key (os52.completed.v1)
-      const oldKey = '52wav.completed.v1';
-      let raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      if ((!raw || raw.length === 0) && localStorage.getItem(oldKey)) {
-        raw = JSON.parse(localStorage.getItem(oldKey) || '[]');
-        // Migrate to new key
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(raw));
-          localStorage.removeItem(oldKey);
-        } catch { /* ignore if migration fails */ }
-      }
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       return new Set(Array.isArray(raw) ? raw : []);
     } catch {
       return new Set();
@@ -571,7 +561,7 @@
     window.addEventListener('afterprint', restoreTitle);
 
     els.printBtn.addEventListener('click', () => {
-      document.title = 'OS-52-checklist';
+      document.title = '52-With-a-View-checklist';
       window.print();
       setTimeout(restoreTitle, 1000);
     });
@@ -629,30 +619,10 @@
       if (location.hash.startsWith('#p=')) saveCompleted();
 
       let saved = 'cards';
-      try {
-        const oldViewKey = '52wav.view';
-        const newValue = localStorage.getItem(VIEW_KEY);
-        if (!newValue && localStorage.getItem(oldViewKey)) {
-          saved = localStorage.getItem(oldViewKey) || 'cards';
-          localStorage.setItem(VIEW_KEY, saved);
-          localStorage.removeItem(oldViewKey);
-        } else {
-          saved = newValue || 'cards';
-        }
-      } catch { /* ignore */ }
+      try { saved = localStorage.getItem(VIEW_KEY) || 'cards'; } catch { /* ignore */ }
 
       let sort = 'name:asc';
-      try {
-        const oldSortKey = '52wav.sort';
-        const newValue = localStorage.getItem(SORT_KEY);
-        if (!newValue && localStorage.getItem(oldSortKey)) {
-          sort = localStorage.getItem(oldSortKey) || 'name:asc';
-          localStorage.setItem(SORT_KEY, sort);
-          localStorage.removeItem(oldSortKey);
-        } else {
-          sort = newValue || 'name:asc';
-        }
-      } catch { /* ignore */ }
+      try { sort = localStorage.getItem(SORT_KEY) || 'name:asc'; } catch { /* ignore */ }
       const [sortKey, sortDir] = sort.split(':');
 
       buildRangeOptions();
