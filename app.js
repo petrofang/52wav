@@ -161,7 +161,7 @@
 
   const DIFFICULTY_ORDER = { Easier: 1, Medium: 2, Harder: 3 };
 
-  function preferredRoute(p) {
+  function recommendedRoute(p) {
     const routes = Array.isArray(p.routes) && p.routes.length
       ? p.routes
       : Array.isArray(p.alt_routes) && p.route
@@ -171,12 +171,12 @@
           : [];
 
     if (!routes.length) return null;
-    const preferred = routes.find((route) => route && route.preferred === true);
-    return preferred || routes[0];
+    const recommended = routes.find((route) => route && route.recommended === true);
+    return recommended || routes[0];
   }
 
   function sortValue(p, key) {
-    const route = preferredRoute(p);
+    const route = recommendedRoute(p);
     switch (key) {
       case 'elevation_ft': return p.elevation_ft;
       case 'round_trip_mi': return route?.round_trip_mi ?? Infinity;
@@ -192,7 +192,7 @@
   function visiblePeaks() {
     const q = state.query.trim().toLowerCase();
     const rows = state.peaks.filter((p) => {
-      const route = preferredRoute(p);
+      const route = recommendedRoute(p);
       if (state.list !== 'all' && p.status !== state.list) return false;
       if (state.range && p.range !== state.range) return false;
       if (state.county && p.county !== state.county) return false;
@@ -354,7 +354,7 @@
   }
 
   function primaryRoute(p) {
-    return preferredRoute(p) || p.route || {};
+    return recommendedRoute(p) || p.route || {};
   }
 
   const DIFFICULTY_STYLE = {
@@ -503,16 +503,16 @@
         const miles = route?.round_trip_mi ? `${route.round_trip_mi.toFixed(1)} mi` : '&mdash; mi';
         const gain = route?.gain_ft ? `${route.gain_ft.toLocaleString()} ft up` : '&mdash; ft up';
         const effort = route?.difficulty ? badge(route.difficulty, DIFFICULTY_STYLE[route.difficulty]) : '';
-        const preferred = route?.preferred ? badge('Preferred', 'bg-emerald-100 text-emerald-800 ring-emerald-600/20') : '';
+        const recommended = route?.recommended ? badge('Recommended', 'bg-emerald-100 text-emerald-800 ring-emerald-600/20') : '';
         const trailhead = routeTrailhead(route, p);
         const trailheadLink = trailhead
           ? `<a class="inline-flex items-center gap-1 text-xs font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Trailhead directions for ${escapeHtml(route?.name || 'this route')}" href="${mapsDirections(trailhead.lat, trailhead.lon)}">${escapeHtml(trailhead.name || route?.name || 'Trailhead')}</a>`
           : '';
         return `
-          <li class="rounded-xl border ${route?.preferred ? 'border-emerald-200 bg-emerald-50/60' : 'border-stone-200 bg-white'} px-3 py-2.5">
+          <li class="rounded-xl border ${route?.recommended ? 'border-emerald-200 bg-emerald-50/60' : 'border-stone-200 bg-white'} px-3 py-2.5">
             <div class="flex flex-wrap items-start justify-between gap-2">
               <p class="font-medium text-stone-800">${escapeHtml(route?.name || `Route ${idx + 1}`)}</p>
-              <div class="flex items-center gap-1.5">${preferred}${effort}</div>
+              <div class="flex items-center gap-1.5">${recommended}${effort}</div>
             </div>
             <p class="mt-1 text-xs text-stone-500">${miles} &middot; ${gain}${route?.derived ? ' &middot; est.' : ''}</p>
             ${route?.notes ? `<p class="mt-1 text-xs leading-relaxed text-stone-600">${escapeHtml(route.notes)}</p>` : ''}

@@ -578,7 +578,7 @@
         "round_trip_mi": 8.3,
         "gain_ft": 2250,
         "difficulty": "Harder",
-        "preferred": true
+        "recommended": true
       },
       "routes": [
         {
@@ -586,7 +586,7 @@
           "round_trip_mi": 8.3,
           "gain_ft": 2250,
           "difficulty": "Harder",
-          "preferred": true
+          "recommended": true
         },
         {
           "name": "Piper Trail / Liberty Trail loop",
@@ -1134,7 +1134,7 @@
         "round_trip_mi": 7.3,
         "gain_ft": 2750,
         "difficulty": "Harder",
-        "preferred": true
+        "recommended": true
       },
       "routes": [
         {
@@ -1142,7 +1142,7 @@
           "round_trip_mi": 7.3,
           "gain_ft": 2750,
           "difficulty": "Harder",
-          "preferred": true
+          "recommended": true
         },
         {
           "name": "Mt. Roberts loop via Castle in the Clouds roads",
@@ -2547,7 +2547,7 @@
         "round_trip_mi": 5.4,
         "gain_ft": 1650,
         "difficulty": "Medium",
-        "preferred": true
+        "recommended": true
       },
       "routes": [
         {
@@ -2555,7 +2555,7 @@
           "round_trip_mi": 5.4,
           "gain_ft": 1650,
           "difficulty": "Medium",
-          "preferred": true
+          "recommended": true
         },
         {
           "name": "Pine Mountain Road spur (private, shorter access)",
@@ -2819,3 +2819,4 @@
     }
   ]
 }
+
