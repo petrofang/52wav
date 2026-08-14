@@ -42,6 +42,7 @@
     meta: {},
     completed: new Set(),
     expandedCards: new Set(),
+    weather: {},
     query: '',
     range: '',
     county: '',
@@ -346,6 +347,12 @@
     return p.route ? [p.route] : [];
   }
 
+  function routeTrailhead(route, fallbackPeak = null) {
+    const candidate = route?.trailhead || fallbackPeak?.trailhead || null;
+    if (!candidate || candidate.lat == null || candidate.lon == null) return null;
+    return candidate;
+  }
+
   function primaryRoute(p) {
     return preferredRoute(p) || p.route || {};
   }
@@ -369,6 +376,48 @@
   const viewStar = (p) => (p.view_rating_imputed
     ? '<span class="text-amber-600" title="Not yet rated; showing the median score of the rated peaks">*</span>'
     : '');
+
+  const weatherCodeMap = {
+    0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 48: '🌫️',
+    51: '🌦️', 53: '🌦️', 55: '🌧️', 56: '🌧️', 57: '🌧️',
+    61: '🌧️', 63: '🌧️', 65: '🌧️', 66: '🌧️', 67: '🌧️',
+    71: '🌨️', 73: '🌨️', 75: '❄️', 77: '❄️', 80: '🌦️', 81: '🌧️',
+    82: '🌧️', 85: '🌨️', 86: '🌨️', 95: '⛈️', 96: '⛈️', 99: '⛈️'
+  };
+
+  const weatherTarget = (peak) => {
+    if (peak?.summit && peak.summit.lat != null && peak.summit.lon != null) {
+      return { lat: Number(peak.summit.lat), lon: Number(peak.summit.lon) };
+    }
+
+    const route = primaryRoute(peak);
+    const trailhead = routeTrailhead(route, peak);
+    if (trailhead && trailhead.lat != null && trailhead.lon != null) {
+      return { lat: Number(trailhead.lat), lon: Number(trailhead.lon) };
+    }
+
+    return null;
+  };
+
+  const weatherBadge = (peak) => {
+    const weather = state.weather[peak.id];
+    if (!weather) return '';
+
+    if (weather.unavailable) {
+      return `
+        <div class="inline-flex items-center gap-1 rounded-full bg-stone-100 px-2 py-0.5 text-[11px] font-medium text-stone-500 ring-1 ring-stone-200" title="Weather unavailable for ${escapeHtml(peak.name)}">
+          <span aria-label="Weather unavailable">—</span>
+          <span>Weather</span>
+        </div>`;
+    }
+
+    if (weather.temp == null || !weather.icon) return '';
+    return `
+      <div class="inline-flex items-center gap-1 rounded-full bg-sky-50 px-2 py-0.5 text-[11px] font-medium text-sky-800 ring-1 ring-sky-200" title="Current weather near ${escapeHtml(peak.name)}">
+        <span aria-label="Current weather">${weather.icon}</span>
+        <span>${Math.round(weather.temp)}°F</span>
+      </div>`;
+  };
 
   const badge = (text, cls, title = '') =>
     `<span class="inline-flex items-center whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${cls}"${title ? ` title="${escapeHtml(title)}"` : ''}>${text}</span>`;
@@ -394,6 +443,53 @@
       </div>`;
   }
 
+  async function fetchWeatherForPeak(peak) {
+    const key = `${peak.id}`;
+    if (state.weather[key]) return state.weather[key];
+
+    const target = weatherTarget(peak);
+    if (!target) {
+      const result = { icon: '—', temp: null, unavailable: true };
+      state.weather[key] = result;
+      return result;
+    }
+
+    const url = new URL('https://api.open-meteo.com/v1/forecast');
+    url.searchParams.set('latitude', String(target.lat));
+    url.searchParams.set('longitude', String(target.lon));
+    url.searchParams.set('current', 'temperature_2m,weather_code');
+    url.searchParams.set('temperature_unit', 'fahrenheit');
+    url.searchParams.set('wind_speed_unit', 'mph');
+    url.searchParams.set('timezone', 'auto');
+
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) {
+        const result = { icon: '—', temp: null, unavailable: true };
+        state.weather[key] = result;
+        return result;
+      }
+      const data = await res.json();
+      const weatherCode = data?.current?.weather_code;
+      const temp = data?.current?.temperature_2m;
+      const result = {
+        icon: weatherCodeMap[weatherCode] || '🌤️',
+        temp: Number.isFinite(temp) ? temp : null,
+      };
+      state.weather[key] = result;
+      return result;
+    } catch {
+      const result = { icon: '—', temp: null, unavailable: true };
+      state.weather[key] = result;
+      return result;
+    }
+  }
+
+  async function hydrateWeather() {
+    const visible = state.peaks.filter((peak) => peak.status !== 'delisted' || peak.status === 'delisted');
+    await Promise.allSettled(visible.map((peak) => fetchWeatherForPeak(peak)));
+  }
+
   function card(p) {
     const done = state.completed.has(p.id);
     const r = primaryRoute(p);
@@ -408,6 +504,10 @@
         const gain = route?.gain_ft ? `${route.gain_ft.toLocaleString()} ft up` : '&mdash; ft up';
         const effort = route?.difficulty ? badge(route.difficulty, DIFFICULTY_STYLE[route.difficulty]) : '';
         const preferred = route?.preferred ? badge('Preferred', 'bg-emerald-100 text-emerald-800 ring-emerald-600/20') : '';
+        const trailhead = routeTrailhead(route, p);
+        const trailheadLink = trailhead
+          ? `<a class="inline-flex items-center gap-1 text-xs font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Trailhead directions for ${escapeHtml(route?.name || 'this route')}" href="${mapsDirections(trailhead.lat, trailhead.lon)}">${escapeHtml(trailhead.name || route?.name || 'Trailhead')}</a>`
+          : '';
         return `
           <li class="rounded-xl border ${route?.preferred ? 'border-emerald-200 bg-emerald-50/60' : 'border-stone-200 bg-white'} px-3 py-2.5">
             <div class="flex flex-wrap items-start justify-between gap-2">
@@ -416,6 +516,7 @@
             </div>
             <p class="mt-1 text-xs text-stone-500">${miles} &middot; ${gain}${route?.derived ? ' &middot; est.' : ''}</p>
             ${route?.notes ? `<p class="mt-1 text-xs leading-relaxed text-stone-600">${escapeHtml(route.notes)}</p>` : ''}
+            ${trailheadLink ? `<div class="mt-2"><span class="text-[11px] uppercase tracking-wide text-stone-400">Trailhead:</span> ${trailheadLink}</div>` : ''}
           </li>`;
       }).join('')
       : `<li class="rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-sm text-stone-500">Route details not yet published for this peak.</li>`;
@@ -440,7 +541,10 @@
             class="mt-1 h-5 w-5 flex-none cursor-pointer rounded-md border-stone-300 text-emerald-600 focus:ring-emerald-500"
             aria-label="Mark ${escapeHtml(displayName(p))} as climbed">
           <div class="min-w-0 flex-1">
-            <h2 class="font-display text-lg font-semibold leading-snug text-stone-900">${escapeHtml(displayName(p))}</h2>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 class="font-display text-lg font-semibold leading-snug text-stone-900">${escapeHtml(displayName(p))}</h2>
+              ${weatherBadge(p)}
+            </div>
             <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(p.town || '')} &middot; ${escapeHtml(p.range || '')}</p>
           </div>
           <div class="flex-none font-display text-lg font-semibold text-stone-900">
@@ -471,7 +575,6 @@
         <div class="mt-3 flex items-center justify-between gap-2 border-t border-stone-100 px-4 py-3">
           <span class="truncate text-xs text-stone-400" title="${escapeHtml(p.land?.manager || '')}">${escapeHtml(LAND_LABEL[p.land?.owner_type] || '')}</span>
           <span class="flex flex-none gap-3 text-sm font-medium">
-            ${p.trailhead ? `<a class="text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(p.trailhead.address || p.trailhead.name)}" href="${mapsDirections(p.trailhead.lat, p.trailhead.lon)}">Drive there</a>` : ''}
             <a class="text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsSearch(p.summit.lat, p.summit.lon)}">Summit map</a>
           </span>
         </div>
@@ -517,7 +620,11 @@
         <td class="px-3 py-2.5"><span class="text-xs text-stone-500" title="${escapeHtml(p.land?.manager || '')}">${escapeHtml(LAND_LABEL[p.land?.owner_type] || '')}</span></td>
         <td class="px-3 py-2.5">${statusBadge(p)}</td>
         <td class="px-3 py-2.5 text-sm leading-tight">
-          ${p.trailhead ? `<a class="block whitespace-nowrap font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(p.trailhead.address || p.trailhead.name)}" href="${mapsDirections(p.trailhead.lat, p.trailhead.lon)}">Trailhead</a>` : ''}
+          ${(() => {
+            const trailhead = routeTrailhead(r, p);
+            if (!trailhead) return '<span class="text-stone-300">No trailhead</span>';
+            return `<a class="block whitespace-nowrap font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(trailhead.address || trailhead.name || 'the trailhead')}" href="${mapsDirections(trailhead.lat, trailhead.lon)}">Trailhead</a>`;
+          })()}
           <a class="block whitespace-nowrap font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsSearch(p.summit.lat, p.summit.lon)}">Summit</a>
         </td>
       </tr>`;
@@ -865,6 +972,7 @@
       state.meta = meta;
       state.completed = loadCompleted();
       if (location.hash.startsWith('#p=')) saveCompleted();
+      await hydrateWeather();
 
       let saved = 'cards';
       try { saved = localStorage.getItem(VIEW_KEY) || 'cards'; } catch { /* ignore */ }
