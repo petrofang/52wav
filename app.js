@@ -195,7 +195,7 @@
       const route = preferredRoute(p);
       if (state.list !== 'all' && p.status !== state.list) return false;
       if (state.range && p.range !== state.range) return false;
-      if (state.county && p.county !== p.county) return false;
+      if (state.county && p.county !== state.county) return false;
       if (state.difficulty && route?.difficulty !== state.difficulty) return false;
       if (state.land && p.land?.owner_type !== state.land) return false;
       const done = state.completed.has(p.id);
