@@ -41,6 +41,7 @@
     peaks: [],
     meta: {},
     completed: new Set(),
+    expandedCards: new Set(),
     query: '',
     range: '',
     county: '',
@@ -159,12 +160,27 @@
 
   const DIFFICULTY_ORDER = { Easier: 1, Medium: 2, Harder: 3 };
 
+  function preferredRoute(p) {
+    const routes = Array.isArray(p.routes) && p.routes.length
+      ? p.routes
+      : Array.isArray(p.alt_routes) && p.route
+        ? [p.route, ...p.alt_routes]
+        : p.route
+          ? [p.route]
+          : [];
+
+    if (!routes.length) return null;
+    const preferred = routes.find((route) => route && route.preferred === true);
+    return preferred || routes[0];
+  }
+
   function sortValue(p, key) {
+    const route = preferredRoute(p);
     switch (key) {
       case 'elevation_ft': return p.elevation_ft;
-      case 'round_trip_mi': return p.route?.round_trip_mi ?? Infinity;
-      case 'gain_ft': return p.route?.gain_ft ?? Infinity;
-      case 'difficulty': return DIFFICULTY_ORDER[p.route?.difficulty] ?? 99;
+      case 'round_trip_mi': return route?.round_trip_mi ?? Infinity;
+      case 'gain_ft': return route?.gain_ft ?? Infinity;
+      case 'difficulty': return DIFFICULTY_ORDER[route?.difficulty] ?? 99;
       case 'view_rating': return p.view_rating ?? -1;
       case 'name': return sortName(p);
       case 'land': return String(p.land?.owner_type ?? '').toLowerCase();
@@ -175,16 +191,17 @@
   function visiblePeaks() {
     const q = state.query.trim().toLowerCase();
     const rows = state.peaks.filter((p) => {
+      const route = preferredRoute(p);
       if (state.list !== 'all' && p.status !== state.list) return false;
       if (state.range && p.range !== state.range) return false;
-      if (state.county && p.county !== state.county) return false;
-      if (state.difficulty && p.route?.difficulty !== state.difficulty) return false;
+      if (state.county && p.county !== p.county) return false;
+      if (state.difficulty && route?.difficulty !== state.difficulty) return false;
       if (state.land && p.land?.owner_type !== state.land) return false;
       const done = state.completed.has(p.id);
       if (state.status === 'todo' && done) return false;
       if (state.status === 'completed' && !done) return false;
       if (!q) return true;
-      return [p.name, p.range, p.town, p.county, p.notes, p.route?.name, p.trailhead?.name, p.land?.manager, displayName(p)]
+      return [p.name, p.range, p.town, p.county, p.notes, route?.name, p.trailhead?.name, p.land?.manager, displayName(p)]
         .some((f) => String(f || '').toLowerCase().includes(q));
     });
 
@@ -202,6 +219,136 @@
 
   const mapsSearch = (lat, lon) => `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
   const mapsDirections = (lat, lon) => `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=driving`;
+
+  function safeExternalUrl(url) {
+    try {
+      const parsed = new URL(String(url));
+      return /^https?:$/.test(parsed.protocol) ? parsed.href : null;
+    } catch {
+      return null;
+    }
+  }
+
+  const NH_FAMILY_HIKES_NAME_MAP = {
+    'Black Mtn. (Benton)': 'Black Mountain',
+    'Carr Mountain': 'Carr Mountain',
+    'Eagle Crag': 'The Meader Ridge',
+    'Eastman Mtn.': 'Eastman Mountain',
+    'Hedgehog Mtn.': 'Hedgehog Mountain',
+    'Hibbard Mountain': 'Mt. Wonalancet and Hibbard Mountain',
+    'The Horn': 'The Horn',
+    'Imp Face': 'Imp Face',
+    'Jennings Peak': 'Stairs Mountain and Mts. Resolution and Crawford',
+    'Middle Sister': 'The Three Sisters',
+    'Mt. Avalon': 'Mt. Avalon',
+    'Mt. Cardigan': 'Mt. Cardigan',
+    'Mt. Chocorua': 'Mt. Chocorua',
+    'Mt. Crawford': 'Stairs Mountain and Mts. Resolution and Crawford',
+    'Mt. Cube (South Peak)': 'Mt. Cube',
+    'Mt. Hayes': 'Mt. Hayes',
+    'Mt. Israel': 'Mt. Israel',
+    'Mt. Kearsarge': 'Mt. Kearsarge',
+    'Mt. Kearsarge North': 'Mt. Kearsarge North',
+    'Mt. Monadnock': 'Mt. Monadnock',
+    'Mt. Morgan': 'Mts. Morgan and Percival',
+    'Mt. Parker': 'Mt. Parker',
+    'Mt. Paugus (South Peak)': 'Mt. Paugus',
+    'Mt. Pemigewasset': 'Mt. Pemigewasset',
+    'Mt. Percival': 'Mts. Morgan and Percival',
+    'Mt. Resolution': 'Stairs Mountain and Mts. Resolution and Crawford',
+    'Mt. Roberts': 'Mt. Roberts',
+    'Mt. Shaw': 'Mt. Shaw',
+    'Mt. Success': 'Mt. Success',
+    'Mt. Tremont': 'Mt. Tremont',
+    'Mt. Webster': 'Mts. Webster and Jackson',
+    'Mt. Willard': 'Mt. Willard',
+    'Middle Sugarloaf': 'Middle and North Sugarloaf Mountains',
+    'Middle Sugarloaf Mtn.': 'Middle and North Sugarloaf Mountains',
+    'North Baldface': 'The Baldfaces',
+    'North Doublehead and South Doublehead': 'Doublehead Mountain',
+    'North Moat Mtn.': 'South and North Moat Mountains',
+    'North Percy Peak': 'North Percy Peak',
+    'Pine Mtn. (Gorham)': 'Pine Mountain',
+    'Potash Mtn.': 'Potash Mountain',
+    'Sandwich Dome': 'Sandwich Dome',
+    'Shelburne Moriah Mtn.': 'Shelburne Moriah Mountain',
+    'Smarts Mtn.': 'Smarts  Mountain',
+    'South Baldface': 'The Baldfaces',
+    'South Moat Mtn.': 'South and North Moat Mountains',
+    'Stairs Mtn.': 'Stairs Mountain and Mts. Resolution and Crawford',
+    'Stinson Mtn.': 'Stinson Mountain',
+    'Sugarloaf (Stratford)': 'Sugarloaf Mountain',
+    'Table Mtn.': 'Table Mountain',
+    'Welch Mountain and Dickey Mountain': 'Welch and Dickey Mountains',
+    'Mt. Waumbek': 'Mt. Waumbek',
+    'Black Mountain - Middle Peak (Jackson)': 'Black Mountain',
+    'Bald Peak': 'Bald Peak',
+    'Iron Mountain': 'Iron Mountain',
+    'Owlshead (Carroll)': 'Owlshead',
+    'Mt. Starr King': 'Mt. Waumbek',
+    'Mt. Martha (Cherry Mtn.)': 'Cherry Mountain',
+    'Mt. Wolf': 'Mt. Roberts',
+    'Rogers Ledge': 'Rogers Ledge',
+    'Square Ledge (Albany)': 'Square Ledge',
+    'West Royce Mountain': 'East and West Royce',
+  };
+
+  function nhFamilyHikesUrl(p) {
+    const mappedName = NH_FAMILY_HIKES_NAME_MAP[p.name] || p.name;
+    const hikeParam = encodeURIComponent(mappedName);
+    const sourceParam = encodeURIComponent('petrofang.github.io/52wav');
+    return `http://www.nhfamilyhikes.com/hikes.php?hike=${hikeParam}&from=${sourceParam}`;
+  }
+
+  function fallbackSources(p) {
+    const q = encodeURIComponent(`${p.name} New Hampshire hike`);
+    return [
+      {
+        label: 'NH Family Hikes',
+        url: nhFamilyHikesUrl(p),
+        note: 'Peak page and hike notes',
+      },
+      {
+        label: 'New England Waterfalls',
+        url: 'https://www.newenglandwaterfalls.com/52withaview.php',
+        note: 'Alternate-route guide and standard route options',
+      },
+      {
+        label: 'TrailsNH',
+        url: `https://www.google.com/search?q=site:trailsnh.com+${q}`,
+        note: 'Recent trail conditions and weather links',
+      },
+    ];
+  }
+
+  function infoSources(p) {
+    const fromData = Array.isArray(p.sources)
+      ? p.sources
+        .map((s) => {
+          const label = (s?.label || s?.name || s?.title || '').trim();
+          const url = safeExternalUrl(s?.url || s?.href);
+          if (!label || !url) return null;
+          return {
+            label,
+            url,
+            note: String(s?.note || '').trim(),
+          };
+        })
+        .filter(Boolean)
+      : [];
+
+    return (fromData.length ? fromData : fallbackSources(p)).slice(0, 3);
+  }
+
+  function routeChoices(p) {
+    if (Array.isArray(p.routes) && p.routes.length) return p.routes;
+    if (Array.isArray(p.alt_routes) && p.route) return [p.route, ...p.alt_routes];
+    return p.route ? [p.route] : [];
+  }
+
+  function primaryRoute(p) {
+    return preferredRoute(p) || p.route || {};
+  }
 
   const DIFFICULTY_STYLE = {
     Easier: 'bg-sky-50 text-sky-700 ring-sky-600/20',
@@ -249,10 +396,45 @@
 
   function card(p) {
     const done = state.completed.has(p.id);
-    const r = p.route || {};
+    const r = primaryRoute(p);
+    const expanded = state.expandedCards.has(p.id);
+    const routes = routeChoices(p);
+    const detailsId = `card-details-${p.id}`;
+    const sourceLinks = infoSources(p);
+
+    const routeMarkup = routes.length
+      ? routes.map((route, idx) => {
+        const miles = route?.round_trip_mi ? `${route.round_trip_mi.toFixed(1)} mi` : '&mdash; mi';
+        const gain = route?.gain_ft ? `${route.gain_ft.toLocaleString()} ft up` : '&mdash; ft up';
+        const effort = route?.difficulty ? badge(route.difficulty, DIFFICULTY_STYLE[route.difficulty]) : '';
+        const preferred = route?.preferred ? badge('Preferred', 'bg-emerald-100 text-emerald-800 ring-emerald-600/20') : '';
+        return `
+          <li class="rounded-xl border ${route?.preferred ? 'border-emerald-200 bg-emerald-50/60' : 'border-stone-200 bg-white'} px-3 py-2.5">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <p class="font-medium text-stone-800">${escapeHtml(route?.name || `Route ${idx + 1}`)}</p>
+              <div class="flex items-center gap-1.5">${preferred}${effort}</div>
+            </div>
+            <p class="mt-1 text-xs text-stone-500">${miles} &middot; ${gain}${route?.derived ? ' &middot; est.' : ''}</p>
+            ${route?.notes ? `<p class="mt-1 text-xs leading-relaxed text-stone-600">${escapeHtml(route.notes)}</p>` : ''}
+          </li>`;
+      }).join('')
+      : `<li class="rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-sm text-stone-500">Route details not yet published for this peak.</li>`;
+
+    const routeSummary = routes.length > 1
+      ? `<p class="mt-1.5 text-xs text-stone-400">via ${escapeHtml(r.name)} • ${routes.length} route options</p>`
+      : r.name
+        ? `<p class="mt-1.5 text-xs text-stone-400">via ${escapeHtml(r.name)}</p>`
+        : '';
+
+    const sourceMarkup = sourceLinks.map((src) => `
+      <a class="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 transition hover:bg-emerald-100"
+         target="_blank" rel="noopener noreferrer" href="${escapeHtml(src.url)}">
+        <span class="font-medium">${escapeHtml(src.label)}</span>
+        ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
+      </a>`).join('');
 
     return `
-      <article class="flex flex-col overflow-hidden rounded-2xl border ${done ? 'border-emerald-300 bg-emerald-50/40' : 'border-stone-200 bg-white'} shadow-sm transition hover:shadow-md">
+      <article data-card-id="${p.id}" tabindex="0" class="flex cursor-pointer flex-col overflow-hidden rounded-2xl border ${done ? 'border-emerald-300 bg-emerald-50/40' : 'border-stone-200 bg-white'} shadow-sm transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
         <div class="flex items-start gap-3 p-4 pb-3">
           <input type="checkbox" data-id="${p.id}" ${done ? 'checked' : ''}
             class="mt-1 h-5 w-5 flex-none cursor-pointer rounded-md border-stone-300 text-emerald-600 focus:ring-emerald-500"
@@ -266,9 +448,13 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap gap-1.5 px-4 pb-3">
+        <div class="flex flex-wrap items-center gap-1.5 px-4 pb-3">
           ${statusBadge(p)}
           ${r.difficulty ? badge(r.difficulty, DIFFICULTY_STYLE[r.difficulty]) : ''}
+          <button type="button" data-card-toggle="${p.id}" aria-expanded="${expanded ? 'true' : 'false'}" aria-controls="${detailsId}"
+            class="ml-auto inline-flex items-center gap-1 rounded-full border border-stone-300 bg-white px-3 py-1 text-xs font-medium text-stone-700 transition hover:bg-stone-50">
+            ${expanded ? 'Hide details' : 'More details'}
+          </button>
         </div>
 
         <div class="mx-4 flex gap-2 rounded-xl bg-stone-50 px-3 py-3 ring-1 ring-inset ring-stone-200/70">
@@ -279,7 +465,7 @@
 
         <div class="flex-1 px-4 pt-3">
           ${p.notes ? `<p class="text-sm leading-relaxed text-stone-600">${escapeHtml(p.notes)}</p>` : ''}
-          ${r.name ? `<p class="mt-1.5 text-xs text-stone-400">via ${escapeHtml(r.name)}</p>` : ''}
+          ${routeSummary}
         </div>
 
         <div class="mt-3 flex items-center justify-between gap-2 border-t border-stone-100 px-4 py-3">
@@ -289,6 +475,14 @@
             <a class="text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" href="${mapsSearch(p.summit.lat, p.summit.lon)}">Summit map</a>
           </span>
         </div>
+
+        <div id="${detailsId}" class="${expanded ? '' : 'hidden '}border-t border-stone-200 bg-stone-50/70 px-4 py-3">
+          <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Route options</p>
+          <ul class="mt-2 space-y-2">${routeMarkup}</ul>
+
+          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Hiker writeups and conditions</p>
+          <div class="mt-2 grid gap-2">${sourceMarkup}</div>
+        </div>
       </article>`;
   }
 
@@ -296,7 +490,7 @@
 
   function tableRow(p) {
     const done = state.completed.has(p.id);
-    const r = p.route || {};
+    const r = primaryRoute(p);
     const num = (v) => (v ? v.toLocaleString() : '<span class="text-stone-300">&mdash;</span>');
 
     return `
@@ -403,7 +597,10 @@
 
     const remaining = current.filter((p) => !state.completed.has(p.id));
     const milesLeft = [...new Map(
-      remaining.filter((p) => p.route?.round_trip_mi).map((p) => [p.route.name || p.name, p.route.round_trip_mi])
+      remaining
+        .map((p) => primaryRoute(p))
+        .filter((route) => route && route.round_trip_mi)
+        .map((route) => [route.name || 'Unknown route', route.round_trip_mi])
     ).values()].reduce((sum, mi) => sum + mi, 0);
 
     let headline = 'Ready when you are';
@@ -494,6 +691,34 @@
     try { localStorage.setItem(SORT_KEY, option); } catch { /* ignore */ }
   }
 
+  function toggleCard(id) {
+    if (!id) return;
+    const cardEl = document.querySelector(`article[data-card-id="${id}"]`);
+    const toggleBtn = document.querySelector(`[data-card-toggle="${id}"]`);
+    const detailsEl = cardEl ? cardEl.querySelector(`#card-details-${id}`) : null;
+    const isOpen = state.expandedCards.has(id);
+
+    if (isOpen) {
+      state.expandedCards.delete(id);
+    } else {
+      state.expandedCards.add(id);
+    }
+
+    const nextOpen = state.expandedCards.has(id);
+    if (toggleBtn) {
+      toggleBtn.setAttribute('aria-expanded', String(nextOpen));
+      toggleBtn.textContent = nextOpen ? 'Hide details' : 'More details';
+    }
+    if (detailsEl) {
+      detailsEl.classList.toggle('hidden', !nextOpen);
+    }
+    if (cardEl) {
+      cardEl.setAttribute('data-expanded', String(nextOpen));
+    }
+
+    render();
+  }
+
   function wire() {
     els.search.addEventListener('input', (e) => { state.query = e.target.value; render(); });
     els.range.addEventListener('change', (e) => { state.range = e.target.value; render(); });
@@ -552,6 +777,29 @@
       saveCompleted();
       render();
     };
+
+    els.cards.addEventListener('click', (e) => {
+      const toggleBtn = e.target.closest('[data-card-toggle]');
+      if (toggleBtn) {
+        toggleCard(Number(toggleBtn.dataset.cardToggle));
+        return;
+      }
+
+      if (e.target.closest('a,button,input,label,select,textarea')) return;
+      const cardEl = e.target.closest('article[data-card-id]');
+      if (!cardEl) return;
+      toggleCard(Number(cardEl.dataset.cardId));
+    });
+
+    els.cards.addEventListener('keydown', (e) => {
+      if (!['Enter', ' '].includes(e.key)) return;
+      if (e.target.closest('a,button,input,label,select,textarea')) return;
+      const cardEl = e.target.closest('article[data-card-id]');
+      if (!cardEl) return;
+      e.preventDefault();
+      toggleCard(Number(cardEl.dataset.cardId));
+    });
+
     els.cards.addEventListener('change', onToggleTick);
     els.tableBody.addEventListener('change', onToggleTick);
 

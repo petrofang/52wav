@@ -30,6 +30,10 @@ The dataset is also published as a Gist so other people can use it:
 That Gist is **generated**. Edit `data/peaks.json` here; anything typed directly into the
 Gist gets overwritten on the next data change.
 
+For multi-route peaks, the preferred route is the one with `preferred: true`. If a single route
+still exists, the legacy `route` object remains supported for backward compatibility, but the app
+prefers the explicit route list when present.
+
 ---
 
 ## The dataset
@@ -55,8 +59,45 @@ kept because any 52 peaks, current or retired, count toward the Over the Hill Hi
     "name": "Champney Falls Trail",
     "round_trip_mi": 8.3,
     "gain_ft": 2250,
-    "difficulty": "Harder"     // "derived": true means measured, not published
+    "difficulty": "Harder",    // "derived": true means measured, not published
+    "preferred": true,
+    "trailhead": {
+      "name": "Champney Falls Trailhead",
+      "lat": 43.9478,
+      "lon": -71.2874,
+      "address": "Champney Falls Trailhead, Albany, NH",
+      "verified": true
+    }
   },
+  "routes": [
+    {
+      "name": "Champney Falls Trail",
+      "round_trip_mi": 8.3,
+      "gain_ft": 2250,
+      "difficulty": "Harder",
+      "preferred": true,
+      "trailhead": {
+        "name": "Champney Falls Trailhead",
+        "lat": 43.9478,
+        "lon": -71.2874,
+        "address": "Champney Falls Trailhead, Albany, NH",
+        "verified": true
+      }
+    },
+    {
+      "name": "Mt. Chocorua via Piper Trail",
+      "round_trip_mi": 10.1,
+      "gain_ft": 2900,
+      "difficulty": "Harder",
+      "trailhead": {
+        "name": "Piper Trail parking",
+        "lat": 43.9592,
+        "lon": -71.2716,
+        "address": "Piper Trail parking, Albany, NH",
+        "verified": false
+      }
+    }
+  ],
   "view_rating": 10,           // "view_rating_imputed": true means it's the list median
   "summit": { "lat": 43.954276, "lon": -71.273296 },
   "trailhead": { "name": "...", "lat": 0, "lon": 0, "address": null },
@@ -108,7 +149,7 @@ what you send to the Over the Hill Hikers to claim the patch.
 | Town and county | US Census Bureau geocoder |
 | Landowner and manager | [NH GRANIT](https://www.granit.unh.edu/) Conservation & Public Lands |
 | Official place names | [USGS GNIS](https://www.usgs.gov/tools/geographic-names-information-system-gnis), U.S. Board on Geographic Names |
-| Standard-route cross-check | [New England Waterfalls](https://www.newenglandwaterfalls.com/52withaview.php) |
+| Alternate-route reference | [New England Waterfalls](https://www.newenglandwaterfalls.com/52withaview.php) |
 | Derived distances and elevation profiles | OpenStreetMap trail geometry + USGS 3DEP/NED |
 
 Two peaks added in 2025 (Bald Peak, Iron Mountain) had no published route statistics, so
