@@ -58,4 +58,14 @@ secrets.*
 *.log
 *.cache
 *.pid
+
+# Local Android Studio / PWABuilder workspace inside this repo (never commit)
 /.play/
+/.play/**
+
+# Playwright and local test run artifacts
+testing/playwright-report/
+testing/test-results/
+
+# Local one-off testing workspace
+/testing/
