@@ -5,7 +5,14 @@
   const STORAGE_KEY = '52wav.completed.v1';
   const VIEW_KEY = '52wav.view';
   const SORT_KEY = '52wav.sort';
+  const WEATHER_CACHE_KEY = '52wav.weather.v1';
   const PATCH_TARGET = 52;
+  const WEATHER_SUCCESS_TTL_MS = 30 * 60 * 1000;
+  const WEATHER_FAILURE_TTL_MS = 5 * 60 * 1000;
+  const WEATHER_RATE_MS = 220;
+
+  const weatherInflight = Object.create(null);
+  let weatherGate = Promise.resolve();
 
   const el = (id) => document.getElementById(id);
   const els = {
@@ -157,6 +164,67 @@
     els.saveHint.innerHTML = html;
   }
 
+  function loadWeatherCache() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || '{}');
+      const now = Date.now();
+      const out = {};
+      Object.entries(raw).forEach(([id, rec]) => {
+        if (!rec || typeof rec !== 'object') return;
+        if (!Number.isFinite(rec.expiresAt) || rec.expiresAt <= now) return;
+        out[id] = {
+          icon: typeof rec.icon === 'string' ? rec.icon : '—',
+          temp: Number.isFinite(rec.temp) ? rec.temp : null,
+          unavailable: Boolean(rec.unavailable),
+          expiresAt: rec.expiresAt,
+        };
+      });
+      return out;
+    } catch {
+      return {};
+    }
+  }
+
+  function saveWeatherCache() {
+    try {
+      const now = Date.now();
+      const keep = {};
+      Object.entries(state.weather).forEach(([id, rec]) => {
+        if (!rec || !Number.isFinite(rec.expiresAt) || rec.expiresAt <= now) return;
+        keep[id] = {
+          icon: rec.icon,
+          temp: Number.isFinite(rec.temp) ? rec.temp : null,
+          unavailable: Boolean(rec.unavailable),
+          expiresAt: rec.expiresAt,
+        };
+      });
+      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(keep));
+    } catch {
+      // Ignore storage failures (private mode / quota).
+    }
+  }
+
+  function cacheWeather(key, rec, ttlMs) {
+    const value = {
+      icon: rec?.icon || '—',
+      temp: Number.isFinite(rec?.temp) ? rec.temp : null,
+      unavailable: Boolean(rec?.unavailable),
+      expiresAt: Date.now() + ttlMs,
+    };
+    state.weather[key] = value;
+    saveWeatherCache();
+    return value;
+  }
+
+  function queueWeatherRequest(task) {
+    const run = weatherGate.then(task, task);
+    weatherGate = run.then(
+      () => new Promise((resolve) => setTimeout(resolve, WEATHER_RATE_MS)),
+      () => new Promise((resolve) => setTimeout(resolve, WEATHER_RATE_MS))
+    );
+    return run;
+  }
+
   // --- filtering and sorting ------------------------------------------------
 
   const DIFFICULTY_ORDER = { Easier: 1, Medium: 2, Harder: 3 };
@@ -220,6 +288,23 @@
 
   const mapsSearch = (lat, lon) => `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
   const mapsDirections = (lat, lon) => `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=driving`;
+  const googleEarthView = (lat, lon) => {
+    const la = Number(lat).toFixed(8);
+    const lo = Number(lon).toFixed(8);
+    return `https://earth.google.com/web/@${la},${lo},900a,2200d,35y,0h,84t,0r`;
+  };
+  const satellitePreviewImage = (lat, lon) => {
+    const la = Number(lat);
+    const lo = Number(lon);
+    const latHalfSpan = 0.018;
+    const lonHalfSpan = (latHalfSpan * (22 / 7)) / Math.max(0.2, Math.cos((la * Math.PI) / 180));
+    const minLon = (lo - lonHalfSpan).toFixed(6);
+    const minLat = (la - latHalfSpan).toFixed(6);
+    const maxLon = (lo + lonHalfSpan).toFixed(6);
+    const maxLat = (la + latHalfSpan).toFixed(6);
+    const bbox = `${minLon},${minLat},${maxLon},${maxLat}`;
+    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${bbox}&bboxSR=4326&size=1100,350&imageSR=4326&format=png&f=image`;
+  };
 
   function safeExternalUrl(url) {
     try {
@@ -445,49 +530,75 @@
 
   async function fetchWeatherForPeak(peak) {
     const key = `${peak.id}`;
-    if (state.weather[key]) return state.weather[key];
+    const now = Date.now();
+    const cached = state.weather[key];
+    if (cached && Number.isFinite(cached.expiresAt) && cached.expiresAt > now) return cached;
+
+    if (weatherInflight[key]) return weatherInflight[key];
 
     const target = weatherTarget(peak);
     if (!target) {
-      const result = { icon: '—', temp: null, unavailable: true };
-      state.weather[key] = result;
-      return result;
+      return cacheWeather(key, { icon: '—', temp: null, unavailable: true }, WEATHER_FAILURE_TTL_MS);
     }
 
-    const url = new URL('https://api.open-meteo.com/v1/forecast');
-    url.searchParams.set('latitude', String(target.lat));
-    url.searchParams.set('longitude', String(target.lon));
-    url.searchParams.set('current', 'temperature_2m,weather_code');
-    url.searchParams.set('temperature_unit', 'fahrenheit');
-    url.searchParams.set('wind_speed_unit', 'mph');
-    url.searchParams.set('timezone', 'auto');
+    const request = queueWeatherRequest(async () => {
+      const url = new URL('https://api.open-meteo.com/v1/forecast');
+      url.searchParams.set('latitude', String(target.lat));
+      url.searchParams.set('longitude', String(target.lon));
+      url.searchParams.set('current', 'temperature_2m,weather_code');
+      url.searchParams.set('temperature_unit', 'fahrenheit');
+      url.searchParams.set('wind_speed_unit', 'mph');
+      url.searchParams.set('timezone', 'auto');
 
-    try {
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) {
-        const result = { icon: '—', temp: null, unavailable: true };
-        state.weather[key] = result;
-        return result;
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) {
+          return cacheWeather(key, { icon: '—', temp: null, unavailable: true }, WEATHER_FAILURE_TTL_MS);
+        }
+
+        const data = await res.json();
+        const weatherCode = data?.current?.weather_code;
+        const temp = data?.current?.temperature_2m;
+        return cacheWeather(key, {
+          icon: weatherCodeMap[weatherCode] || '🌤️',
+          temp: Number.isFinite(temp) ? temp : null,
+          unavailable: false,
+        }, WEATHER_SUCCESS_TTL_MS);
+      } catch {
+        return cacheWeather(key, { icon: '—', temp: null, unavailable: true }, WEATHER_FAILURE_TTL_MS);
       }
-      const data = await res.json();
-      const weatherCode = data?.current?.weather_code;
-      const temp = data?.current?.temperature_2m;
-      const result = {
-        icon: weatherCodeMap[weatherCode] || '🌤️',
-        temp: Number.isFinite(temp) ? temp : null,
-      };
-      state.weather[key] = result;
-      return result;
-    } catch {
-      const result = { icon: '—', temp: null, unavailable: true };
-      state.weather[key] = result;
-      return result;
-    }
+    });
+
+    weatherInflight[key] = request.finally(() => {
+      delete weatherInflight[key];
+    });
+
+    return weatherInflight[key];
   }
 
   async function hydrateWeather() {
-    const visible = state.peaks.filter((peak) => peak.status !== 'delisted' || peak.status === 'delisted');
-    await Promise.allSettled(visible.map((peak) => fetchWeatherForPeak(peak)));
+    const now = Date.now();
+    const targets = visiblePeaks().filter((peak) => {
+      const rec = state.weather[peak.id];
+      return !(rec && Number.isFinite(rec.expiresAt) && rec.expiresAt > now);
+    });
+
+    if (!targets.length) return;
+
+    let queuedRender = false;
+    const renderSoon = () => {
+      if (queuedRender) return;
+      queuedRender = true;
+      requestAnimationFrame(() => {
+        queuedRender = false;
+        render();
+      });
+    };
+
+    await Promise.allSettled(targets.map(async (peak) => {
+      await fetchWeatherForPeak(peak);
+      renderSoon();
+    }));
   }
 
   function card(p) {
@@ -534,6 +645,54 @@
         ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
       </a>`).join('');
 
+    const countyLabel = p.county ? `${p.county} County` : '';
+    const townCounty = [p.town, countyLabel].filter(Boolean).join(', ');
+    const rangeLabel = p.range
+      ? (/\brange\b/i.test(p.range) ? p.range : `${p.range} Range`)
+      : '';
+    const locationLine = [townCounty, rangeLabel].filter(Boolean).join(' | ');
+    const summitLat = Number(p?.summit?.lat);
+    const summitLon = Number(p?.summit?.lon);
+    const summitLatText = Number.isFinite(summitLat) ? summitLat.toFixed(6) : '&mdash;';
+    const summitLonText = Number.isFinite(summitLon) ? summitLon.toFixed(6) : '&mdash;';
+    const earthUrl = Number.isFinite(summitLat) && Number.isFinite(summitLon)
+      ? safeExternalUrl(googleEarthView(summitLat, summitLon))
+      : null;
+    const satelliteImageUrl = Number.isFinite(summitLat) && Number.isFinite(summitLon)
+      ? safeExternalUrl(satellitePreviewImage(summitLat, summitLon))
+      : null;
+    const earthPreview = earthUrl
+      ? `
+          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Google Earth perspective</p>
+          <a class="group mt-2 block" target="_blank" rel="noopener noreferrer" href="${escapeHtml(earthUrl)}">
+            <div class="relative overflow-hidden rounded-xl border border-stone-300 bg-stone-900" style="aspect-ratio: 22 / 7;">
+              ${satelliteImageUrl ? `<img class="absolute inset-0 h-full w-full object-cover" alt="Summit satellite preview" loading="eager" referrerpolicy="no-referrer" src="${escapeHtml(satelliteImageUrl)}">` : ''}
+              <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0.15) 55%, rgba(2, 6, 23, 0));"></div>
+              <div class="absolute inset-0" style="background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 28px 28px;"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-900/40 to-transparent"></div>
+              <div class="absolute left-3 top-3 rounded-md border border-white/30 bg-stone-900/65 px-2 py-1 text-[11px] font-medium text-white/95 backdrop-blur-sm">
+                Summit frame
+              </div>
+              <div class="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2">
+                <div class="relative">
+                  <div class="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-rose-300/90"></div>
+                  <div class="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-400 shadow-[0_0_14px_rgba(251,113,133,0.95)]"></div>
+                  <div class="absolute left-1/2 top-1/2 h-[2px] w-10 -translate-x-1/2 -translate-y-1/2 bg-rose-200/85"></div>
+                  <div class="absolute left-1/2 top-1/2 h-10 w-[2px] -translate-x-1/2 -translate-y-1/2 bg-rose-200/85"></div>
+                  <div class="absolute left-5 top-[-36px] whitespace-nowrap rounded-lg border border-rose-200/60 bg-rose-50/95 px-3 py-1.5 text-sm font-bold text-rose-900 shadow-lg">
+                    Summit ${summitLatText}, ${summitLonText}
+                  </div>
+                </div>
+              </div>
+              <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-2">
+                <span class="rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-stone-900">Google Earth</span>
+                <span class="truncate rounded-full border border-white/40 bg-stone-900/55 px-2.5 py-1 text-[11px] font-medium text-white/95" title="${summitLatText}, ${summitLonText}">${summitLatText}, ${summitLonText}</span>
+                <span class="rounded-full border border-white/40 bg-stone-900/55 px-2.5 py-1 text-[11px] font-medium text-white transition group-hover:bg-stone-900/75">Open live view</span>
+              </div>
+            </div>
+          </a>`
+      : '';
+
     return `
       <article data-card-id="${p.id}" tabindex="0" class="flex cursor-pointer flex-col overflow-hidden rounded-2xl border ${done ? 'border-emerald-300 bg-emerald-50/40' : 'border-stone-200 bg-white'} shadow-sm transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
         <div class="flex items-start gap-3 p-4 pb-3">
@@ -545,7 +704,7 @@
               <h2 class="font-display text-lg font-semibold leading-snug text-stone-900">${escapeHtml(displayName(p))}</h2>
               ${weatherBadge(p)}
             </div>
-            <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(p.town || '')} &middot; ${escapeHtml(p.range || '')}</p>
+            <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(locationLine || p.town || '')}</p>
           </div>
           <div class="flex-none font-display text-lg font-semibold text-stone-900">
             ${p.elevation_ft.toLocaleString()}<span class="text-xs font-normal text-stone-400"> ft</span>
@@ -580,11 +739,18 @@
         </div>
 
         <div id="${detailsId}" class="${expanded ? '' : 'hidden '}border-t border-stone-200 bg-stone-50/70 px-4 py-3">
+          <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Peak location</p>
+          <div class="mt-2 rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-sm text-stone-700">
+            <p>${escapeHtml(locationLine || 'Location details unavailable')}</p>
+            <p class="mt-1 text-xs text-stone-500">Summit lat/lon: ${summitLatText}, ${summitLonText}</p>
+          </div>
+
           <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Route options</p>
           <ul class="mt-2 space-y-2">${routeMarkup}</ul>
 
           <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Hiker writeups and conditions</p>
           <div class="mt-2 grid gap-2">${sourceMarkup}</div>
+          ${earthPreview}
         </div>
       </article>`;
   }
@@ -971,8 +1137,8 @@
       state.peaks = peaks;
       state.meta = meta;
       state.completed = loadCompleted();
+      state.weather = loadWeatherCache();
       if (location.hash.startsWith('#p=')) saveCompleted();
-      await hydrateWeather();
 
       let saved = 'cards';
       try { saved = localStorage.getItem(VIEW_KEY) || 'cards'; } catch { /* ignore */ }
@@ -988,6 +1154,7 @@
       setToggle('.status-btn', 'status', state.status);
       wire();
       render();
+      hydrateWeather().then(() => render());
     } catch (err) {
       els.cards.innerHTML =
         `<p class="col-span-full rounded-2xl border border-rose-200 bg-rose-50 py-14 text-center text-rose-700">

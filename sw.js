@@ -1,4 +1,4 @@
-const CACHE_NAME = '52wav-v1';
+const CACHE_NAME = '52wav-v2';
 const APP_SHELL = [
   './',
   './index.html',
