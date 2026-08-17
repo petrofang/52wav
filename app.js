@@ -537,6 +537,18 @@
     summitView.frame = requestAnimationFrame(step);
   }
 
+  // Let the still image paint first so the frame is never empty while WebGL spins up.
+  function posterReady(id) {
+    const poster = document.querySelector(`[data-summit-mount="${id}"] .summit-poster`);
+    if (!poster || poster.complete) return Promise.resolve();
+    return new Promise((resolve) => {
+      const done = () => resolve();
+      poster.addEventListener('load', done, { once: true });
+      poster.addEventListener('error', done, { once: true });
+      setTimeout(done, 3000);
+    });
+  }
+
   function createSummitView(id, lat, lon) {
     destroySummitView();
 
@@ -547,6 +559,7 @@
     summitView.host = host;
 
     loadMapLibre()
+      .then((maplibregl) => posterReady(id).then(() => maplibregl))
       .then((maplibregl) => {
         if (summitView.id !== id) return;
         registerDespikeProtocol(maplibregl);
@@ -952,9 +965,8 @@
       : '';
     const earthPreview = earthUrl && expanded
       ? `
-          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Summit view</p>
-          <div class="relative mt-2 overflow-hidden rounded-xl border border-stone-300 bg-stone-900" style="aspect-ratio: 16 / 9;" data-summit-mount="${p.id}" data-summit-lat="${summitLat}" data-summit-lon="${summitLon}">
-            ${satelliteImageUrl ? `<img class="summit-orbit summit-poster absolute inset-0 h-full w-full object-cover" alt="Satellite view of ${escapeHtml(p.name)}" loading="lazy" referrerpolicy="no-referrer" src="${escapeHtml(satelliteImageUrl)}">` : ''}
+          <div class="relative overflow-hidden border-y border-stone-200 bg-stone-900" style="aspect-ratio: 16 / 9;" data-summit-mount="${p.id}" data-summit-lat="${summitLat}" data-summit-lon="${summitLon}">
+            ${satelliteImageUrl ? `<img class="summit-orbit summit-poster absolute inset-0 h-full w-full object-cover" alt="Satellite view of ${escapeHtml(p.name)}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" src="${escapeHtml(satelliteImageUrl)}">` : ''}
             <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-10 bg-gradient-to-b from-stone-950/45 to-transparent"></div>
             <a class="group absolute inset-0 z-20 flex items-start justify-between gap-2 px-3 pt-2" target="_blank" rel="noopener noreferrer" href="${escapeHtml(earthUrl)}">
               <span class="flex items-center gap-2">
@@ -983,6 +995,8 @@
             ${p.elevation_ft.toLocaleString()}<span class="text-xs font-normal text-stone-400"> ft</span>
           </div>
         </div>
+
+        ${earthPreview}
 
         <div class="flex flex-wrap items-center gap-1.5 px-4 pb-3">
           ${statusBadge(p)}
@@ -1023,7 +1037,6 @@
 
           <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Hiker writeups and conditions</p>
           <div class="mt-2 grid gap-2">${sourceMarkup}</div>
-          ${earthPreview}
         </div>
       </article>`;
   }
