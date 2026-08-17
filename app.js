@@ -303,8 +303,42 @@
     const maxLon = (lo + lonHalfSpan).toFixed(6);
     const maxLat = (la + latHalfSpan).toFixed(6);
     const bbox = `${minLon},${minLat},${maxLon},${maxLat}`;
-    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${bbox}&bboxSR=4326&size=1024,576&imageSR=4326&format=png&f=image`;
+    // JPEG at 640x360 is ~79 KB against ~515 KB for the same frame as PNG, and it only has to
+    // hold the frame for the second or so before the 3D view fades in over it.
+    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${bbox}&bboxSR=4326&size=640,360&imageSR=4326&format=jpg&f=image`;
   };
+
+  // Warm the browser cache in the background so an expanded card has its still image ready.
+  function prefetchPosters() {
+    const connection = navigator.connection;
+    if (connection?.saveData) return;
+    if (/2g/.test(connection?.effectiveType || '')) return;
+
+    const urls = state.peaks
+      .map((peak) => {
+        const lat = Number(peak?.summit?.lat);
+        const lon = Number(peak?.summit?.lon);
+        return Number.isFinite(lat) && Number.isFinite(lon) ? safeExternalUrl(satellitePreviewImage(lat, lon)) : null;
+      })
+      .filter(Boolean);
+
+    const schedule = (fn) => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
+    let next = 0;
+
+    const fetchOne = () => {
+      if (next >= urls.length) return;
+      const image = new Image();
+      image.referrerPolicy = 'no-referrer';
+      image.decoding = 'async';
+      image.fetchPriority = 'low';
+      image.onload = () => schedule(fetchOne);
+      image.onerror = () => schedule(fetchOne);
+      image.src = urls[next];
+      next += 1;
+    };
+
+    schedule(() => { fetchOne(); fetchOne(); });
+  }
 
   function safeExternalUrl(url) {
     try {
@@ -1442,6 +1476,7 @@
       wire();
       render();
       hydrateWeather().then(() => render());
+      prefetchPosters();
     } catch (err) {
       els.cards.innerHTML =
         `<p class="col-span-full rounded-2xl border border-rose-200 bg-rose-50 py-14 text-center text-rose-700">
