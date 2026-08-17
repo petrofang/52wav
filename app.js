@@ -296,14 +296,14 @@
   const satellitePreviewImage = (lat, lon) => {
     const la = Number(lat);
     const lo = Number(lon);
-    const latHalfSpan = 0.018;
-    const lonHalfSpan = (latHalfSpan * (22 / 7)) / Math.max(0.2, Math.cos((la * Math.PI) / 180));
+    const latHalfSpan = 0.008;
+    const lonHalfSpan = (latHalfSpan * (16 / 9)) / Math.max(0.2, Math.cos((la * Math.PI) / 180));
     const minLon = (lo - lonHalfSpan).toFixed(6);
     const minLat = (la - latHalfSpan).toFixed(6);
     const maxLon = (lo + lonHalfSpan).toFixed(6);
     const maxLat = (la + latHalfSpan).toFixed(6);
     const bbox = `${minLon},${minLat},${maxLon},${maxLat}`;
-    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${bbox}&bboxSR=4326&size=1100,350&imageSR=4326&format=png&f=image`;
+    return `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${bbox}&bboxSR=4326&size=1024,576&imageSR=4326&format=png&f=image`;
   };
 
   function safeExternalUrl(url) {
@@ -313,6 +313,287 @@
     } catch {
       return null;
     }
+  }
+
+  // --- 3D summit view -------------------------------------------------------
+
+  const MAPLIBRE_VERSION = '4.7.1';
+  const summitView = { id: null, host: null, map: null, frame: 0 };
+  let maplibrePromise = null;
+
+  function loadMapLibre() {
+    if (window.maplibregl) return Promise.resolve(window.maplibregl);
+    if (maplibrePromise) return maplibrePromise;
+
+    maplibrePromise = new Promise((resolve, reject) => {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = `https://unpkg.com/maplibre-gl@${MAPLIBRE_VERSION}/dist/maplibre-gl.css`;
+      css.crossOrigin = 'anonymous';
+      document.head.appendChild(css);
+
+      const script = document.createElement('script');
+      script.src = `https://unpkg.com/maplibre-gl@${MAPLIBRE_VERSION}/dist/maplibre-gl.js`;
+      script.crossOrigin = 'anonymous';
+      script.onload = () => (window.maplibregl ? resolve(window.maplibregl) : reject(new Error('MapLibre unavailable')));
+      script.onerror = () => reject(new Error('MapLibre failed to load'));
+      document.head.appendChild(script);
+    }).catch((err) => {
+      maplibrePromise = null;
+      throw err;
+    });
+
+    return maplibrePromise;
+  }
+
+  let despikeRegistered = false;
+
+  // Terrarium tiles carry occasional corrupt pixels that decode as huge spikes.
+  // This rewrites each tile, replacing any pixel that disagrees wildly with its
+  // neighbours by the local median height.
+  function despikeHeights(data, width, height, thresholdMetres) {
+    const count = width * height;
+    const heights = new Float32Array(count);
+    for (let i = 0; i < count; i += 1) {
+      const p = i * 4;
+      heights[i] = data[p] * 256 + data[p + 1] + data[p + 2] / 256 - 32768;
+    }
+
+    const neighbours = new Float64Array(8);
+    for (let y = 1; y < height - 1; y += 1) {
+      for (let x = 1; x < width - 1; x += 1) {
+        const i = y * width + x;
+        let n = 0;
+        for (let dy = -1; dy <= 1; dy += 1) {
+          for (let dx = -1; dx <= 1; dx += 1) {
+            if (dx === 0 && dy === 0) continue;
+            neighbours[n] = heights[(y + dy) * width + (x + dx)];
+            n += 1;
+          }
+        }
+        neighbours.sort();
+        const median = (neighbours[3] + neighbours[4]) / 2;
+        if (Math.abs(heights[i] - median) <= thresholdMetres) continue;
+
+        const value = median + 32768;
+        const p = i * 4;
+        const r = Math.floor(value / 256);
+        const g = Math.floor(value - r * 256);
+        data[p] = r;
+        data[p + 1] = g;
+        data[p + 2] = Math.floor((value - Math.floor(value)) * 256);
+      }
+    }
+  }
+
+  function registerDespikeProtocol(maplibregl) {
+    if (despikeRegistered || typeof OffscreenCanvas === 'undefined') return;
+    despikeRegistered = true;
+
+    maplibregl.addProtocol('despike', async (params, abortController) => {
+      const url = params.url.replace(/^despike:\/\//, 'https://');
+      const res = await fetch(url, { signal: abortController?.signal });
+      if (!res.ok) throw new Error(`Terrain tile ${res.status}`);
+
+      const bitmap = await createImageBitmap(await res.blob());
+      const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      ctx.drawImage(bitmap, 0, 0);
+      bitmap.close();
+
+      // A pixel covers more ground at low zoom, so tolerate bigger honest steps there.
+      const zoom = Number(url.match(/terrarium\/(\d+)\//)?.[1]);
+      const metresPerPixel = Number.isFinite(zoom) ? (156543 * Math.cos(0.77)) / 2 ** zoom : 20;
+      const threshold = Math.max(60, metresPerPixel * 1.5);
+
+      const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      despikeHeights(image.data, canvas.width, canvas.height, threshold);
+      ctx.putImageData(image, 0, 0);
+
+      const blob = await canvas.convertToBlob({ type: 'image/png' });
+      return { data: await blob.arrayBuffer() };
+    });
+  }
+
+  const summitStyle = {
+    version: 8,
+    sources: {
+      imagery: {
+        type: 'raster',
+        tiles: ['https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+        tileSize: 256,
+        maxzoom: 19,
+        attribution: 'Imagery &copy; Esri'
+      },
+      terrain: {
+        type: 'raster-dem',
+        tiles: ['despike://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
+        tileSize: 256,
+        maxzoom: 15,
+        encoding: 'terrarium',
+        attribution: 'Elevation: Mapzen / AWS Open Data'
+      }
+    },
+    layers: [{ id: 'imagery', type: 'raster', source: 'imagery' }]
+  };
+
+  const SUMMIT_SKY = {
+    'sky-color': '#6fa8dc',
+    'horizon-color': '#dfeaf4',
+    'fog-color': '#ffffff',
+    'fog-ground-blend': 0.55,
+    'horizon-fog-blend': 0.6,
+    'sky-horizon-blend': 0.75,
+    'atmosphere-blend': 0.85
+  };
+
+  function skyForCloudCover(cloudCover) {
+    const overcast = Number.isFinite(cloudCover) ? Math.min(100, Math.max(0, cloudCover)) / 100 : 0.2;
+    const mix = (clear, cloudy) => Math.round(clear + (cloudy - clear) * overcast);
+    const blend = (clear, cloudy) => clear + (cloudy - clear) * overcast;
+    return {
+      'sky-color': `rgb(${mix(111, 122)}, ${mix(168, 127)}, ${mix(220, 135)})`,
+      'horizon-color': `rgb(${mix(223, 171)}, ${mix(234, 173)}, ${mix(244, 178)})`,
+      'fog-color': `rgb(${mix(255, 196)}, ${mix(255, 198)}, ${mix(255, 203)})`,
+      // Thicker cloud pushes haze further down the slopes and softens the horizon.
+      'fog-ground-blend': blend(0.6, 0.2),
+      'horizon-fog-blend': blend(0.55, 0.9),
+      'sky-horizon-blend': blend(0.7, 1),
+      'atmosphere-blend': blend(0.85, 0.95)
+    };
+  }
+
+  function applySummitWeather(map, id, weather) {
+    if (!map || !map.isStyleLoaded()) return;
+    const cloudCover = weather?.cloudCover;
+    const overcast = Number.isFinite(cloudCover) ? Math.min(100, Math.max(0, cloudCover)) / 100 : 0.2;
+
+    map.setSky(skyForCloudCover(cloudCover));
+
+    if (map.getLayer('imagery')) {
+      map.setPaintProperty('imagery', 'raster-saturation', -0.7 * overcast);
+      map.setPaintProperty('imagery', 'raster-brightness-max', 1 - 0.45 * overcast);
+      map.setPaintProperty('imagery', 'raster-contrast', -0.25 * overcast);
+    }
+
+    if (weather?.precipitation > 0) addRadarOverlay(map, id);
+  }
+
+  let radarPromise = null;
+
+  function latestRadarTiles() {
+    if (radarPromise) return radarPromise;
+    radarPromise = fetch('https://api.rainviewer.com/public/weather-maps.json')
+      .then((res) => res.json())
+      .then((data) => {
+        const frame = data?.radar?.past?.[data.radar.past.length - 1];
+        if (!data?.host || !frame?.path) throw new Error('No radar frame available');
+        return `${data.host}${frame.path}/256/{z}/{x}/{y}/4/1_1.png`;
+      })
+      .catch((err) => {
+        radarPromise = null;
+        throw err;
+      });
+    return radarPromise;
+  }
+
+  function addRadarOverlay(map, id) {
+    latestRadarTiles()
+      .then((tiles) => {
+        if (summitView.id !== id || summitView.map !== map || map.getSource('radar')) return;
+        map.addSource('radar', {
+          type: 'raster',
+          tiles: [tiles],
+          tileSize: 256,
+          maxzoom: 10,
+          attribution: 'Radar &copy; RainViewer'
+        });
+        map.addLayer({ id: 'radar', type: 'raster', source: 'radar', paint: { 'raster-opacity': 0.45 } });
+      })
+      .catch(() => {
+        // Radar is decorative; the summit view stands on its own without it.
+      });
+  }
+
+  function destroySummitView() {
+    if (summitView.frame) cancelAnimationFrame(summitView.frame);
+    if (summitView.map) summitView.map.remove();
+    if (summitView.host) summitView.host.remove();
+    summitView.id = null;
+    summitView.host = null;
+    summitView.map = null;
+    summitView.frame = 0;
+  }
+
+  function startSummitOrbit(map) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let last = performance.now();
+    const step = (now) => {
+      const seconds = (now - last) / 1000;
+      last = now;
+      map.setBearing(map.getBearing() + seconds * 3);
+      summitView.frame = requestAnimationFrame(step);
+    };
+    summitView.frame = requestAnimationFrame(step);
+  }
+
+  function createSummitView(id, lat, lon) {
+    destroySummitView();
+
+    const host = document.createElement('div');
+    // Inline styles: Tailwind's JIT does not reliably pick up classes on nodes created here.
+    host.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;opacity:0;transition:opacity .7s;';
+    summitView.id = id;
+    summitView.host = host;
+
+    loadMapLibre()
+      .then((maplibregl) => {
+        if (summitView.id !== id) return;
+        registerDespikeProtocol(maplibregl);
+        const map = new maplibregl.Map({
+          container: host,
+          style: summitStyle,
+          center: [lon, lat],
+          zoom: 12.4,
+          pitch: 80,
+          maxPitch: 85,
+          bearing: 20,
+          interactive: false,
+          attributionControl: { compact: true }
+        });
+        summitView.map = map;
+        map.on('load', () => {
+          if (summitView.id !== id) return;
+          map.setTerrain({ source: 'terrain', exaggeration: 1.35 });
+          applySummitWeather(map, id, state.weather[id]);
+          map.resize();
+          host.style.opacity = '1';
+          startSummitOrbit(map);
+        });
+      })
+      .catch(() => {
+        // Poster image stays visible when the 3D view cannot load.
+      });
+  }
+
+  function syncSummitView() {
+    const mount = els.cards.querySelector('article[data-expanded="true"] [data-summit-mount]');
+    if (!mount) {
+      destroySummitView();
+      return;
+    }
+
+    const id = Number(mount.dataset.summitMount);
+    const lat = Number(mount.dataset.summitLat);
+    const lon = Number(mount.dataset.summitLon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+
+    if (summitView.id !== id) createSummitView(id, lat, lon);
+    if (summitView.host && summitView.host.parentElement !== mount) {
+      mount.insertBefore(summitView.host, mount.firstChild);
+      if (summitView.map) summitView.map.resize();
+    }
+    applySummitWeather(summitView.map, id, state.weather[id]);
   }
 
   const NH_FAMILY_HIKES_NAME_MAP = {
@@ -545,7 +826,7 @@
       const url = new URL('https://api.open-meteo.com/v1/forecast');
       url.searchParams.set('latitude', String(target.lat));
       url.searchParams.set('longitude', String(target.lon));
-      url.searchParams.set('current', 'temperature_2m,weather_code');
+      url.searchParams.set('current', 'temperature_2m,weather_code,precipitation,cloud_cover');
       url.searchParams.set('temperature_unit', 'fahrenheit');
       url.searchParams.set('wind_speed_unit', 'mph');
       url.searchParams.set('timezone', 'auto');
@@ -559,9 +840,13 @@
         const data = await res.json();
         const weatherCode = data?.current?.weather_code;
         const temp = data?.current?.temperature_2m;
+        const precipitation = data?.current?.precipitation;
+        const cloudCover = data?.current?.cloud_cover;
         return cacheWeather(key, {
           icon: weatherCodeMap[weatherCode] || '🌤️',
           temp: Number.isFinite(temp) ? temp : null,
+          precipitation: Number.isFinite(precipitation) ? precipitation : 0,
+          cloudCover: Number.isFinite(cloudCover) ? cloudCover : null,
           unavailable: false,
         }, WEATHER_SUCCESS_TTL_MS);
       } catch {
@@ -661,40 +946,28 @@
     const satelliteImageUrl = Number.isFinite(summitLat) && Number.isFinite(summitLon)
       ? safeExternalUrl(satellitePreviewImage(summitLat, summitLon))
       : null;
-    const earthPreview = earthUrl
+    const summitWeather = state.weather[p.id];
+    const summitWeatherLabel = summitWeather && !summitWeather.unavailable && summitWeather.temp != null && summitWeather.icon
+      ? `<span class="text-[11px] font-medium text-white/90">${summitWeather.icon} ${Math.round(summitWeather.temp)}&deg;F</span>`
+      : '';
+    const earthPreview = earthUrl && expanded
       ? `
-          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Google Earth perspective</p>
-          <a class="group mt-2 block" target="_blank" rel="noopener noreferrer" href="${escapeHtml(earthUrl)}">
-            <div class="relative overflow-hidden rounded-xl border border-stone-300 bg-stone-900" style="aspect-ratio: 22 / 7;">
-              ${satelliteImageUrl ? `<img class="absolute inset-0 h-full w-full object-cover" alt="Summit satellite preview" loading="eager" referrerpolicy="no-referrer" src="${escapeHtml(satelliteImageUrl)}">` : ''}
-              <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0.15) 55%, rgba(2, 6, 23, 0));"></div>
-              <div class="absolute inset-0" style="background-image: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 28px 28px;"></div>
-              <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-900/40 to-transparent"></div>
-              <div class="absolute left-3 top-3 rounded-md border border-white/30 bg-stone-900/65 px-2 py-1 text-[11px] font-medium text-white/95 backdrop-blur-sm">
-                Summit frame
-              </div>
-              <div class="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2">
-                <div class="relative">
-                  <div class="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-rose-300/90"></div>
-                  <div class="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-400 shadow-[0_0_14px_rgba(251,113,133,0.95)]"></div>
-                  <div class="absolute left-1/2 top-1/2 h-[2px] w-10 -translate-x-1/2 -translate-y-1/2 bg-rose-200/85"></div>
-                  <div class="absolute left-1/2 top-1/2 h-10 w-[2px] -translate-x-1/2 -translate-y-1/2 bg-rose-200/85"></div>
-                  <div class="absolute left-5 top-[-36px] whitespace-nowrap rounded-lg border border-rose-200/60 bg-rose-50/95 px-3 py-1.5 text-sm font-bold text-rose-900 shadow-lg">
-                    Summit ${summitLatText}, ${summitLonText}
-                  </div>
-                </div>
-              </div>
-              <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-2">
-                <span class="rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-stone-900">Google Earth</span>
-                <span class="truncate rounded-full border border-white/40 bg-stone-900/55 px-2.5 py-1 text-[11px] font-medium text-white/95" title="${summitLatText}, ${summitLonText}">${summitLatText}, ${summitLonText}</span>
-                <span class="rounded-full border border-white/40 bg-stone-900/55 px-2.5 py-1 text-[11px] font-medium text-white transition group-hover:bg-stone-900/75">Open live view</span>
-              </div>
-            </div>
-          </a>`
+          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Summit view</p>
+          <div class="relative mt-2 overflow-hidden rounded-xl border border-stone-300 bg-stone-900" style="aspect-ratio: 16 / 9;" data-summit-mount="${p.id}" data-summit-lat="${summitLat}" data-summit-lon="${summitLon}">
+            ${satelliteImageUrl ? `<img class="summit-orbit summit-poster absolute inset-0 h-full w-full object-cover" alt="Satellite view of ${escapeHtml(p.name)}" loading="lazy" referrerpolicy="no-referrer" src="${escapeHtml(satelliteImageUrl)}">` : ''}
+            <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-10 bg-gradient-to-b from-stone-950/45 to-transparent"></div>
+            <a class="group absolute inset-0 z-20 flex items-start justify-between gap-2 px-3 pt-2" target="_blank" rel="noopener noreferrer" href="${escapeHtml(earthUrl)}">
+              <span class="flex items-center gap-2">
+                <span class="text-[11px] font-medium text-white/90">${summitLatText}, ${summitLonText}</span>
+                ${summitWeatherLabel}
+              </span>
+              <span class="text-[11px] font-medium text-white/80 transition group-hover:text-white">Open in Google Earth &rarr;</span>
+            </a>
+          </div>`
       : '';
 
     return `
-      <article data-card-id="${p.id}" tabindex="0" class="flex cursor-pointer flex-col overflow-hidden rounded-2xl border ${done ? 'border-emerald-300 bg-emerald-50/40' : 'border-stone-200 bg-white'} shadow-sm transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+      <article data-card-id="${p.id}" data-expanded="${expanded ? 'true' : 'false'}" tabindex="0" class="flex cursor-pointer flex-col overflow-hidden rounded-2xl border ${done ? 'border-emerald-300 bg-emerald-50/40' : 'border-stone-200 bg-white'} shadow-sm transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
         <div class="flex items-start gap-3 p-4 pb-3">
           <input type="checkbox" data-id="${p.id}" ${done ? 'checked' : ''}
             class="mt-1 h-5 w-5 flex-none cursor-pointer rounded-md border-stone-300 text-emerald-600 focus:ring-emerald-500"
@@ -925,6 +1198,7 @@
     syncSortIndicators();
     renderProgress();
     renderPrintSheet();
+    syncSummitView();
   }
 
   function setToggle(selector, attr, value) {
@@ -971,9 +1245,9 @@
     const detailsEl = cardEl ? cardEl.querySelector(`#card-details-${id}`) : null;
     const isOpen = state.expandedCards.has(id);
 
-    if (isOpen) {
-      state.expandedCards.delete(id);
-    } else {
+    // Only one card may be open at a time, so opening one closes the rest.
+    state.expandedCards.clear();
+    if (!isOpen) {
       state.expandedCards.add(id);
     }
 

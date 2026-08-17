@@ -35,6 +35,26 @@
     body { -webkit-font-smoothing: antialiased; }
     .print-sheet { display: none; }
 
+    /* Slow drift across an overscanned satellite tile, standing in for a real orbit. */
+    @keyframes summit-orbit {
+      0%   { transform: scale(1.18) translate3d(-2.2%, 1.2%, 0); }
+      25%  { transform: scale(1.24) translate3d(1.8%, 2%, 0); }
+      50%  { transform: scale(1.18) translate3d(2.4%, -1.4%, 0); }
+      75%  { transform: scale(1.24) translate3d(-1.6%, -2.2%, 0); }
+      100% { transform: scale(1.18) translate3d(-2.2%, 1.2%, 0); }
+    }
+
+    .summit-orbit { transform: scale(1.18); }
+
+    article[data-expanded="true"] .summit-orbit {
+      animation: summit-orbit 42s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      article[data-expanded="true"] .summit-orbit { animation: none; }
+    }
+
     @media print {
       @page { size: letter; margin: 0.55in 0.5in 0.45in; }
       .no-print { display: none !important; }

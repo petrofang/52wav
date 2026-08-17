@@ -152,6 +152,24 @@ what you send to the Over the Hill Hikers to claim the patch.
 | Alternate-route reference | [New England Waterfalls](https://www.newenglandwaterfalls.com/52withaview.php) |
 | Derived distances and elevation profiles | OpenStreetMap trail geometry + USGS 3DEP/NED |
 
+### Live sources used by the summit view
+
+These are fetched in the browser when a peak card is expanded. Nothing is stored, and none of
+them needs an API key.
+
+| Layer | Source |
+| --- | --- |
+| Satellite imagery | [Esri World Imagery](https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer) |
+| Terrain elevation | [Terrain Tiles on AWS Open Data](https://registry.opendata.aws/terrain-tiles/) (Mapzen Terrarium encoding) |
+| Precipitation radar | [RainViewer](https://www.rainviewer.com/api.html) |
+| Temperature and cloud cover | [Open-Meteo](https://open-meteo.com/) |
+| 3D rendering | [MapLibre GL JS](https://maplibre.org/) (loaded on demand from unpkg) |
+
+The elevation tiles contain occasional corrupt pixels that decode as spikes of over a
+kilometre, so each tile is passed through a median filter in the browser before it reaches the
+terrain mesh. The filter's threshold scales with the tile's ground resolution, which keeps
+genuine relief intact at low zoom.
+
 Two peaks added in 2025 (Bald Peak, Iron Mountain) had no published route statistics, so
 distance and gain were measured by routing the trail geometry and sampling USGS elevations.
 Those are flagged `"derived": true` and shown as *est.* in the interface. Their view scores
@@ -166,6 +184,10 @@ The most active community for the list is the
 ## Licence
 
 **Code** — `index.html`, `app.js`, `config.js` and the workflow — is [MIT](LICENSE).
+
+The summit view loads [MapLibre GL JS](https://maplibre.org/) (BSD-3-Clause) from a CDN on
+demand. It is not bundled here, and the page works without it: the satellite still image
+remains in place if the script or WebGL is unavailable.
 
 **Data** (`data/peaks.json`) is a compilation of third-party sources and is *not* covered by
 the MIT licence. Coordinates are derived from OpenStreetMap, so the dataset is offered under
