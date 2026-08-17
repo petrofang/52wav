@@ -995,19 +995,18 @@
       : null;
     const summitWeather = state.weather[p.id];
     const summitWeatherLabel = summitWeather && !summitWeather.unavailable && summitWeather.temp != null && summitWeather.icon
-      ? `<span class="text-[11px] font-medium text-white/90">${summitWeather.icon} ${Math.round(summitWeather.temp)}&deg;F</span>`
+      ? `<span class="rounded-full border border-white/25 bg-stone-900/55 px-2 py-0.5 text-[11px] font-medium text-white/95 backdrop-blur-sm">${summitWeather.icon} ${Math.round(summitWeather.temp)}&deg;F</span>`
       : '';
     const earthPreview = earthUrl && expanded
       ? `
           <div class="relative overflow-hidden border-y border-stone-200 bg-stone-900" style="aspect-ratio: 16 / 9;" data-summit-mount="${p.id}" data-summit-lat="${summitLat}" data-summit-lon="${summitLon}">
             ${satelliteImageUrl ? `<img class="summit-orbit summit-poster absolute inset-0 h-full w-full object-cover" alt="Satellite view of ${escapeHtml(p.name)}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" src="${escapeHtml(satelliteImageUrl)}">` : ''}
             <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-10 bg-gradient-to-b from-stone-950/45 to-transparent"></div>
-            <a class="group absolute inset-0 z-20 flex items-start justify-between gap-2 px-3 pt-2" target="_blank" rel="noopener noreferrer" href="${escapeHtml(earthUrl)}">
-              <span class="flex items-center gap-2">
-                <span class="text-[11px] font-medium text-white/90">${summitLatText}, ${summitLonText}</span>
-                ${summitWeatherLabel}
-              </span>
-              <span class="text-[11px] font-medium text-white/80 transition group-hover:text-white">Open in Google Earth &rarr;</span>
+            <div class="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 bg-gradient-to-t from-stone-950/45 to-transparent"></div>
+            <a class="group absolute inset-0 z-20" target="_blank" rel="noopener noreferrer" href="${escapeHtml(earthUrl)}">
+              <span class="absolute left-3 top-2 text-[11px] font-medium text-white/90">${summitLatText}, ${summitLonText}</span>
+              <span class="absolute right-3 top-2">${summitWeatherLabel}</span>
+              <span class="absolute bottom-2 left-3 text-[11px] font-medium text-white/80 transition group-hover:text-white">Open in Google Earth &rarr;</span>
             </a>
           </div>`
       : '';
@@ -1021,7 +1020,8 @@
           <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-center gap-2">
               <h2 class="font-display text-lg font-semibold leading-snug text-stone-900">${escapeHtml(displayName(p))}</h2>
-              ${weatherBadge(p)}
+              ${r.difficulty ? badge(r.difficulty, DIFFICULTY_STYLE[r.difficulty]) : ''}
+              ${expanded ? '' : weatherBadge(p)}
             </div>
             <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(locationLine || p.town || '')}</p>
           </div>
@@ -1034,7 +1034,6 @@
 
         <div class="flex flex-wrap items-center gap-1.5 px-4 pb-3">
           ${statusBadge(p)}
-          ${r.difficulty ? badge(r.difficulty, DIFFICULTY_STYLE[r.difficulty]) : ''}
           <button type="button" data-card-toggle="${p.id}" aria-expanded="${expanded ? 'true' : 'false'}" aria-controls="${detailsId}"
             class="ml-auto inline-flex items-center gap-1 rounded-full border border-stone-300 bg-white px-3 py-1 text-xs font-medium text-stone-700 transition hover:bg-stone-50">
             ${expanded ? 'Hide details' : 'More details'}
