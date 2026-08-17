@@ -967,7 +967,7 @@
       : '';
 
     return `
-      <article data-card-id="${p.id}" data-expanded="${expanded ? 'true' : 'false'}" tabindex="0" class="flex cursor-pointer flex-col overflow-hidden rounded-2xl border ${done ? 'border-emerald-300 bg-emerald-50/40' : 'border-stone-200 bg-white'} shadow-sm transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+      <article data-card-id="${p.id}" data-expanded="${expanded ? 'true' : 'false'}" tabindex="0" class="flex cursor-pointer flex-col overflow-hidden rounded-2xl border ${expanded ? 'md:col-span-2 ' : ''}${done ? 'border-emerald-300 bg-emerald-50/40' : 'border-stone-200 bg-white'} shadow-sm transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
         <div class="flex items-start gap-3 p-4 pb-3">
           <input type="checkbox" data-id="${p.id}" ${done ? 'checked' : ''}
             class="mt-1 h-5 w-5 flex-none cursor-pointer rounded-md border-stone-300 text-emerald-600 focus:ring-emerald-500"
