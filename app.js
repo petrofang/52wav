@@ -1004,7 +1004,6 @@
             <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-10 bg-gradient-to-b from-stone-950/45 to-transparent"></div>
             <div class="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 bg-gradient-to-t from-stone-950/45 to-transparent"></div>
             <a class="group absolute inset-0 z-20" target="_blank" rel="noopener noreferrer" href="${escapeHtml(earthUrl)}">
-              <span class="absolute left-3 top-2 text-[11px] font-medium text-white/90">${summitLatText}, ${summitLonText}</span>
               <span class="absolute right-3 top-2">${summitWeatherLabel}</span>
               <span class="absolute bottom-2 left-3 text-[11px] font-medium text-white/80 transition group-hover:text-white">Open in Google Earth &rarr;</span>
             </a>
@@ -1024,6 +1023,7 @@
               ${expanded ? '' : weatherBadge(p)}
             </div>
             <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(locationLine || p.town || '')}</p>
+            ${Number.isFinite(summitLat) && Number.isFinite(summitLon) ? `<p class="mt-0.5 text-xs text-stone-400">${summitLatText}, ${summitLonText}</p>` : ''}
           </div>
           <div class="flex-none font-display text-lg font-semibold text-stone-900">
             ${p.elevation_ft.toLocaleString()}<span class="text-xs font-normal text-stone-400"> ft</span>
@@ -1059,12 +1059,6 @@
         </div>
 
         <div id="${detailsId}" class="${expanded ? '' : 'hidden '}border-t border-stone-200 bg-stone-50/70 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Peak location</p>
-          <div class="mt-2 rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-sm text-stone-700">
-            <p>${escapeHtml(locationLine || 'Location details unavailable')}</p>
-            <p class="mt-1 text-xs text-stone-500">Summit lat/lon: ${summitLatText}, ${summitLonText}</p>
-          </div>
-
           <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Route options</p>
           <ul class="mt-2 space-y-2">${routeMarkup}</ul>
 
