@@ -892,6 +892,23 @@
     applySummitWeather(summitView.map, id, state.weather[id]);
   }
 
+  // Icons are stored here rather than hotlinked, so the page makes no third-party requests
+  // and still works offline. Sites without a favicon of their own fall back to a plain mark.
+  const SOURCE_ICONS = {
+    'www.nhmountainhiking.com': 'assets/icons/sources/nhmountainhiking.ico',
+    'www.alltrails.com': 'assets/icons/sources/alltrails.png',
+  };
+
+  function sourceIcon(url) {
+    let host = '';
+    try { host = new URL(url).hostname; } catch { host = ''; }
+    const icon = SOURCE_ICONS[host];
+    if (icon) {
+      return `<img class="h-4 w-4 flex-none rounded-sm" src="${icon}" alt="" loading="lazy" decoding="async" aria-hidden="true">`;
+    }
+    return `<span class="flex h-4 w-4 flex-none items-center justify-center rounded-sm bg-emerald-200/70 text-[9px] font-bold text-emerald-900" aria-hidden="true">${escapeHtml((host.replace(/^www\./, '')[0] || '?').toUpperCase())}</span>`;
+  }
+
   // The book is the guide to this list; everything else is a third-party writeup.
   const OFFICIAL_GUIDE = {
     label: "52 With a View: A Hiker's Guide",
@@ -1151,10 +1168,13 @@
         : '';
 
     const sourceMarkup = sourceLinks.map((src) => `
-      <a class="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 transition hover:bg-emerald-100"
+      <a class="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 transition hover:bg-emerald-100"
          target="_blank" rel="noopener noreferrer" href="${escapeHtml(src.url)}">
-        <span class="font-medium">${escapeHtml(src.label)}</span>
-        ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
+        ${sourceIcon(src.url)}
+        <span class="min-w-0">
+          <span class="block font-medium">${escapeHtml(src.label)}</span>
+          ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
+        </span>
       </a>`).join('');
 
     const countyLabel = p.county ? `${p.county} County` : '';
