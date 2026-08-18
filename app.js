@@ -540,28 +540,72 @@
       });
   }
 
-  function addTrailOverlay(map, id, lat, lon) {
+  const normaliseTrail = (name) => String(name || '')
+    .toUpperCase()
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/\bMOUNTAIN\b/g, 'MTN')
+    .replace(/\bMOUNT\b|\bMT\b/g, '')
+    .replace(/\bTRAILHEAD\b|\bTRAIL\b|\bPATH\b|\bLOOP\b|\bSPUR\b|\bPARKING\b/g, '')
+    .replace(/[^A-Z0-9]+/g, ' ')
+    .trim();
+
+  // Route names are written for people ("Sandwich Dome + Jennings Peak") and do not always
+  // match the Forest Service trail name, so the trailhead name is used as a second chance.
+  function routeTrailTokens(...names) {
+    return names
+      .flatMap((name) => String(name || '').split(/\s*(?:\+|\/|&|,|\band\b)\s*/i))
+      .map(normaliseTrail)
+      .filter((token) => token.length >= 3);
+  }
+
+  function markRouteTrails(geojson, routeName, trailheadName) {
+    const tokens = routeTrailTokens(routeName, trailheadName);
+    const squash = (value) => value.replace(/\s+/g, '');
+    const overlaps = (a, b) => a.includes(b) || b.includes(a) || squash(a).includes(squash(b)) || squash(b).includes(squash(a));
+    let matched = 0;
+    geojson.features.forEach((feature) => {
+      const trail = normaliseTrail(feature?.properties?.trail_name);
+      const onRoute = Boolean(trail) && tokens.some((token) => overlaps(trail, token));
+      feature.properties = { ...feature.properties, on_route: onRoute };
+      if (onRoute) matched += 1;
+    });
+    return matched;
+  }
+
+  function addTrailOverlay(map, id, lat, lon, routeName, trailheadName) {
     trailsNear(lat, lon)
       .then((geojson) => {
         if (summitView.id !== id || summitView.map !== map || map.getSource('trails')) return;
+        const matched = markRouteTrails(geojson, routeName, trailheadName);
+
         map.addSource('trails', {
           type: 'geojson',
           data: geojson,
           attribution: 'Trails: USDA Forest Service'
         });
         map.addLayer({
+          id: 'trails-other',
+          type: 'line',
+          source: 'trails',
+          filter: ['!=', ['get', 'on_route'], true],
+          layout: { 'line-cap': 'round', 'line-join': 'round' },
+          paint: { 'line-color': '#e7e5e4', 'line-width': 1.2, 'line-opacity': matched ? 0.35 : 0.7 }
+        });
+        map.addLayer({
           id: 'trails-casing',
           type: 'line',
           source: 'trails',
+          filter: ['==', ['get', 'on_route'], true],
           layout: { 'line-cap': 'round', 'line-join': 'round' },
-          paint: { 'line-color': '#1c1917', 'line-width': 4, 'line-opacity': 0.45, 'line-blur': 1 }
+          paint: { 'line-color': '#1c1917', 'line-width': 6, 'line-opacity': 0.55, 'line-blur': 1 }
         });
         map.addLayer({
-          id: 'trails',
+          id: 'trails-route',
           type: 'line',
           source: 'trails',
+          filter: ['==', ['get', 'on_route'], true],
           layout: { 'line-cap': 'round', 'line-join': 'round' },
-          paint: { 'line-color': '#fbbf24', 'line-width': 1.8, 'line-opacity': 0.95 }
+          paint: { 'line-color': '#fbbf24', 'line-width': 3, 'line-opacity': 1 }
         });
       })
       .catch(() => {
@@ -671,7 +715,9 @@
           host.style.opacity = '1';
           startSummitOrbit(map);
           // Not map.once('idle'): the orbit animation means the map never goes idle.
-          addTrailOverlay(map, id, lat, lon);
+          const peak = state.peaks.find((p) => p.id === id);
+          const route = primaryRoute(peak || {});
+          addTrailOverlay(map, id, lat, lon, route?.name, routeTrailhead(route, peak)?.name);
         });
       })
       .catch(() => {
