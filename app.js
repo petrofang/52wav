@@ -1425,24 +1425,19 @@
   }
 
   async function fetchPeaks() {
-    const sources = [cfg.DATA_URL, cfg.FALLBACK_URL].filter(Boolean);
-    let lastError;
-    for (const url of sources) {
-      try {
-        const res = await fetch(url, { cache: 'no-cache' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const body = await res.json();
-        const peaks = Array.isArray(body) ? body : body.peaks;
-        if (!Array.isArray(peaks)) throw new Error('No peak array found');
-        els.sourceNote.textContent =
-          `${peaks.length} peaks loaded from ${url.includes('gist.githubusercontent.com') ? 'the public Gist' : 'this site'}` +
-          `${body.list_revision ? `, list revision ${body.list_revision}` : ''}.`;
-        return { peaks, meta: Array.isArray(body) ? {} : body };
-      } catch (err) {
-        lastError = err;
-      }
-    }
-    throw lastError || new Error('No data source configured');
+    const url = cfg.DATA_URL;
+    if (!url) throw new Error('No data source configured');
+
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const body = await res.json();
+    const peaks = Array.isArray(body) ? body : body.peaks;
+    if (!Array.isArray(peaks)) throw new Error('No peak array found');
+
+    els.sourceNote.textContent =
+      `${peaks.length} peaks loaded${body.list_revision ? `, list revision ${body.list_revision}` : ''}.`;
+    return { peaks, meta: Array.isArray(body) ? {} : body };
   }
 
   (async function init() {

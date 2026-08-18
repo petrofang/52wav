@@ -22,13 +22,13 @@ No build step, no framework, no backend — three static files and a JSON docume
 | `app.js` | Filtering, sorting, progress links, print sheet generation |
 | `config.js` | Which URL the peak data is loaded from |
 | `data/peaks.json` | **The dataset — the source of truth** |
-| `.github/workflows/sync-gist.yml` | Validates the dataset and mirrors it to the public Gist |
+| `.github/workflows/validate-data.yml` | Checks the dataset for duplicate ids, a stale `next_id` and missing coordinates |
 
-The dataset is also published as a Gist so other people can use it:
-<https://gist.github.com/petrofang/46213d7d93292f14ffd54d955b7f3f67>
+The dataset is a single file, and the copy in this repository is the only one:
+<https://github.com/petrofang/52wav/blob/main/data/peaks.json>
 
-That Gist is **generated**. Edit `data/peaks.json` here; anything typed directly into the
-Gist gets overwritten on the next data change.
+To use it elsewhere, read the raw file directly:
+<https://raw.githubusercontent.com/petrofang/52wav/main/data/peaks.json>
 
 For multi-route peaks, the preferred route is the one with `preferred: true`. If a single route
 still exists, the legacy `route` object remains supported for backward compatibility, but the app
@@ -121,9 +121,9 @@ old links warn the reader instead of quietly restoring the wrong mountains.
 
 ### Updating it
 
-Edit `data/peaks.json`, commit, push. That's it — Pages redeploys the site and the workflow
-mirrors the file to the Gist. Before publishing, the workflow checks for duplicate ids, an
-inconsistent `next_id`, and missing coordinates, and refuses to publish if it finds any.
+Edit `data/peaks.json`, commit, push. That's it — Pages redeploys the site. A workflow checks
+the file for duplicate ids, an inconsistent `next_id`, and missing coordinates, and fails the
+build if it finds any.
 
 ---
 

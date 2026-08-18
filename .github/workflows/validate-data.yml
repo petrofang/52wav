@@ -1,0 +1,48 @@
+name: Validate peak data
+
+# data/peaks.json in this repo is the single source of truth. This check runs
+# before it can reach the live site, so a broken dataset fails here rather than
+# in someone's browser.
+
+on:
+  push:
+    branches: [main]
+    paths: ['data/peaks.json']
+  pull_request:
+    paths: ['data/peaks.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-data-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check the dataset
+        run: |
+          python3 - <<'PY'
+          import json, sys, collections
+          data = json.load(open("data/peaks.json"))
+          peaks = data["peaks"]
+          ids = [p["id"] for p in peaks]
+          dupes = [i for i, n in collections.Counter(ids).items() if n > 1]
+          problems = []
+          if dupes:
+              problems.append(f"duplicate ids: {dupes}")
+          if max(ids) >= data["next_id"]:
+              problems.append(f"next_id {data['next_id']} must exceed max id {max(ids)}")
+          missing = [p["name"] for p in peaks if not p.get("summit", {}).get("lat")]
+          if missing:
+              problems.append(f"missing coordinates: {missing}")
+          if problems:
+              sys.exit("Dataset is not publishable:\n  " + "\n  ".join(problems))
+          current = sum(1 for p in peaks if p["status"] == "current")
+          print(f"{len(peaks)} peaks, {current} current, next_id {data['next_id']}")
+          PY
