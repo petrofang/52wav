@@ -892,77 +892,6 @@
     applySummitWeather(summitView.map, id, state.weather[id]);
   }
 
-  const NH_FAMILY_HIKES_NAME_MAP = {
-    'Black Mtn. (Benton)': 'Black Mountain',
-    'Carr Mountain': 'Carr Mountain',
-    'Eagle Crag': 'The Meader Ridge',
-    'Eastman Mtn.': 'Eastman Mountain',
-    'Hedgehog Mtn.': 'Hedgehog Mountain',
-    'Hibbard Mountain': 'Mt. Wonalancet and Hibbard Mountain',
-    'The Horn': 'The Horn',
-    'Imp Face': 'Imp Face',
-    'Jennings Peak': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Middle Sister': 'The Three Sisters',
-    'Mt. Avalon': 'Mt. Avalon',
-    'Mt. Cardigan': 'Mt. Cardigan',
-    'Mt. Chocorua': 'Mt. Chocorua',
-    'Mt. Crawford': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Mt. Cube (South Peak)': 'Mt. Cube',
-    'Mt. Hayes': 'Mt. Hayes',
-    'Mt. Israel': 'Mt. Israel',
-    'Mt. Kearsarge': 'Mt. Kearsarge',
-    'Mt. Kearsarge North': 'Mt. Kearsarge North',
-    'Mt. Monadnock': 'Mt. Monadnock',
-    'Mt. Morgan': 'Mts. Morgan and Percival',
-    'Mt. Parker': 'Mt. Parker',
-    'Mt. Paugus (South Peak)': 'Mt. Paugus',
-    'Mt. Pemigewasset': 'Mt. Pemigewasset',
-    'Mt. Percival': 'Mts. Morgan and Percival',
-    'Mt. Resolution': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Mt. Roberts': 'Mt. Roberts',
-    'Mt. Shaw': 'Mt. Shaw',
-    'Mt. Success': 'Mt. Success',
-    'Mt. Tremont': 'Mt. Tremont',
-    'Mt. Webster': 'Mts. Webster and Jackson',
-    'Mt. Willard': 'Mt. Willard',
-    'Middle Sugarloaf': 'Middle and North Sugarloaf Mountains',
-    'Middle Sugarloaf Mtn.': 'Middle and North Sugarloaf Mountains',
-    'North Baldface': 'The Baldfaces',
-    'North Doublehead and South Doublehead': 'Doublehead Mountain',
-    'North Moat Mtn.': 'South and North Moat Mountains',
-    'North Percy Peak': 'North Percy Peak',
-    'Pine Mtn. (Gorham)': 'Pine Mountain',
-    'Potash Mtn.': 'Potash Mountain',
-    'Sandwich Dome': 'Sandwich Dome',
-    'Shelburne Moriah Mtn.': 'Shelburne Moriah Mountain',
-    'Smarts Mtn.': 'Smarts  Mountain',
-    'South Baldface': 'The Baldfaces',
-    'South Moat Mtn.': 'South and North Moat Mountains',
-    'Stairs Mtn.': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Stinson Mtn.': 'Stinson Mountain',
-    'Sugarloaf (Stratford)': 'Sugarloaf Mountain',
-    'Table Mtn.': 'Table Mountain',
-    'Welch Mountain and Dickey Mountain': 'Welch and Dickey Mountains',
-    'Mt. Waumbek': 'Mt. Waumbek',
-    'Black Mountain - Middle Peak (Jackson)': 'Black Mountain',
-    'Bald Peak': 'Bald Peak',
-    'Iron Mountain': 'Iron Mountain',
-    'Owlshead (Carroll)': 'Owlshead',
-    'Mt. Starr King': 'Mt. Waumbek',
-    'Mt. Martha (Cherry Mtn.)': 'Cherry Mountain',
-    'Mt. Wolf': 'Mt. Roberts',
-    'Rogers Ledge': 'Rogers Ledge',
-    'Square Ledge (Albany)': 'Square Ledge',
-    'West Royce Mountain': 'East and West Royce',
-  };
-
-  function nhFamilyHikesUrl(p) {
-    const mappedName = NH_FAMILY_HIKES_NAME_MAP[p.name] || p.name;
-    const hikeParam = encodeURIComponent(mappedName);
-    const sourceParam = encodeURIComponent('petrofang.github.io/52wav');
-    return `http://www.nhfamilyhikes.com/hikes.php?hike=${hikeParam}&from=${sourceParam}`;
-  }
-
   // The book is the guide to this list; everything else is a third-party writeup.
   const OFFICIAL_GUIDE = {
     label: "52 With a View: A Hiker's Guide",
@@ -973,11 +902,6 @@
   function fallbackSources(p) {
     const q = encodeURIComponent(`${p.name} New Hampshire hike`);
     return [
-      {
-        label: 'NH Family Hikes',
-        url: nhFamilyHikesUrl(p),
-        note: 'One hiker\u2019s page for this peak',
-      },
       {
         label: 'New England Waterfalls',
         url: 'https://www.newenglandwaterfalls.com/52withaview.php',
@@ -1007,7 +931,7 @@
         .filter(Boolean)
       : [];
 
-    return [OFFICIAL_GUIDE, ...(fromData.length ? fromData : fallbackSources(p)).slice(0, 3)];
+    return [OFFICIAL_GUIDE, ...(fromData.length ? fromData : fallbackSources(p)).slice(0, 4)];
   }
 
   function routeChoices(p) {

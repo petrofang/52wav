@@ -149,9 +149,10 @@ where this dataset disagrees with the book, the book is right.
 | Field | Source |
 | --- | --- |
 | The list, elevations, revision history | [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html) (June 2025 revision; 2019 NH statewide LIDAR), cross-checked against [Ken MacGray's peak list](https://www.kenmacgray.org/52/peaks.shtml) |
-| Distance, gain, difficulty, view rating | [NH Family Hikes](http://www.nhfamilyhikes.com/52WAV.php) — a secondary source, used because it has a page per peak, not because it is authoritative |
+| Distance, gain, difficulty, view rating | [NH Family Hikes](http://www.nhfamilyhikes.com/52WAV.php) — where the stored figures came from. No longer linked from the cards, but the numbers are still theirs, and the view ratings are theirs alone |
 | Trail reports and route stats | [NH Mountain Hiking](https://www.nhmountainhiking.com/hike/lists/52view.html) — linked from every card; detailed per-peak reports with measured route figures |
 | Trail reports with photos | [Hike New England](https://www.hikenewengland.com/) — linked where a report exists for the peak |
+| Route pages and recent reviews | [AllTrails](https://www.alltrails.com/) — linked only; no AllTrails data is stored here |
 | Summit and trailhead coordinates | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors |
 | Town and county | US Census Bureau geocoder |
 | Landowner and manager | [NH GRANIT](https://www.granit.unh.edu/) Conservation & Public Lands |
