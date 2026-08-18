@@ -515,6 +515,60 @@
 
   let radarPromise = null;
 
+  const USFS_TRAILS = 'https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_TrailNFSPublish_01/MapServer/0/query';
+
+  function trailsNear(lat, lon) {
+    const pad = 0.045;
+    const params = new URLSearchParams({
+      where: '1=1',
+      geometry: `${lon - pad},${lat - pad},${lon + pad},${lat + pad}`,
+      geometryType: 'esriGeometryEnvelope',
+      inSR: '4326',
+      spatialRel: 'esriSpatialRelIntersects',
+      outFields: 'TRAIL_NAME',
+      returnGeometry: 'true',
+      outSR: '4326',
+      f: 'geojson'
+    });
+    return fetch(`${USFS_TRAILS}?${params}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!Array.isArray(data?.features)) throw new Error('No trail features');
+        // Snowmobile corridors are not hiking trails and clutter the view.
+        data.features = data.features.filter((f) => !/SNOMO|CORR/i.test(f?.properties?.trail_name || ''));
+        return data;
+      });
+  }
+
+  function addTrailOverlay(map, id, lat, lon) {
+    trailsNear(lat, lon)
+      .then((geojson) => {
+        if (summitView.id !== id || summitView.map !== map || map.getSource('trails')) return;
+        map.addSource('trails', {
+          type: 'geojson',
+          data: geojson,
+          attribution: 'Trails: USDA Forest Service'
+        });
+        map.addLayer({
+          id: 'trails-casing',
+          type: 'line',
+          source: 'trails',
+          layout: { 'line-cap': 'round', 'line-join': 'round' },
+          paint: { 'line-color': '#1c1917', 'line-width': 4, 'line-opacity': 0.45, 'line-blur': 1 }
+        });
+        map.addLayer({
+          id: 'trails',
+          type: 'line',
+          source: 'trails',
+          layout: { 'line-cap': 'round', 'line-join': 'round' },
+          paint: { 'line-color': '#fbbf24', 'line-width': 1.8, 'line-opacity': 0.95 }
+        });
+      })
+      .catch(() => {
+        // Trails are a bonus; peaks outside the national forest simply have none.
+      });
+  }
+
   function latestRadarTiles() {
     if (radarPromise) return radarPromise;
     radarPromise = fetch('https://api.rainviewer.com/public/weather-maps.json')
@@ -616,6 +670,8 @@
           map.resize();
           host.style.opacity = '1';
           startSummitOrbit(map);
+          // Not map.once('idle'): the orbit animation means the map never goes idle.
+          addTrailOverlay(map, id, lat, lon);
         });
       })
       .catch(() => {
