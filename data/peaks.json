@@ -57,6 +57,11 @@
       "notes": "Historic lime kilns. Many nice ledge viewpoints.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/black.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Black%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -107,13 +112,29 @@
         "needs": "A standalone Eagle Crag route with its own trailhead, distance and gain, verified against the book.",
         "evidence": {
           "source": "USFS National Forest System Trails (EDW_TrailNFSPublish_01), queried 2026-08",
-          "trails_at_summit": ["Baldface Circle Trail", "Eagle Link", "Meader Ridge Trail", "Bicknell Ridge Trail"],
-          "trail_lengths_mi": { "Baldface Circle Trail": 7.36, "Bicknell Ridge Trail": 2.2, "Eagle Link": 2.45, "Meader Ridge Trail": 1.86, "Mount Meader Trail": 2.41 },
+          "trails_at_summit": [
+            "Baldface Circle Trail",
+            "Eagle Link",
+            "Meader Ridge Trail",
+            "Bicknell Ridge Trail"
+          ],
+          "trail_lengths_mi": {
+            "Baldface Circle Trail": 7.36,
+            "Bicknell Ridge Trail": 2.2,
+            "Eagle Link": 2.45,
+            "Meader Ridge Trail": 1.86,
+            "Mount Meader Trail": 2.41
+          },
           "reading": "Eagle Crag sits on the Baldface Circle Trail, sharing the Rt. 113 trailhead with North and South Baldface and Eastman Mtn. Meader Ridge Trail carries on north to Mt. Meader, which is how the two came to be paired, but it is a continuation rather than the way in.",
           "caveat": "These are whole-trail lengths from the Forest Service GIS, not the distance from any particular trailhead."
         }
       },
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/meader.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Meader%20Ridge&from=petrofang.github.io%2F52wav",
@@ -160,6 +181,11 @@
       "notes": "Nice sub-alpine summit.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/eastman.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Eastman%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -204,6 +230,11 @@
       },
       "notes": "Good views from three ledgy areas. Cliffs and boulders.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/hedgehog.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Hedgehog%20Mountain&from=petrofang.github.io%2F52wav",
@@ -250,6 +281,11 @@
       "notes": "Rocky pinnacle with near-360 view. Beautiful birch glades.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/horn.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Horn&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -294,6 +330,11 @@
       },
       "notes": "Cascades. Ladder. Sharp drop-off ledge above the brook valley.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/carter.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Imp%20Face&from=petrofang.github.io%2F52wav",
@@ -340,6 +381,11 @@
       "notes": "Usually combined with Sandwich Dome.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sandwich.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -385,6 +431,11 @@
       "notes": "Fire tower with unequaled view of Pittsburg. The far north outlier.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/magalloway.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Magalloway%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -426,6 +477,11 @@
       },
       "notes": "Stone foundation of an old fire lookout. Open in all directions.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sister.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Three%20Sisters&from=petrofang.github.io%2F52wav",
@@ -472,6 +528,11 @@
       "notes": "River walk. Split rock. Ladders. Walk-around ledgy summit.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sugarloaf.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Middle%20and%20North%20Sugarloaf%20Mountains&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -516,6 +577,11 @@
       },
       "notes": "Brook and cascades. Sharp rocky peak.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/avalon.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Avalon&from=petrofang.github.io%2F52wav",
@@ -563,6 +629,11 @@
       "notes": "Bare rock dome with a fire tower. Semi-open traverse from Firescrew.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cardigan.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Cardigan&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -608,6 +679,11 @@
         }
       ],
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/chocorua.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Chocorua&from=petrofang.github.io%2F52wav",
@@ -669,6 +745,11 @@
       "notes": "Walk-around view in all directions. Often combined with Resolution and Stairs.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/crawford.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -713,6 +794,11 @@
       },
       "notes": "Two summit knobs with interesting rock and wide views. Coordinates are the main summit.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cube.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Cube&from=petrofang.github.io%2F52wav",
@@ -759,6 +845,11 @@
       "notes": "Pond and cliffs. Ledges with view of Gorham.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/hayes.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Hayes&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -803,6 +894,11 @@
       },
       "notes": "Long ledgy summit with views in a few different directions.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/israel.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Israel&from=petrofang.github.io%2F52wav",
@@ -849,6 +945,11 @@
       "notes": "Great starter peak. Expansive ledgy summit with fire tower.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/kearsarge.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Kearsarge&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -893,6 +994,11 @@
       },
       "notes": "Enclosed fire tower with 360-degree views.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/kearsarge_north.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Kearsarge%20North&from=petrofang.github.io%2F52wav",
@@ -939,6 +1045,11 @@
       "notes": "Southernmost peak on the list. One of the most-hiked mountains in the world. The name is Abenaki for a mountain that stands alone; geologists later borrowed it as the word for any such peak.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/monadnock.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Monadnock&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -983,6 +1094,11 @@
       },
       "notes": "Remote view of the Rocky Branch valley.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/parker.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Parker&from=petrofang.github.io%2F52wav",
@@ -1029,6 +1145,11 @@
       "notes": "Viewpoints from the ledgy knob south of the true summit.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/paugus.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Paugus&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1073,6 +1194,11 @@
       },
       "notes": "The Indian Head profile. Easy forest climb to open ledges.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/pemigewasset.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Pemigewasset&from=petrofang.github.io%2F52wav",
@@ -1119,6 +1245,11 @@
       "notes": "Views are from the south knob. Wild sub-alpine ridge.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/parker.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1164,6 +1295,11 @@
         }
       ],
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/shaw.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Shaw&from=petrofang.github.io%2F52wav",
@@ -1226,6 +1362,11 @@
       "notes": "Wild remote trail, summit bog, and the 1954 DC-3 crash site nearby.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/success.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Success&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1270,6 +1411,11 @@
       },
       "notes": "Brook and cascades. Outstanding foliage view.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/tremont.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Tremont&from=petrofang.github.io%2F52wav",
@@ -1316,6 +1462,11 @@
       "notes": "Bugle Cliff and cascades. Scenic loop with 4,000-footer Mt. Jackson.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/webster.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Webster%20and%20Jackson&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1360,6 +1511,11 @@
       },
       "notes": "Easiest hike on the list. Incomparable view down Crawford Notch.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/willard.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Willard&from=petrofang.github.io%2F52wav",
@@ -1406,6 +1562,11 @@
       "notes": "Vast expanses of steep ledges. Usually looped with South Baldface.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/baldface.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Baldfaces&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1450,6 +1611,11 @@
       },
       "notes": "Counts as one entry. North 3,051 ft; South 2,939 ft. Rentable summit cabin on North.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/doublehead.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Doublehead%20Mountain&from=petrofang.github.io%2F52wav",
@@ -1496,6 +1662,11 @@
       "notes": "Long interesting ridge walk with wide open summits.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/moat.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=South%20and%20North%20Moat%20Mountains&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1540,6 +1711,11 @@
       },
       "notes": "Extremely steep slabs. Beautiful flat open summit.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/percy.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=North%20Percy%20Peak&from=petrofang.github.io%2F52wav",
@@ -1586,6 +1762,11 @@
       "notes": "River crossing. Many ledges with wilderness views.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/potash.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Potash%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1630,6 +1811,11 @@
       },
       "notes": "Highest on the list and New England's tallest sub-4,000-foot mountain.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sandwich.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Sandwich%20Dome&from=petrofang.github.io%2F52wav",
@@ -1676,6 +1862,11 @@
       "notes": "Alpine bogs and wide open ledges. Long day.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/shelburne.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Shelburne%20Moriah%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1720,6 +1911,11 @@
       },
       "notes": "Ledges on Lambert Ridge. Views come from the fire tower.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/smarts.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Smarts%20%20Mountain&from=petrofang.github.io%2F52wav",
@@ -1766,6 +1962,11 @@
       "notes": "Steep ledge climb out of the woods. Emerald Pool at the base.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/baldface.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Baldfaces&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1810,6 +2011,11 @@
       },
       "notes": "Open ledgy summit; shortest approach to the Moat ridge.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/smoat.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=South%20and%20North%20Moat%20Mountains&from=petrofang.github.io%2F52wav",
@@ -1856,6 +2062,11 @@
       "notes": "The Giant Stairs. Wide directional view from the cliff top.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/stairs.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1900,6 +2111,11 @@
       },
       "notes": "Short forest climb to a rocky summit with fire tower footings.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/stinson.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stinson%20Mountain&from=petrofang.github.io%2F52wav",
@@ -1946,6 +2162,11 @@
       "notes": "Old fire warden road and cabin. Beautiful open summit.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sugarloaf4.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Sugarloaf%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1990,6 +2211,11 @@
       },
       "notes": "Counts as one entry. Dickey 2,722 ft; Welch 2,598 ft. Coordinates are Dickey.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/welch.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Welch%20and%20Dickey%20Mountains&from=petrofang.github.io%2F52wav",
@@ -2036,6 +2262,11 @@
       "notes": "Retired June 2025 after losing most of its view. Pair it with 4,000-footer Waumbek.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/waumbek.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Waumbek&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2080,6 +2311,11 @@
       },
       "notes": "Retired June 2025, flipped for neighboring Owlshead. Fire tower footings on the summit.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cherry.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Cherry%20Mountain&from=petrofang.github.io%2F52wav",
@@ -2126,6 +2362,11 @@
       "notes": "Retired in 2010, replaced by Mt. Roberts.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/wolf.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Roberts&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2170,6 +2411,11 @@
       },
       "notes": "The first peak ever retired, in 2001.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/carr.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Carr%20Mountain&from=petrofang.github.io%2F52wav",
@@ -2216,6 +2462,11 @@
       "notes": "Retired May 2020.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/royce.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=East%20and%20West%20Royce&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2260,6 +2511,11 @@
       },
       "notes": "Retired May 2020.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/passaconaway.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Wonalancet%20and%20Hibbard%20Mountain&from=petrofang.github.io%2F52wav",
@@ -2306,6 +2562,11 @@
       "notes": "Retired June 2025; only limited views remain. Replaced by Bald Peak.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/blueberry.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Blueberry%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2351,6 +2612,11 @@
       "notes": "Retired May 2020. Not to be confused with Square Ledge in Pinkham Notch.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/square.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Square%20Ledge&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2395,6 +2661,11 @@
       },
       "notes": "Added 2001 to replace Carr Mountain, retired May 2020. The middle peak is not separately mapped, so the summit pin is the main Black Mountain summit on the same ridge.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/black2.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Black%20Mountain&from=petrofang.github.io%2F52wav",
@@ -2442,6 +2713,11 @@
       "notes": "Replaced Mt. Wolf in 2010. Lake views from an extended ledge walk.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/roberts.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Roberts&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2487,6 +2763,11 @@
       "notes": "Ladders and caves on the loop. Panoramic Squam Lake views.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/percival.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Morgan%20and%20Percival&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2531,6 +2812,11 @@
       },
       "notes": "Boulder cave scramble option near the summit.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/percival.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Morgan%20and%20Percival&from=petrofang.github.io%2F52wav",
@@ -2583,13 +2869,27 @@
         "needs": "Confirmation of which approach the book treats as standard, and whether the Gorham start should remain the recommended route.",
         "evidence": {
           "source": "USFS National Forest System Trails (EDW_TrailNFSPublish_01), queried 2026-08",
-          "trails_at_summit": ["Pine Mountain Road", "Pine Mountain Trail", "Ledge Trail"],
-          "trail_lengths_mi": { "Pine Mountain Road": 1.32, "Pine Mountain Trail": 0.82, "Ledge Trail": 0.3, "Pine Link": 3.43 },
+          "trails_at_summit": [
+            "Pine Mountain Road",
+            "Pine Mountain Trail",
+            "Ledge Trail"
+          ],
+          "trail_lengths_mi": {
+            "Pine Mountain Road": 1.32,
+            "Pine Mountain Trail": 0.82,
+            "Ledge Trail": 0.3,
+            "Pine Link": 3.43
+          },
           "reading": "Pine Mountain Road is itself a Forest Service system route, which supports walking in. Road plus Pine Mountain Trail is about 2.1 mi each way, with the Ledge Trail available to make a loop; the stored 3.5 mi round trip looks short against that.",
           "caveat": "These are whole-trail lengths from the Forest Service GIS, not the distance from any particular trailhead."
         }
       },
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/pine.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Pine%20Mountain&from=petrofang.github.io%2F52wav",
@@ -2652,6 +2952,11 @@
       "notes": "Table-like ledge with excellent views over a remote northern forest. Reached by a spur off York Pond Road through the fish hatchery; the road is seasonal and the hatchery gate is signed 8am-4pm.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/rogersledge.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Rogers%20Ledge&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2696,6 +3001,11 @@
       },
       "notes": "Sub-alpine ledges with great views. Nice cascades.",
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/table.html",
+          "note": "Trail report, route stats and GPS track"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Table%20Mountain&from=petrofang.github.io%2F52wav",
@@ -2791,6 +3101,11 @@
       "notes": "Removed 2020, returned June 2025 after the worn trail was rerouted.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/iron.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Iron%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2836,6 +3151,11 @@
       "notes": "Added June 2025, flipped with neighboring Mt. Martha for its better view.",
       "sources": [
         {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cherry.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Owlshead&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2844,4 +3164,3 @@
     }
   ]
 }
-
