@@ -515,248 +515,49 @@
 
   let radarPromise = null;
 
-  const USFS_TRAILS = 'https://apps.fs.usda.gov/arcx/rest/services/EDW/EDW_TrailNFSPublish_01/MapServer/0/query';
-
-  function trailsNear(lat, lon, extra) {
-    const lats = [lat, extra?.lat].filter(Number.isFinite);
-    const lons = [lon, extra?.lon].filter(Number.isFinite);
-    const pad = 0.02;
-    const minLat = Math.min(...lats) - pad;
-    const maxLat = Math.max(...lats) + pad;
-    const minLon = Math.min(...lons) - pad;
-    const maxLon = Math.max(...lons) + pad;
-    const params = new URLSearchParams({
-      where: '1=1',
-      geometry: `${minLon},${minLat},${maxLon},${maxLat}`,
-      geometryType: 'esriGeometryEnvelope',
-      inSR: '4326',
-      spatialRel: 'esriSpatialRelIntersects',
-      outFields: 'TRAIL_NAME',
-      returnGeometry: 'true',
-      outSR: '4326',
-      f: 'geojson'
-    });
-    return fetch(`${USFS_TRAILS}?${params}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!Array.isArray(data?.features)) throw new Error('No trail features');
-        // Snowmobile corridors are not hiking trails and clutter the view.
-        data.features = data.features.filter((f) => !/SNOMO|CORR/i.test(f?.properties?.trail_name || ''));
-        return data;
-      });
-  }
-
-  const metresBetween = (a, b) => {
-    const toRad = Math.PI / 180;
-    const dLat = (b[1] - a[1]) * toRad;
-    const dLon = (b[0] - a[0]) * toRad;
-    const lat1 = a[1] * toRad;
-    const lat2 = b[1] * toRad;
-    const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
-    return 6371000 * 2 * Math.asin(Math.sqrt(h));
-  };
-
-  // Trail segments are separate features that meet at junctions, so vertices are snapped to a
-  // ~10 m grid and nearby segment ends are bridged to stitch them into one network.
-  function buildTrailGraph(features) {
-    const key = (c) => `${c[0].toFixed(4)},${c[1].toFixed(4)}`;
-    const nodes = new Map();
-    const endpoints = [];
-
-    const addEdge = (a, b) => {
-      const ka = key(a);
-      const kb = key(b);
-      if (ka === kb) return;
-      if (!nodes.has(ka)) nodes.set(ka, { coord: a, edges: [] });
-      if (!nodes.has(kb)) nodes.set(kb, { coord: b, edges: [] });
-      const cost = metresBetween(a, b);
-      nodes.get(ka).edges.push({ to: kb, cost });
-      nodes.get(kb).edges.push({ to: ka, cost });
-    };
-
-    features.forEach((feature) => {
-      const geom = feature?.geometry;
-      if (!geom) return;
-      const lines = geom.type === 'MultiLineString' ? geom.coordinates : [geom.coordinates];
-      lines.forEach((line) => {
-        if (!Array.isArray(line) || line.length < 2) return;
-        for (let i = 1; i < line.length; i += 1) addEdge(line[i - 1], line[i]);
-        endpoints.push(line[0], line[line.length - 1]);
-      });
-    });
-
-    for (let i = 0; i < endpoints.length; i += 1) {
-      for (let j = i + 1; j < endpoints.length; j += 1) {
-        if (metresBetween(endpoints[i], endpoints[j]) <= 40) addEdge(endpoints[i], endpoints[j]);
-      }
-    }
-
-    return nodes;
-  }
-
-  const normaliseTrail = (name) => String(name || '')
-    .toUpperCase()
-    .replace(/\([^)]*\)/g, ' ')
-    .replace(/\bMOUNTAIN\b/g, 'MTN')
-    .replace(/\bMOUNT\b|\bMT\b/g, '')
-    .replace(/\bTRAILHEAD\b|\bTRAIL\b|\bPATH\b|\bLOOP\b|\bSPUR\b|\bPARKING\b/g, '')
-    .replace(/[^A-Z0-9]+/g, ' ')
-    .trim();
-
-  // Route names are written for people ("Sandwich Dome + Jennings Peak") and often differ from
-  // the Forest Service trail name, so the trailhead name gets a second chance at matching.
-  function routeTrailFeatures(features, routeName, trailheadName) {
-    const squash = (value) => value.replace(/\s+/g, '');
-    const overlaps = (a, b) => a.includes(b) || b.includes(a) || squash(a).includes(squash(b)) || squash(b).includes(squash(a));
-    const tokens = [routeName, trailheadName]
-      .flatMap((name) => String(name || '').split(/\s*(?:\+|\/|&|,|\band\b)\s*/i))
-      .map(normaliseTrail)
-      .filter((token) => token.length >= 3);
-
-    return features.filter((feature) => {
-      const trail = normaliseTrail(feature?.properties?.trail_name);
-      return Boolean(trail) && tokens.some((token) => overlaps(trail, token));
-    });
-  }
-
-  // Highlight only the stretch of the route's own trails that runs from the trailhead to the
-  // summit, so a long through-trail is not lit up far past the peak.
-  function walkedRoute(features, summit, trailhead) {
-    if (!features.length) return null;
-    const nodes = buildTrailGraph(features);
-    if (!nodes.size) return null;
-
-    const anchor = (point) => {
-      let best = null;
-      let bestDistance = Infinity;
-      nodes.forEach((node, id) => {
-        const distance = metresBetween(node.coord, point);
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          best = id;
-        }
-      });
-      return bestDistance < 1500 ? best : null;
-    };
-
-    const start = Number.isFinite(trailhead?.lat) ? anchor([trailhead.lon, trailhead.lat]) : null;
-    const end = anchor([summit.lon, summit.lat]);
-    if (!start || !end || start === end) return null;
-
-    const path = shortestTrailPath(nodes, start, end);
-    if (!path || path.coords.length < 2) return null;
-
-    return {
-      type: 'FeatureCollection',
-      features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: path.coords } }]
-    };
-  }
-
-  function shortestTrailPath(nodes, startId, endId) {
-    const dist = new Map([[startId, 0]]);
-    const prev = new Map();
-    const seen = new Set();
-    const queue = [{ id: startId, cost: 0 }];
-
-    while (queue.length) {
-      queue.sort((a, b) => a.cost - b.cost);
-      const { id } = queue.shift();
-      if (seen.has(id)) continue;
-      seen.add(id);
-      if (id === endId) break;
-
-      nodes.get(id).edges.forEach((edge) => {
-        if (seen.has(edge.to)) return;
-        const next = dist.get(id) + edge.cost;
-        if (next < (dist.get(edge.to) ?? Infinity)) {
-          dist.set(edge.to, next);
-          prev.set(edge.to, id);
-          queue.push({ id: edge.to, cost: next });
-        }
-      });
-    }
-
-    if (!dist.has(endId)) return null;
-
-    const coords = [];
-    for (let at = endId; at; at = prev.get(at)) {
-      coords.unshift(nodes.get(at).coord);
-      if (at === startId) break;
-    }
-    return { coords, metres: dist.get(endId) };
-  }
-
-  function walkedRoute(features, summit, trailhead) {
-    if (!features.length) return null;
-    const nodes = buildTrailGraph(features);
-    if (!nodes.size) return null;
-
-    const anchor = (point) => {
-      let best = null;
-      let bestDistance = Infinity;
-      nodes.forEach((node, id) => {
-        const distance = metresBetween(node.coord, point);
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          best = id;
-        }
-      });
-      return bestDistance < 1500 ? best : null;
-    };
-
-    const start = Number.isFinite(trailhead?.lat) ? anchor([trailhead.lon, trailhead.lat]) : null;
-    const end = anchor([summit.lon, summit.lat]);
-    if (!start || !end || start === end) return null;
-
-    const path = shortestTrailPath(nodes, start, end);
-    if (!path || path.coords.length < 2) return null;
-
-    return {
-      type: 'FeatureCollection',
-      features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: path.coords } }]
-    };
-  }
-
-  function addTrailOverlay(map, id, summit, trailhead, routeName) {
-    trailsNear(summit.lat, summit.lon, trailhead)
+  // Trail geometry is baked into data/trails/<id>.json at build time from OpenStreetMap, so
+  // the page never queries a shared API at runtime. See docs in the README.
+  function addTrailOverlay(map, id) {
+    fetch(`data/trails/${id}.json`, { cache: 'force-cache' })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
       .then((geojson) => {
         if (summitView.id !== id || summitView.map !== map || map.getSource('trails')) return;
-        const routeFeatures = routeTrailFeatures(geojson.features, routeName, trailhead?.name);
-        const walked = walkedRoute(routeFeatures, summit, trailhead)
-          || (routeFeatures.length ? { type: 'FeatureCollection', features: routeFeatures } : null);
+        const hasRoute = geojson.features.some((f) => f.properties?.role === 'route');
 
         map.addSource('trails', {
           type: 'geojson',
           data: geojson,
-          attribution: 'Trails: USDA Forest Service'
+          attribution: 'Trails: OpenStreetMap contributors'
         });
         map.addLayer({
-          id: 'trails-other',
+          id: 'trails-network',
           type: 'line',
           source: 'trails',
+          filter: ['!=', ['get', 'role'], 'route'],
           layout: { 'line-cap': 'round', 'line-join': 'round' },
-          paint: { 'line-color': '#e7e5e4', 'line-width': 1.2, 'line-opacity': walked ? 0.35 : 0.7 }
+          paint: { 'line-color': '#e7e5e4', 'line-width': 1.2, 'line-opacity': hasRoute ? 0.35 : 0.7 }
         });
 
-        if (!walked) return;
-        map.addSource('route-line', { type: 'geojson', data: walked });
+        if (!hasRoute) return;
         map.addLayer({
           id: 'route-casing',
           type: 'line',
-          source: 'route-line',
+          source: 'trails',
+          filter: ['==', ['get', 'role'], 'route'],
           layout: { 'line-cap': 'round', 'line-join': 'round' },
           paint: { 'line-color': '#1c1917', 'line-width': 6, 'line-opacity': 0.55, 'line-blur': 1 }
         });
         map.addLayer({
           id: 'route-line',
           type: 'line',
-          source: 'route-line',
+          source: 'trails',
+          filter: ['==', ['get', 'role'], 'route'],
           layout: { 'line-cap': 'round', 'line-join': 'round' },
           paint: { 'line-color': '#fbbf24', 'line-width': 3, 'line-opacity': 1 }
         });
       })
       .catch(() => {
-        // Trails are a bonus; peaks outside the national forest simply have none.
+        // Peaks without baked trail data simply show none.
       });
   }
 
@@ -862,9 +663,7 @@
           host.style.opacity = '1';
           startSummitOrbit(map);
           // Not map.once('idle'): the orbit animation means the map never goes idle.
-          const peak = state.peaks.find((p) => p.id === id);
-          const route = primaryRoute(peak || {});
-          addTrailOverlay(map, id, { lat, lon }, routeTrailhead(route, peak), route?.name);
+          addTrailOverlay(map, id);
         });
       })
       .catch(() => {

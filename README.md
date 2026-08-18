@@ -172,6 +172,7 @@ them needs an API key.
 | --- | --- |
 | Satellite imagery | [Esri World Imagery](https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer) |
 | Terrain elevation | [Terrain Tiles on AWS Open Data](https://registry.opendata.aws/terrain-tiles/) (Mapzen Terrarium encoding) |
+| Trail lines | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, baked into `data/trails/` — see below |
 | Precipitation radar | [RainViewer](https://www.rainviewer.com/api.html) |
 | Temperature and cloud cover | [Open-Meteo](https://open-meteo.com/) |
 | 3D rendering | [MapLibre GL JS](https://maplibre.org/) (loaded on demand from unpkg) |
@@ -180,6 +181,17 @@ The elevation tiles contain occasional corrupt pixels that decode as spikes of o
 kilometre, so each tile is passed through a median filter in the browser before it reaches the
 terrain mesh. The filter's threshold scales with the tile's ground resolution, which keeps
 genuine relief intact at low zoom.
+
+### Trail lines
+
+`data/trails/<id>.json` holds the trail lines drawn on the summit view: the walking route from
+the trailhead to the summit, plus the surrounding path network for context. They were built
+offline from OpenStreetMap, once, and are served as static files, so the page never queries a
+shared API while someone is browsing.
+
+The route line is the shortest path along the trail network between the stored trailhead and
+summit. It is drawn as a guide to which trails a hike uses; it is **not** a measurement, and
+the published distance in `peaks.json` remains the figure of record.
 
 Two peaks added in 2025 (Bald Peak, Iron Mountain) had no published route statistics, so
 distance and gain were measured by routing the trail geometry and sampling USGS elevations.
