@@ -649,6 +649,11 @@
           "note": "Trail report, route stats and GPS track"
         },
         {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Cardigan980426.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Cardigan&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -970,6 +975,11 @@
           "note": "Trail report, route stats and GPS track"
         },
         {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Kearsarge000603.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Kearsarge&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -1068,6 +1078,11 @@
           "label": "NH Mountain Hiking",
           "url": "https://www.nhmountainhiking.com/monadnock.html",
           "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Monadnock071112.php",
+          "note": "Trail report with photos and directions"
         },
         {
           "label": "NH Family Hikes",
@@ -1218,6 +1233,11 @@
           "label": "NH Mountain Hiking",
           "url": "https://www.nhmountainhiking.com/pemigewasset.html",
           "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Pemigewasset000429.php",
+          "note": "Trail report with photos and directions"
         },
         {
           "label": "NH Family Hikes",
@@ -2162,6 +2182,11 @@
           "note": "Trail report, route stats and GPS track"
         },
         {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Stinson080209.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stinson%20Mountain&from=petrofang.github.io%2F52wav",
           "note": "One hiker's page for this peak"
@@ -2425,6 +2450,11 @@
           "label": "NH Mountain Hiking",
           "url": "https://www.nhmountainhiking.com/wolf.html",
           "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Wolf020817.php",
+          "note": "Trail report with photos and directions"
         },
         {
           "label": "NH Family Hikes",
@@ -3127,6 +3157,16 @@
         "derived": true
       },
       "sources": [
+        {
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/kinsman.html",
+          "note": "Covered as part of the Mount Kinsman Trail report"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/BaldPeakKinsman090328.php",
+          "note": "Trail report with photos and directions"
+        },
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Bald%20Peak&from=petrofang.github.io%2F52wav",
