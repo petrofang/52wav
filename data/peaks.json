@@ -2953,7 +2953,13 @@
         "round_trip_mi": 5.4,
         "gain_ft": 1650,
         "difficulty": "Medium",
-        "recommended": true
+        "recommended": true,
+        "trailhead": {
+          "name": "Promenade Street trailhead, Gorham",
+          "lat": 44.386003,
+          "lon": -71.180484,
+          "address": "Promenade St, Gorham, NH 03581"
+        }
       },
       "routes": [
         {
@@ -2961,35 +2967,48 @@
           "round_trip_mi": 5.4,
           "gain_ft": 1650,
           "difficulty": "Medium",
-          "recommended": true
+          "recommended": true,
+          "trailhead": {
+            "name": "Promenade Street trailhead, Gorham",
+            "lat": 44.386003,
+            "lon": -71.180484,
+            "address": "Promenade St, Gorham, NH 03581"
+          }
         },
         {
-          "name": "Pine Mountain Road (walk in; road closed to public driving)",
-          "round_trip_mi": 3.5,
-          "gain_ft": 1200,
-          "difficulty": "Easier"
+          "name": "Pine Mountain Road and Pine Mountain Trail",
+          "round_trip_mi": 2.7,
+          "gain_ft": 800,
+          "difficulty": "Easier",
+          "derived": true,
+          "trailhead": {
+            "name": "Pine Link Trail parking, Pinkham B Road",
+            "lat": 44.353966,
+            "lon": -71.231311
+          }
         }
       ],
       "review": {
         "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
         "date": "2026-08",
-        "issue": "Route selection needed checking. The stored recommendation starts in Gorham on the assumption that the shorter Pine Mountain Road approach was closed to hikers; in fact the road is only closed to public driving and walking in is welcome.",
-        "needs": "Confirmation of which approach the book treats as standard, and whether the Gorham start should remain the recommended route.",
-        "evidence": {
-          "source": "USFS National Forest System Trails (EDW_TrailNFSPublish_01), queried 2026-08",
-          "trails_at_summit": [
-            "Pine Mountain Road",
-            "Pine Mountain Trail",
-            "Ledge Trail"
+        "issue": "The stored recommendation started in Gorham on the assumption that the shorter approach was closed to hikers. The road up to the Horton Center is private to vehicles only; walking in is welcome, and that is the usual way up.",
+        "needs": "Confirmation of which approach the guidebook treats as standard.",
+        "access": {
+          "drive": "Pinkham B Road and Dolly Copp Road are both public; they are two named stretches of the same through route between Route 2 and Route 16.",
+          "park": "Pine Link Trail lot at 44.353966, -71.231311, directly opposite the gated road.",
+          "walk": "Pine Mtn Horton Center Road is tagged private in OpenStreetMap and gated, and is the 'Pine Mountain Road' the Forest Service lists as a system route.",
+          "directions_from": "NH Family Hikes trailhead directions, cross-checked against OpenStreetMap road names and access tags"
+        },
+        "measured": {
+          "south_one_way_mi": 1.37,
+          "south_round_trip_mi": 2.74,
+          "south_gain_ft": 817,
+          "south_legs": [
+            "Pine Mtn Horton Center Road 0.89 mi",
+            "Pine Mountain Trail 0.48 mi"
           ],
-          "trail_lengths_mi": {
-            "Pine Mountain Road": 1.32,
-            "Pine Mountain Trail": 0.82,
-            "Ledge Trail": 0.3,
-            "Pine Link": 3.43
-          },
-          "reading": "Pine Mountain Road is itself a Forest Service system route, which supports walking in. Road plus Pine Mountain Trail is about 2.1 mi each way, with the Ledge Trail available to make a loop; the stored 3.5 mi round trip looks short against that.",
-          "caveat": "These are whole-trail lengths from the Forest Service GIS, not the distance from any particular trailhead."
+          "north_round_trip_mi": 5.75,
+          "note": "Straight up and back. The stored 3.5 mi figure is close to this plus the ledge loop."
         }
       },
       "sources": [
@@ -3019,7 +3038,7 @@
         "lon": -71.180484,
         "address": "Promenade St, Gorham, NH 03581"
       },
-      "notes": "Many expansive ledges facing the Northern Presidentials. The shorter approach, about 3.5 mi round trip, follows Pine Mountain Road off Pinkham B Road: the road is private and closed to public driving, but walkers are welcome."
+      "notes": "Many expansive ledges facing the Northern Presidentials. The short way in leaves Pinkham B Road at the Pine Link Trail parking, opposite the gated road up to the Horton Center: that road is private and closed to public driving, but walkers are welcome."
     },
     {
       "id": 57,
