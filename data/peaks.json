@@ -104,7 +104,14 @@
         "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
         "date": "2026-08",
         "issue": "Eagle Crag is not closely tied to Mt. Meader beyond sharing the range. The stored route, mileage, gain and source link all describe a Meader Ridge traverse, and Mt. Meader is not on the 52 With a View list at all.",
-        "needs": "A standalone Eagle Crag route with its own trailhead, distance and gain, verified against the book."
+        "needs": "A standalone Eagle Crag route with its own trailhead, distance and gain, verified against the book.",
+        "evidence": {
+          "source": "USFS National Forest System Trails (EDW_TrailNFSPublish_01), queried 2026-08",
+          "trails_at_summit": ["Baldface Circle Trail", "Eagle Link", "Meader Ridge Trail", "Bicknell Ridge Trail"],
+          "trail_lengths_mi": { "Baldface Circle Trail": 7.36, "Bicknell Ridge Trail": 2.2, "Eagle Link": 2.45, "Meader Ridge Trail": 1.86, "Mount Meader Trail": 2.41 },
+          "reading": "Eagle Crag sits on the Baldface Circle Trail, sharing the Rt. 113 trailhead with North and South Baldface and Eastman Mtn. Meader Ridge Trail carries on north to Mt. Meader, which is how the two came to be paired, but it is a continuation rather than the way in.",
+          "caveat": "These are whole-trail lengths from the Forest Service GIS, not the distance from any particular trailhead."
+        }
       },
       "sources": [
         {
@@ -2573,7 +2580,14 @@
         "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
         "date": "2026-08",
         "issue": "Route selection needed checking. The stored recommendation starts in Gorham on the assumption that the shorter Pine Mountain Road approach was closed to hikers; in fact the road is only closed to public driving and walking in is welcome.",
-        "needs": "Confirmation of which approach the book treats as standard, and whether the Gorham start should remain the recommended route."
+        "needs": "Confirmation of which approach the book treats as standard, and whether the Gorham start should remain the recommended route.",
+        "evidence": {
+          "source": "USFS National Forest System Trails (EDW_TrailNFSPublish_01), queried 2026-08",
+          "trails_at_summit": ["Pine Mountain Road", "Pine Mountain Trail", "Ledge Trail"],
+          "trail_lengths_mi": { "Pine Mountain Road": 1.32, "Pine Mountain Trail": 0.82, "Ledge Trail": 0.3, "Pine Link": 3.43 },
+          "reading": "Pine Mountain Road is itself a Forest Service system route, which supports walking in. Road plus Pine Mountain Trail is about 2.1 mi each way, with the Ledge Trail available to make a loop; the stored 3.5 mi round trip looks short against that.",
+          "caveat": "These are whole-trail lengths from the Forest Service GIS, not the distance from any particular trailhead."
+        }
       },
       "sources": [
         {
