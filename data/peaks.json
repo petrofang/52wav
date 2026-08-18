@@ -2949,32 +2949,19 @@
       "prominence_ft": 780,
       "isolation_mi": 1.7,
       "route": {
-        "name": "Pine Mountain Trail (from Gorham)",
-        "round_trip_mi": 5.4,
-        "gain_ft": 1650,
-        "difficulty": "Medium",
-        "recommended": true,
+        "name": "Pine Mountain Road and Pine Mountain Trail",
+        "round_trip_mi": 2.7,
+        "gain_ft": 800,
+        "difficulty": "Easier",
+        "derived": true,
         "trailhead": {
-          "name": "Promenade Street trailhead, Gorham",
-          "lat": 44.386003,
-          "lon": -71.180484,
-          "address": "Promenade St, Gorham, NH 03581"
-        }
+          "name": "Pine Link Trail parking, Pinkham B Road",
+          "lat": 44.353966,
+          "lon": -71.231311
+        },
+        "recommended": true
       },
       "routes": [
-        {
-          "name": "Pine Mountain Trail (from Gorham)",
-          "round_trip_mi": 5.4,
-          "gain_ft": 1650,
-          "difficulty": "Medium",
-          "recommended": true,
-          "trailhead": {
-            "name": "Promenade Street trailhead, Gorham",
-            "lat": 44.386003,
-            "lon": -71.180484,
-            "address": "Promenade St, Gorham, NH 03581"
-          }
-        },
         {
           "name": "Pine Mountain Road and Pine Mountain Trail",
           "round_trip_mi": 2.7,
@@ -2985,6 +2972,19 @@
             "name": "Pine Link Trail parking, Pinkham B Road",
             "lat": 44.353966,
             "lon": -71.231311
+          },
+          "recommended": true
+        },
+        {
+          "name": "Pine Mountain Trail (from Gorham)",
+          "round_trip_mi": 5.4,
+          "gain_ft": 1650,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Promenade Street trailhead, Gorham",
+            "lat": 44.386003,
+            "lon": -71.180484,
+            "address": "Promenade St, Gorham, NH 03581"
           }
         }
       ],
@@ -3033,10 +3033,9 @@
         "lon": -71.215187
       },
       "trailhead": {
-        "name": "Promenade Street trailhead, Gorham",
-        "lat": 44.386003,
-        "lon": -71.180484,
-        "address": "Promenade St, Gorham, NH 03581"
+        "name": "Pine Link Trail parking, Pinkham B Road",
+        "lat": 44.353966,
+        "lon": -71.231311
       },
       "notes": "Many expansive ledges facing the Northern Presidentials. The short way in leaves Pinkham B Road at the Pine Link Trail parking, opposite the gated road up to the Horton Center: that road is private and closed to public driving, but walkers are welcome."
     },
