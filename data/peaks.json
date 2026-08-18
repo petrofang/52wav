@@ -894,7 +894,13 @@
         "name": "Wentworth Trail",
         "round_trip_mi": 4.4,
         "gain_ft": 1700,
-        "difficulty": "Easier"
+        "difficulty": "Easier",
+        "recommended": true,
+        "trailhead": {
+          "name": "Mead Base Camp (Wentworth Trail)",
+          "lat": 43.828917,
+          "lon": -71.48399
+        }
       },
       "view_rating": 7,
       "gnis": {
@@ -922,7 +928,40 @@
           "url": "https://www.alltrails.com/trail/us/new-hampshire/mount-israel-via-wentworth-trail",
           "note": "Route page and recent reviews"
         }
-      ]
+      ],
+      "routes": [
+        {
+          "name": "Wentworth Trail",
+          "round_trip_mi": 4.4,
+          "gain_ft": 1700,
+          "difficulty": "Easier",
+          "recommended": true,
+          "trailhead": {
+            "name": "Mead Base Camp (Wentworth Trail)",
+            "lat": 43.828917,
+            "lon": -71.48399
+          }
+        },
+        {
+          "name": "Guinea Pond Trail and Mead Trail",
+          "round_trip_mi": 7.2,
+          "gain_ft": 1440,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Guinea Pond Trail, Sandwich Notch Road",
+            "lat": 43.848328,
+            "lon": -71.518412
+          },
+          "note": "Figures are the author's, revised for the 2024 Guinea Pond Trail relocation."
+        }
+      ],
+      "review": {
+        "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
+        "date": "2026-08",
+        "issue": "The Forest Service relocated about a mile of the Guinea Pond Trail to escape persistent beaver flooding. The new line starts 0.7 mi from Sandwich Notch Road and runs parallel to the old one but higher up the slope.",
+        "resolution": "Added the Guinea Pond Trail and Mead Trail approach with the author's revised figures: 7.2 mi round trip and 1,440 ft of gain.",
+        "caveat": "The trail line drawn on the map comes from OpenStreetMap, which still measures this approach at about 6.0 mi round trip and so appears to predate the relocation. The map may show the old alignment until OpenStreetMap catches up."
+      }
     },
     {
       "id": 18,
