@@ -41,8 +41,27 @@ jobs:
           missing = [p["name"] for p in peaks if not p.get("summit", {}).get("lat")]
           if missing:
               problems.append(f"missing coordinates: {missing}")
+
+          # Every peak is described by its routes: one array, one recommendation,
+          # and a trailhead on each route rather than on the peak.
+          legacy = [p["name"] for p in peaks if "route" in p or "trailhead" in p or "alt_routes" in p]
+          if legacy:
+              problems.append(f"peak-level route or trailhead still present: {legacy}")
+          noroutes = [p["name"] for p in peaks if not isinstance(p.get("routes"), list) or not p["routes"]]
+          if noroutes:
+              problems.append(f"no routes: {noroutes}")
+          for p in peaks:
+              picked = [r for r in p.get("routes", []) if r.get("recommended")]
+              if len(picked) != 1:
+                  problems.append(f"{p['name']}: {len(picked)} routes marked recommended, expected 1")
+              for r in p.get("routes", []):
+                  th = r.get("trailhead") or {}
+                  if th.get("lat") is None or th.get("lon") is None:
+                      problems.append(f"{p['name']}: route '{r.get('name')}' has no trailhead")
+
           if problems:
               sys.exit("Dataset is not publishable:\n  " + "\n  ".join(problems))
           current = sum(1 for p in peaks if p["status"] == "current")
-          print(f"{len(peaks)} peaks, {current} current, next_id {data['next_id']}")
+          routes = sum(len(p["routes"]) for p in peaks)
+          print(f"{len(peaks)} peaks, {current} current, {routes} routes, next_id {data['next_id']}")
           PY

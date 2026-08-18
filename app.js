@@ -230,17 +230,9 @@
   const DIFFICULTY_ORDER = { Easier: 1, Medium: 2, Harder: 3 };
 
   function recommendedRoute(p) {
-    const routes = Array.isArray(p.routes) && p.routes.length
-      ? p.routes
-      : Array.isArray(p.alt_routes) && p.route
-        ? [p.route, ...p.alt_routes]
-        : p.route
-          ? [p.route]
-          : [];
-
+    const routes = Array.isArray(p.routes) ? p.routes : [];
     if (!routes.length) return null;
-    const recommended = routes.find((route) => route && route.recommended === true);
-    return recommended || routes[0];
+    return routes.find((route) => route && route.recommended === true) || routes[0];
   }
 
   function sortValue(p, key) {
@@ -270,7 +262,7 @@
       if (state.status === 'todo' && done) return false;
       if (state.status === 'completed' && !done) return false;
       if (!q) return true;
-      return [p.name, p.range, p.town, p.county, p.notes, route?.name, p.trailhead?.name, p.land?.manager, displayName(p)]
+      return [p.name, p.range, p.town, p.county, p.notes, route?.name, routeTrailhead(route)?.name, p.land?.manager, displayName(p)]
         .some((f) => String(f || '').toLowerCase().includes(q));
     });
 
@@ -751,19 +743,17 @@
   }
 
   function routeChoices(p) {
-    if (Array.isArray(p.routes) && p.routes.length) return p.routes;
-    if (Array.isArray(p.alt_routes) && p.route) return [p.route, ...p.alt_routes];
-    return p.route ? [p.route] : [];
+    return Array.isArray(p.routes) ? p.routes : [];
   }
 
-  function routeTrailhead(route, fallbackPeak = null) {
-    const candidate = route?.trailhead || fallbackPeak?.trailhead || null;
+  function routeTrailhead(route) {
+    const candidate = route?.trailhead;
     if (!candidate || candidate.lat == null || candidate.lon == null) return null;
     return candidate;
   }
 
   function primaryRoute(p) {
-    return recommendedRoute(p) || p.route || {};
+    return recommendedRoute(p) || {};
   }
 
   const DIFFICULTY_STYLE = {
@@ -800,7 +790,7 @@
     }
 
     const route = primaryRoute(peak);
-    const trailhead = routeTrailhead(route, peak);
+    const trailhead = routeTrailhead(route);
     if (trailhead && trailhead.lat != null && trailhead.lon != null) {
       return { lat: Number(trailhead.lat), lon: Number(trailhead.lon) };
     }
@@ -943,7 +933,7 @@
         const gain = route?.gain_ft ? `${route.gain_ft.toLocaleString()} ft up` : '&mdash; ft up';
         const effort = route?.difficulty ? badge(route.difficulty, DIFFICULTY_STYLE[route.difficulty]) : '';
         const recommended = route?.recommended ? badge('Recommended', 'bg-emerald-100 text-emerald-800 ring-emerald-600/20') : '';
-        const trailhead = routeTrailhead(route, p);
+        const trailhead = routeTrailhead(route);
         const trailheadLink = trailhead
           ? `<a class="inline-flex items-center gap-1 text-xs font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Trailhead directions for ${escapeHtml(route?.name || 'this route')}" href="${mapsDirections(trailhead.lat, trailhead.lon)}">${escapeHtml(trailhead.name || route?.name || 'Trailhead')}</a>`
           : '';
@@ -1100,7 +1090,7 @@
         <td class="px-3 py-2.5">${statusBadge(p)}</td>
         <td class="px-3 py-2.5 text-sm leading-tight">
           ${(() => {
-            const trailhead = routeTrailhead(r, p);
+            const trailhead = routeTrailhead(r);
             if (!trailhead) return '<span class="text-stone-300">No trailhead</span>';
             return `<a class="block whitespace-nowrap font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(trailhead.address || trailhead.name || 'the trailhead')}" href="${mapsDirections(trailhead.lat, trailhead.lon)}">Trailhead</a>`;
           })()}
