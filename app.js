@@ -230,17 +230,9 @@
   const DIFFICULTY_ORDER = { Easier: 1, Medium: 2, Harder: 3 };
 
   function recommendedRoute(p) {
-    const routes = Array.isArray(p.routes) && p.routes.length
-      ? p.routes
-      : Array.isArray(p.alt_routes) && p.route
-        ? [p.route, ...p.alt_routes]
-        : p.route
-          ? [p.route]
-          : [];
-
+    const routes = Array.isArray(p.routes) ? p.routes : [];
     if (!routes.length) return null;
-    const recommended = routes.find((route) => route && route.recommended === true);
-    return recommended || routes[0];
+    return routes.find((route) => route && route.recommended === true) || routes[0];
   }
 
   function sortValue(p, key) {
@@ -270,7 +262,7 @@
       if (state.status === 'todo' && done) return false;
       if (state.status === 'completed' && !done) return false;
       if (!q) return true;
-      return [p.name, p.range, p.town, p.county, p.notes, route?.name, p.trailhead?.name, p.land?.manager, displayName(p)]
+      return [p.name, p.range, p.town, p.county, p.notes, route?.name, routeTrailhead(route)?.name, p.land?.manager, displayName(p)]
         .some((f) => String(f || '').toLowerCase().includes(q));
     });
 
@@ -515,6 +507,52 @@
 
   let radarPromise = null;
 
+  // Trail geometry is baked into data/trails/<id>.json at build time from OpenStreetMap, so
+  // the page never queries a shared API at runtime. See docs in the README.
+  function addTrailOverlay(map, id) {
+    fetch(`data/trails/${id}.json`, { cache: 'force-cache' })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((geojson) => {
+        if (summitView.id !== id || summitView.map !== map || map.getSource('trails')) return;
+        const hasRoute = geojson.features.some((f) => f.properties?.role === 'route');
+
+        map.addSource('trails', {
+          type: 'geojson',
+          data: geojson,
+          attribution: 'Trails: OpenStreetMap contributors'
+        });
+        map.addLayer({
+          id: 'trails-network',
+          type: 'line',
+          source: 'trails',
+          filter: ['!=', ['get', 'role'], 'route'],
+          layout: { 'line-cap': 'round', 'line-join': 'round' },
+          paint: { 'line-color': '#e7e5e4', 'line-width': 1.2, 'line-opacity': hasRoute ? 0.35 : 0.7 }
+        });
+
+        if (!hasRoute) return;
+        map.addLayer({
+          id: 'route-casing',
+          type: 'line',
+          source: 'trails',
+          filter: ['==', ['get', 'role'], 'route'],
+          layout: { 'line-cap': 'round', 'line-join': 'round' },
+          paint: { 'line-color': '#1c1917', 'line-width': 6, 'line-opacity': 0.55, 'line-blur': 1 }
+        });
+        map.addLayer({
+          id: 'route-line',
+          type: 'line',
+          source: 'trails',
+          filter: ['==', ['get', 'role'], 'route'],
+          layout: { 'line-cap': 'round', 'line-join': 'round' },
+          paint: { 'line-color': '#fbbf24', 'line-width': 3, 'line-opacity': 1 }
+        });
+      })
+      .catch(() => {
+        // Peaks without baked trail data simply show none.
+      });
+  }
+
   function latestRadarTiles() {
     if (radarPromise) return radarPromise;
     radarPromise = fetch('https://api.rainviewer.com/public/weather-maps.json')
@@ -616,6 +654,8 @@
           map.resize();
           host.style.opacity = '1';
           startSummitOrbit(map);
+          // Not map.once('idle'): the orbit animation means the map never goes idle.
+          addTrailOverlay(map, id);
         });
       })
       .catch(() => {
@@ -643,89 +683,37 @@
     applySummitWeather(summitView.map, id, state.weather[id]);
   }
 
-  const NH_FAMILY_HIKES_NAME_MAP = {
-    'Black Mtn. (Benton)': 'Black Mountain',
-    'Carr Mountain': 'Carr Mountain',
-    'Eagle Crag': 'The Meader Ridge',
-    'Eastman Mtn.': 'Eastman Mountain',
-    'Hedgehog Mtn.': 'Hedgehog Mountain',
-    'Hibbard Mountain': 'Mt. Wonalancet and Hibbard Mountain',
-    'The Horn': 'The Horn',
-    'Imp Face': 'Imp Face',
-    'Jennings Peak': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Middle Sister': 'The Three Sisters',
-    'Mt. Avalon': 'Mt. Avalon',
-    'Mt. Cardigan': 'Mt. Cardigan',
-    'Mt. Chocorua': 'Mt. Chocorua',
-    'Mt. Crawford': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Mt. Cube (South Peak)': 'Mt. Cube',
-    'Mt. Hayes': 'Mt. Hayes',
-    'Mt. Israel': 'Mt. Israel',
-    'Mt. Kearsarge': 'Mt. Kearsarge',
-    'Mt. Kearsarge North': 'Mt. Kearsarge North',
-    'Mt. Monadnock': 'Mt. Monadnock',
-    'Mt. Morgan': 'Mts. Morgan and Percival',
-    'Mt. Parker': 'Mt. Parker',
-    'Mt. Paugus (South Peak)': 'Mt. Paugus',
-    'Mt. Pemigewasset': 'Mt. Pemigewasset',
-    'Mt. Percival': 'Mts. Morgan and Percival',
-    'Mt. Resolution': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Mt. Roberts': 'Mt. Roberts',
-    'Mt. Shaw': 'Mt. Shaw',
-    'Mt. Success': 'Mt. Success',
-    'Mt. Tremont': 'Mt. Tremont',
-    'Mt. Webster': 'Mts. Webster and Jackson',
-    'Mt. Willard': 'Mt. Willard',
-    'Middle Sugarloaf': 'Middle and North Sugarloaf Mountains',
-    'Middle Sugarloaf Mtn.': 'Middle and North Sugarloaf Mountains',
-    'North Baldface': 'The Baldfaces',
-    'North Doublehead and South Doublehead': 'Doublehead Mountain',
-    'North Moat Mtn.': 'South and North Moat Mountains',
-    'North Percy Peak': 'North Percy Peak',
-    'Pine Mtn. (Gorham)': 'Pine Mountain',
-    'Potash Mtn.': 'Potash Mountain',
-    'Sandwich Dome': 'Sandwich Dome',
-    'Shelburne Moriah Mtn.': 'Shelburne Moriah Mountain',
-    'Smarts Mtn.': 'Smarts  Mountain',
-    'South Baldface': 'The Baldfaces',
-    'South Moat Mtn.': 'South and North Moat Mountains',
-    'Stairs Mtn.': 'Stairs Mountain and Mts. Resolution and Crawford',
-    'Stinson Mtn.': 'Stinson Mountain',
-    'Sugarloaf (Stratford)': 'Sugarloaf Mountain',
-    'Table Mtn.': 'Table Mountain',
-    'Welch Mountain and Dickey Mountain': 'Welch and Dickey Mountains',
-    'Mt. Waumbek': 'Mt. Waumbek',
-    'Black Mountain - Middle Peak (Jackson)': 'Black Mountain',
-    'Bald Peak': 'Bald Peak',
-    'Iron Mountain': 'Iron Mountain',
-    'Owlshead (Carroll)': 'Owlshead',
-    'Mt. Starr King': 'Mt. Waumbek',
-    'Mt. Martha (Cherry Mtn.)': 'Cherry Mountain',
-    'Mt. Wolf': 'Mt. Roberts',
-    'Rogers Ledge': 'Rogers Ledge',
-    'Square Ledge (Albany)': 'Square Ledge',
-    'West Royce Mountain': 'East and West Royce',
+  // Icons are stored here rather than hotlinked, so the page makes no third-party requests
+  // and still works offline. Sites without a favicon of their own fall back to a plain mark.
+  const SOURCE_ICONS = {
+    'www.nhmountainhiking.com': 'assets/icons/sources/nhmountainhiking.ico',
+    'www.alltrails.com': 'assets/icons/sources/alltrails.png',
   };
 
-  function nhFamilyHikesUrl(p) {
-    const mappedName = NH_FAMILY_HIKES_NAME_MAP[p.name] || p.name;
-    const hikeParam = encodeURIComponent(mappedName);
-    const sourceParam = encodeURIComponent('petrofang.github.io/52wav');
-    return `http://www.nhfamilyhikes.com/hikes.php?hike=${hikeParam}&from=${sourceParam}`;
+  function sourceIcon(url) {
+    let host = '';
+    try { host = new URL(url).hostname; } catch { host = ''; }
+    const icon = SOURCE_ICONS[host];
+    if (icon) {
+      return `<img class="h-4 w-4 flex-none rounded-sm" src="${icon}" alt="" loading="lazy" decoding="async" aria-hidden="true">`;
+    }
+    return `<span class="flex h-4 w-4 flex-none items-center justify-center rounded-sm bg-emerald-200/70 text-[9px] font-bold text-emerald-900" aria-hidden="true">${escapeHtml((host.replace(/^www\./, '')[0] || '?').toUpperCase())}</span>`;
   }
+
+  // The book is the guide to this list; everything else is a third-party writeup.
+  const OFFICIAL_GUIDE = {
+    label: "52 With a View: A Hiker's Guide",
+    url: 'https://www.kenmacgray.org/52/',
+    note: 'Ken MacGray, 3rd edition (2025) \u2014 the guidebook for this list',
+  };
 
   function fallbackSources(p) {
     const q = encodeURIComponent(`${p.name} New Hampshire hike`);
     return [
       {
-        label: 'NH Family Hikes',
-        url: nhFamilyHikesUrl(p),
-        note: 'Peak page and hike notes',
-      },
-      {
         label: 'New England Waterfalls',
         url: 'https://www.newenglandwaterfalls.com/52withaview.php',
-        note: 'Alternate-route guide and standard route options',
+        note: 'Another route writeup',
       },
       {
         label: 'TrailsNH',
@@ -751,23 +739,21 @@
         .filter(Boolean)
       : [];
 
-    return (fromData.length ? fromData : fallbackSources(p)).slice(0, 3);
+    return [OFFICIAL_GUIDE, ...(fromData.length ? fromData : fallbackSources(p)).slice(0, 4)];
   }
 
   function routeChoices(p) {
-    if (Array.isArray(p.routes) && p.routes.length) return p.routes;
-    if (Array.isArray(p.alt_routes) && p.route) return [p.route, ...p.alt_routes];
-    return p.route ? [p.route] : [];
+    return Array.isArray(p.routes) ? p.routes : [];
   }
 
-  function routeTrailhead(route, fallbackPeak = null) {
-    const candidate = route?.trailhead || fallbackPeak?.trailhead || null;
+  function routeTrailhead(route) {
+    const candidate = route?.trailhead;
     if (!candidate || candidate.lat == null || candidate.lon == null) return null;
     return candidate;
   }
 
   function primaryRoute(p) {
-    return recommendedRoute(p) || p.route || {};
+    return recommendedRoute(p) || {};
   }
 
   const DIFFICULTY_STYLE = {
@@ -804,7 +790,7 @@
     }
 
     const route = primaryRoute(peak);
-    const trailhead = routeTrailhead(route, peak);
+    const trailhead = routeTrailhead(route);
     if (trailhead && trailhead.lat != null && trailhead.lon != null) {
       return { lat: Number(trailhead.lat), lon: Number(trailhead.lon) };
     }
@@ -947,7 +933,7 @@
         const gain = route?.gain_ft ? `${route.gain_ft.toLocaleString()} ft up` : '&mdash; ft up';
         const effort = route?.difficulty ? badge(route.difficulty, DIFFICULTY_STYLE[route.difficulty]) : '';
         const recommended = route?.recommended ? badge('Recommended', 'bg-emerald-100 text-emerald-800 ring-emerald-600/20') : '';
-        const trailhead = routeTrailhead(route, p);
+        const trailhead = routeTrailhead(route);
         const trailheadLink = trailhead
           ? `<a class="inline-flex items-center gap-1 text-xs font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Trailhead directions for ${escapeHtml(route?.name || 'this route')}" href="${mapsDirections(trailhead.lat, trailhead.lon)}">${escapeHtml(trailhead.name || route?.name || 'Trailhead')}</a>`
           : '';
@@ -971,10 +957,13 @@
         : '';
 
     const sourceMarkup = sourceLinks.map((src) => `
-      <a class="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 transition hover:bg-emerald-100"
+      <a class="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 transition hover:bg-emerald-100"
          target="_blank" rel="noopener noreferrer" href="${escapeHtml(src.url)}">
-        <span class="font-medium">${escapeHtml(src.label)}</span>
-        ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
+        ${sourceIcon(src.url)}
+        <span class="min-w-0">
+          <span class="block font-medium">${escapeHtml(src.label)}</span>
+          ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
+        </span>
       </a>`).join('');
 
     const countyLabel = p.county ? `${p.county} County` : '';
@@ -1062,7 +1051,8 @@
           <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Route options</p>
           <ul class="mt-2 space-y-2">${routeMarkup}</ul>
 
-          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Hiker writeups and conditions</p>
+          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Further reading</p>
+          <p class="mt-1 text-xs text-stone-500">The guidebook is the reference for this list. The rest are other people&rsquo;s writeups, linked for convenience rather than endorsed.</p>
           <div class="mt-2 grid gap-2">${sourceMarkup}</div>
         </div>
       </article>`;
@@ -1100,7 +1090,7 @@
         <td class="px-3 py-2.5">${statusBadge(p)}</td>
         <td class="px-3 py-2.5 text-sm leading-tight">
           ${(() => {
-            const trailhead = routeTrailhead(r, p);
+            const trailhead = routeTrailhead(r);
             if (!trailhead) return '<span class="text-stone-300">No trailhead</span>';
             return `<a class="block whitespace-nowrap font-medium text-emerald-800 hover:text-emerald-950" target="_blank" rel="noopener noreferrer" title="Drive to ${escapeHtml(trailhead.address || trailhead.name || 'the trailhead')}" href="${mapsDirections(trailhead.lat, trailhead.lon)}">Trailhead</a>`;
           })()}
@@ -1425,24 +1415,19 @@
   }
 
   async function fetchPeaks() {
-    const sources = [cfg.DATA_URL, cfg.FALLBACK_URL].filter(Boolean);
-    let lastError;
-    for (const url of sources) {
-      try {
-        const res = await fetch(url, { cache: 'no-cache' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const body = await res.json();
-        const peaks = Array.isArray(body) ? body : body.peaks;
-        if (!Array.isArray(peaks)) throw new Error('No peak array found');
-        els.sourceNote.textContent =
-          `${peaks.length} peaks loaded from ${url.includes('gist.githubusercontent.com') ? 'the public Gist' : 'this site'}` +
-          `${body.list_revision ? `, list revision ${body.list_revision}` : ''}.`;
-        return { peaks, meta: Array.isArray(body) ? {} : body };
-      } catch (err) {
-        lastError = err;
-      }
-    }
-    throw lastError || new Error('No data source configured');
+    const url = cfg.DATA_URL;
+    if (!url) throw new Error('No data source configured');
+
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const body = await res.json();
+    const peaks = Array.isArray(body) ? body : body.peaks;
+    if (!Array.isArray(peaks)) throw new Error('No peak array found');
+
+    els.sourceNote.textContent =
+      `${peaks.length} peaks loaded${body.list_revision ? `, list revision ${body.list_revision}` : ''}.`;
+    return { peaks, meta: Array.isArray(body) ? {} : body };
   }
 
   (async function init() {

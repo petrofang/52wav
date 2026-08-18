@@ -22,13 +22,13 @@ No build step, no framework, no backend — three static files and a JSON docume
 | `app.js` | Filtering, sorting, progress links, print sheet generation |
 | `config.js` | Which URL the peak data is loaded from |
 | `data/peaks.json` | **The dataset — the source of truth** |
-| `.github/workflows/sync-gist.yml` | Validates the dataset and mirrors it to the public Gist |
+| `.github/workflows/validate-data.yml` | Checks the dataset for duplicate ids, a stale `next_id` and missing coordinates |
 
-The dataset is also published as a Gist so other people can use it:
-<https://gist.github.com/petrofang/46213d7d93292f14ffd54d955b7f3f67>
+The dataset is a single file, and the copy in this repository is the only one:
+<https://github.com/petrofang/52wav/blob/main/data/peaks.json>
 
-That Gist is **generated**. Edit `data/peaks.json` here; anything typed directly into the
-Gist gets overwritten on the next data change.
+To use it elsewhere, read the raw file directly:
+<https://raw.githubusercontent.com/petrofang/52wav/main/data/peaks.json>
 
 For multi-route peaks, the preferred route is the one with `preferred: true`. If a single route
 still exists, the legacy `route` object remains supported for backward compatibility, but the app
@@ -121,9 +121,9 @@ old links warn the reader instead of quietly restoring the wrong mountains.
 
 ### Updating it
 
-Edit `data/peaks.json`, commit, push. That's it — Pages redeploys the site and the workflow
-mirrors the file to the Gist. Before publishing, the workflow checks for duplicate ids, an
-inconsistent `next_id`, and missing coordinates, and refuses to publish if it finds any.
+Edit `data/peaks.json`, commit, push. That's it — Pages redeploys the site. A workflow checks
+the file for duplicate ids, an inconsistent `next_id`, and missing coordinates, and fails the
+build if it finds any.
 
 ---
 
@@ -141,16 +141,27 @@ what you send to the Over the Hill Hikers to claim the patch.
 
 ## Where the data comes from
 
+The guidebook for this list is **New Hampshire's 52 With A View: A Hiker's Guide** by
+[Ken MacGray](https://www.kenmacgray.org/52/), now in its 3rd edition (2025). It is the
+reference for the list itself. It is a print book, so its contents are not reproduced here;
+where this dataset disagrees with the book, the book is right.
+
 | Field | Source |
 | --- | --- |
-| Peak list, elevations, revision history | [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html) (June 2025 revision; 2019 NH statewide LIDAR) |
-| Distance, gain, difficulty, view rating | [NH Family Hikes](http://www.nhfamilyhikes.com/52WAV.php) |
+| The list, elevations, revision history | [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html) (June 2025 revision; 2019 NH statewide LIDAR), cross-checked against [Ken MacGray's peak list](https://www.kenmacgray.org/52/peaks.shtml) |
+| Distance, gain, difficulty, view rating | [NH Family Hikes](http://www.nhfamilyhikes.com/52WAV.php) — where the stored figures came from. No longer linked from the cards, but the numbers are still theirs, and the view ratings are theirs alone |
+| Trail reports and route stats | [NH Mountain Hiking](https://www.nhmountainhiking.com/hike/lists/52view.html) — linked from every card; detailed per-peak reports with measured route figures |
+| Trail reports with photos | [Hike New England](https://www.hikenewengland.com/) — linked where a report exists for the peak |
+| Route pages and recent reviews | [AllTrails](https://www.alltrails.com/) — linked only; no AllTrails data is stored here |
 | Summit and trailhead coordinates | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors |
 | Town and county | US Census Bureau geocoder |
 | Landowner and manager | [NH GRANIT](https://www.granit.unh.edu/) Conservation & Public Lands |
 | Official place names | [USGS GNIS](https://www.usgs.gov/tools/geographic-names-information-system-gnis), U.S. Board on Geographic Names |
 | Alternate-route reference | [New England Waterfalls](https://www.newenglandwaterfalls.com/52withaview.php) |
 | Derived distances and elevation profiles | OpenStreetMap trail geometry + USGS 3DEP/NED |
+
+Links to third-party writeups are offered for convenience and are not endorsements. Peaks
+whose route data is known to need checking carry a `review` block in `data/peaks.json`.
 
 ### Live sources used by the summit view
 
@@ -161,6 +172,7 @@ them needs an API key.
 | --- | --- |
 | Satellite imagery | [Esri World Imagery](https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer) |
 | Terrain elevation | [Terrain Tiles on AWS Open Data](https://registry.opendata.aws/terrain-tiles/) (Mapzen Terrarium encoding) |
+| Trail lines | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, baked into `data/trails/` — see below |
 | Precipitation radar | [RainViewer](https://www.rainviewer.com/api.html) |
 | Temperature and cloud cover | [Open-Meteo](https://open-meteo.com/) |
 | 3D rendering | [MapLibre GL JS](https://maplibre.org/) (loaded on demand from unpkg) |
@@ -169,6 +181,17 @@ The elevation tiles contain occasional corrupt pixels that decode as spikes of o
 kilometre, so each tile is passed through a median filter in the browser before it reaches the
 terrain mesh. The filter's threshold scales with the tile's ground resolution, which keeps
 genuine relief intact at low zoom.
+
+### Trail lines
+
+`data/trails/<id>.json` holds the trail lines drawn on the summit view: the walking route from
+the trailhead to the summit, plus the surrounding path network for context. They were built
+offline from OpenStreetMap, once, and are served as static files, so the page never queries a
+shared API while someone is browsing.
+
+The route line is the shortest path along the trail network between the stored trailhead and
+summit. It is drawn as a guide to which trails a hike uses; it is **not** a measurement, and
+the published distance in `peaks.json` remains the figure of record.
 
 Two peaks added in 2025 (Bald Peak, Iron Mountain) had no published route statistics, so
 distance and gain were measured by routing the trail geometry and sampling USGS elevations.

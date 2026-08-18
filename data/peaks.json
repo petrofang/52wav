@@ -1,10 +1,9 @@
 {
-  "schema": 1,
+  "schema": 2,
   "list_revision": "2025-06",
   "source": "Over the Hill Hikers official 52 With a View list",
   "canonical": "https://github.com/petrofang/52wav/blob/main/data/peaks.json",
   "compiled_by": "Giles Cooper (https://github.com/petrofang)",
-  "mirror_notice": "The public Gist copy of this file is generated automatically from the repository. Edits made directly to the Gist will be overwritten.",
   "license": "ODbL-1.0 — free to use with attribution; derived databases share alike. Contains OpenStreetMap-derived coordinates.",
   "attribution": {
     "peak_list_and_elevations": "Over the Hill Hikers, 52 With a View (June 2025 revision); elevations from the 2019 NH statewide LIDAR survey",
@@ -35,12 +34,6 @@
       "range": "Benton",
       "prominence_ft": 680,
       "isolation_mi": 2.4,
-      "route": {
-        "name": "Chippewa Trail",
-        "round_trip_mi": 3.6,
-        "gain_ft": 1550,
-        "difficulty": "Medium"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "871524",
@@ -50,17 +43,31 @@
         "lat": 44.074611,
         "lon": -71.922249
       },
-      "trailhead": {
-        "name": "Chippewa Trailhead",
-        "lat": 44.066098,
-        "lon": -71.946026
-      },
       "notes": "Historic lime kilns. Many nice ledge viewpoints.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Black%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/black.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/chippewa-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Chippewa Trail",
+          "recommended": true,
+          "round_trip_mi": 3.6,
+          "gain_ft": 1550,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Chippewa Trailhead",
+            "lat": 44.066098,
+            "lon": -71.946026
+          }
         }
       ]
     },
@@ -80,12 +87,6 @@
       "range": "Baldface",
       "prominence_ft": 80,
       "isolation_mi": 0.3,
-      "route": {
-        "name": "Eagle Crag & Mt. Meader",
-        "round_trip_mi": 11.1,
-        "gain_ft": 3000,
-        "difficulty": "Harder"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "871820",
@@ -95,17 +96,48 @@
         "lat": 44.253616,
         "lon": -71.071628
       },
-      "trailhead": {
-        "name": "Wild River / Basin Trailhead",
-        "lat": 44.305983,
-        "lon": -71.064541
+      "notes": "Open ledges at the north end of the Baldface ridge, above the Wild River valley. Reached from Route 113 in North Chatham on the same trailhead as the Baldfaces and Eastman Mtn., passing Emerald Pool early on.",
+      "review": {
+        "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
+        "date": "2026-08",
+        "issue": "The stored route described a Mt. Meader traverse, which inflated the distance and gain and pointed the trailhead at Wild River. Mt. Meader is not on the 52 With a View list.",
+        "resolution": "Replaced with the shortest way to the summit: Emerald Pool Trail to Baldface Circle Trail to the Meader Ridge Trail junction, from the Route 113 trailhead. Distance and gain are measured from OpenStreetMap trail geometry and USGS elevations, so they are flagged derived until the guidebook figure is available.",
+        "measured": {
+          "one_way_mi": 3.59,
+          "round_trip_mi": 7.18,
+          "gain_ft": 2513,
+          "legs": [
+            "Emerald Pool Trail 0.72 mi",
+            "Baldface Circle Trail 2.72 mi",
+            "Meader Ridge Trail 0.15 mi"
+          ]
+        }
       },
-      "notes": "Commonly paired with Mt. Meader. Scenic gorge and open ledges.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Meader%20Ridge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/meader.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/meader-ridge-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Baldface Circle Trail via Emerald Pool",
+          "recommended": true,
+          "round_trip_mi": 7.2,
+          "gain_ft": 2500,
+          "difficulty": "Medium",
+          "derived": true,
+          "trailhead": {
+            "name": "Baldface Circle Trail trailhead",
+            "lat": 44.238144,
+            "lon": -71.016066
+          }
         }
       ]
     },
@@ -125,12 +157,6 @@
       "range": "Baldface",
       "prominence_ft": 369,
       "isolation_mi": 0.9,
-      "route": {
-        "name": "Baldface Circle / Eastman Mountain Trail",
-        "round_trip_mi": 8.4,
-        "gain_ft": 2600,
-        "difficulty": "Medium"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "871842",
@@ -140,17 +166,36 @@
         "lat": 44.215622,
         "lon": -71.062017
       },
-      "trailhead": {
-        "name": "Baldface Circle Trail trailhead",
-        "lat": 44.238144,
-        "lon": -71.016066
-      },
       "notes": "Nice sub-alpine summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Eastman%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/eastman.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/EastmanNH090913.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/eastman-mountain",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Baldface Circle / Eastman Mountain Trail",
+          "recommended": true,
+          "round_trip_mi": 8.4,
+          "gain_ft": 2600,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Baldface Circle Trail trailhead",
+            "lat": 44.238144,
+            "lon": -71.016066
+          }
         }
       ]
     },
@@ -170,12 +215,6 @@
       "range": "Sandwich",
       "prominence_ft": 472,
       "isolation_mi": 0.8,
-      "route": {
-        "name": "UNH Trail loop",
-        "round_trip_mi": 4.8,
-        "gain_ft": 1400,
-        "difficulty": "Easier"
-      },
       "view_rating": 6,
       "gnis": {
         "id": "872031",
@@ -185,17 +224,36 @@
         "lat": 43.974224,
         "lon": -71.367168
       },
-      "trailhead": {
-        "name": "Downes Brook / UNH Trail parking (Kancamagus Hwy)",
-        "lat": 43.99422,
-        "lon": -71.3694
-      },
       "notes": "Good views from three ledgy areas. Cliffs and boulders.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Hedgehog%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/hedgehog.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Hedgehog080419.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/unh-trail-to-hedgehog-mountain",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "UNH Trail loop",
+          "recommended": true,
+          "round_trip_mi": 4.8,
+          "gain_ft": 1400,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Downes Brook / UNH Trail parking (Kancamagus Hwy)",
+            "lat": 43.99422,
+            "lon": -71.3694
+          }
         }
       ]
     },
@@ -215,12 +273,6 @@
       "range": "Pilot",
       "prominence_ft": 255,
       "isolation_mi": 0.5,
-      "route": {
-        "name": "Unknown Pond Trail",
-        "round_trip_mi": 8.4,
-        "gain_ft": 2150,
-        "difficulty": "Medium"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "870384",
@@ -230,17 +282,31 @@
         "lat": 44.517938,
         "lon": -71.400174
       },
-      "trailhead": {
-        "name": "Unknown Pond north trailhead",
-        "lat": 44.55352,
-        "lon": -71.410402
-      },
       "notes": "Rocky pinnacle with near-360 view. Beautiful birch glades.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Horn&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/horn.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mt-cabot-loop-bulge-horn",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Unknown Pond Trail",
+          "recommended": true,
+          "round_trip_mi": 8.4,
+          "gain_ft": 2150,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Unknown Pond north trailhead",
+            "lat": 44.55352,
+            "lon": -71.410402
+          }
         }
       ]
     },
@@ -260,12 +326,6 @@
       "range": "Carter",
       "prominence_ft": 55,
       "isolation_mi": 0.2,
-      "route": {
-        "name": "Imp Trail",
-        "round_trip_mi": 4.4,
-        "gain_ft": 1850,
-        "difficulty": "Medium"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "872070",
@@ -275,17 +335,31 @@
         "lat": 44.321596,
         "lon": -71.188076
       },
-      "trailhead": {
-        "name": "Imp Trail north trailhead (Rt. 16)",
-        "lat": 44.323246,
-        "lon": -71.216921
-      },
       "notes": "Cascades. Ladder. Sharp drop-off ledge above the brook valley.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Imp%20Face&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/carter.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/carter-range-loop",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Imp Trail",
+          "recommended": true,
+          "round_trip_mi": 4.4,
+          "gain_ft": 1850,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Imp Trail north trailhead (Rt. 16)",
+            "lat": 44.323246,
+            "lon": -71.216921
+          }
         }
       ]
     },
@@ -305,12 +379,6 @@
       "range": "Sandwich",
       "prominence_ft": 160,
       "isolation_mi": 0.6,
-      "route": {
-        "name": "Sandwich Dome + Jennings Peak",
-        "round_trip_mi": 8.7,
-        "gain_ft": 2850,
-        "difficulty": "Harder"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872102",
@@ -320,17 +388,31 @@
         "lat": 43.911119,
         "lon": -71.510738
       },
-      "trailhead": {
-        "name": "Sandwich Mountain trailhead",
-        "lat": 43.938322,
-        "lon": -71.511518
-      },
       "notes": "Usually combined with Sandwich Dome.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sandwich.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/jennings-peak-and-sandwich-mountain-trail-loop",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Sandwich Dome + Jennings Peak",
+          "recommended": true,
+          "round_trip_mi": 8.7,
+          "gain_ft": 2850,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Sandwich Mountain trailhead",
+            "lat": 43.938322,
+            "lon": -71.511518
+          }
         }
       ]
     },
@@ -350,12 +432,6 @@
       "range": "Northern Lakes",
       "prominence_ft": 1013,
       "isolation_mi": 3.9,
-      "route": {
-        "name": "Coot Trail / Bobcat Trail",
-        "round_trip_mi": 1.8,
-        "gain_ft": 800,
-        "difficulty": "Easier"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "868234",
@@ -365,17 +441,31 @@
         "lat": 45.063528,
         "lon": -71.162362
       },
-      "trailhead": {
-        "name": "Tower Road parking lot",
-        "lat": 45.069519,
-        "lon": -71.172158
-      },
       "notes": "Fire tower with unequaled view of Pittsburg. The far north outlier.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Magalloway%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/magalloway.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/magalloway-mountain",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Coot Trail / Bobcat Trail",
+          "recommended": true,
+          "round_trip_mi": 1.8,
+          "gain_ft": 800,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Tower Road parking lot",
+            "lat": 45.069519,
+            "lon": -71.172158
+          }
         }
       ]
     },
@@ -395,29 +485,42 @@
       "range": "Sandwich",
       "prominence_ft": 174,
       "isolation_mi": 0.5,
-      "route": {
-        "name": "Chocorua + Three Sisters",
-        "round_trip_mi": 8.3,
-        "gain_ft": 2250,
-        "difficulty": "Harder"
-      },
       "view_rating": 10,
       "gnis": null,
       "summit": {
         "lat": 43.964824,
         "lon": -71.270192
       },
-      "trailhead": {
-        "name": "Champney Falls trailhead",
-        "lat": 43.989911,
-        "lon": -71.29912
-      },
       "notes": "Stone foundation of an old fire lookout. Open in all directions.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Three%20Sisters&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sister.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/MiddleSister071209.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/recording/champney-brook-trail-to-mount-chocorua-688ffcd",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Chocorua + Three Sisters",
+          "recommended": true,
+          "round_trip_mi": 8.3,
+          "gain_ft": 2250,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Champney Falls trailhead",
+            "lat": 43.989911,
+            "lon": -71.29912
+          }
         }
       ]
     },
@@ -437,12 +540,6 @@
       "range": "Little River",
       "prominence_ft": 279,
       "isolation_mi": 0.7,
-      "route": {
-        "name": "Sugarloaf Trail",
-        "round_trip_mi": 3.4,
-        "gain_ft": 1100,
-        "difficulty": "Easier"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "868422",
@@ -452,17 +549,31 @@
         "lat": 44.251466,
         "lon": -71.517564
       },
-      "trailhead": {
-        "name": "Sugarloaf Trailhead (Zealand Rd.)",
-        "lat": 44.25472,
-        "lon": -71.504129
-      },
       "notes": "River walk. Split rock. Ladders. Walk-around ledgy summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Middle%20and%20North%20Sugarloaf%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sugarloaf.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/north-and-middle-sugarloaf-via-sugarloaf-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Sugarloaf Trail",
+          "recommended": true,
+          "round_trip_mi": 3.4,
+          "gain_ft": 1100,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Sugarloaf Trailhead (Zealand Rd.)",
+            "lat": 44.25472,
+            "lon": -71.504129
+          }
         }
       ]
     },
@@ -482,12 +593,6 @@
       "range": "Willey",
       "prominence_ft": 100,
       "isolation_mi": 0.2,
-      "route": {
-        "name": "Avalon Trail",
-        "round_trip_mi": 3.7,
-        "gain_ft": 1550,
-        "difficulty": "Easier"
-      },
       "view_rating": 6,
       "gnis": {
         "id": "871418",
@@ -497,17 +602,31 @@
         "lat": 44.206437,
         "lon": -71.426785
       },
-      "trailhead": {
-        "name": "Crawford Notch Station (Crawford Depot)",
-        "lat": 44.217878,
-        "lon": -71.411294
-      },
       "notes": "Brook and cascades. Sharp rocky peak.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Avalon&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/avalon.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/mount-avalon",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Avalon Trail",
+          "recommended": true,
+          "round_trip_mi": 3.7,
+          "gain_ft": 1550,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Crawford Notch Station (Crawford Depot)",
+            "lat": 44.217878,
+            "lon": -71.411294
+          }
         }
       ]
     },
@@ -527,12 +646,6 @@
       "range": "Cardigan Area",
       "prominence_ft": 1890,
       "isolation_mi": 13.4,
-      "route": {
-        "name": "Holt / Clark / Mowglis loop",
-        "round_trip_mi": 5.7,
-        "gain_ft": 1900,
-        "difficulty": "Medium"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "865998",
@@ -542,18 +655,37 @@
         "lat": 43.649565,
         "lon": -71.914276
       },
-      "trailhead": {
-        "name": "AMC Cardigan Lodge",
-        "lat": 43.649529,
-        "lon": -71.878057,
-        "address": "774 Shem Valley Rd, Alexandria, NH 03222"
-      },
       "notes": "Bare rock dome with a fire tower. Semi-open traverse from Firescrew.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Cardigan&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cardigan.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Cardigan980426.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/mount-cardigan-via-holt-and-clark-trail#:~:text=Mount%20Cardigan%20via%20Holt%20and%20Clark%20Trail%20is%20a%204.3,used%20from%20April%20until%20October.",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Holt / Clark / Mowglis loop",
+          "recommended": true,
+          "round_trip_mi": 5.7,
+          "gain_ft": 1900,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "AMC Cardigan Lodge",
+            "lat": 43.649529,
+            "lon": -71.878057,
+            "address": "774 Shem Valley Rd, Alexandria, NH 03222"
+          }
         }
       ]
     },
@@ -573,33 +705,46 @@
       "range": "Sandwich",
       "prominence_ft": 1280,
       "isolation_mi": 5.2,
-      "route": {
-        "name": "Champney Falls Trail",
-        "round_trip_mi": 8.3,
-        "gain_ft": 2250,
-        "difficulty": "Harder",
-        "recommended": true
-      },
       "routes": [
         {
           "name": "Champney Falls Trail",
+          "recommended": true,
           "round_trip_mi": 8.3,
           "gain_ft": 2250,
           "difficulty": "Harder",
-          "recommended": true
+          "trailhead": {
+            "name": "Champney Falls trailhead",
+            "lat": 43.989911,
+            "lon": -71.29912
+          }
         },
         {
           "name": "Piper Trail / Liberty Trail loop",
           "round_trip_mi": 9.2,
           "gain_ft": 2600,
-          "difficulty": "Harder"
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Champney Falls trailhead",
+            "lat": 43.989911,
+            "lon": -71.29912
+          }
         }
       ],
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Chocorua&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/chocorua.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/ChocoruaNH090405.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/champney-brook-trail-to-mount-chocorua",
+          "note": "Route page and recent reviews"
         }
       ],
       "view_rating": 10,
@@ -610,11 +755,6 @@
       "summit": {
         "lat": 43.954276,
         "lon": -71.273296
-      },
-      "trailhead": {
-        "name": "Champney Falls trailhead",
-        "lat": 43.989911,
-        "lon": -71.29912
       },
       "notes": "Iconic rocky cone. Several waterfalls. Open in all directions."
     },
@@ -634,12 +774,6 @@
       "range": "Presidential",
       "prominence_ft": 259,
       "isolation_mi": 0.8,
-      "route": {
-        "name": "Davis Path",
-        "round_trip_mi": 5,
-        "gain_ft": 2100,
-        "difficulty": "Medium"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "871741",
@@ -649,17 +783,31 @@
         "lat": 44.136672,
         "lon": -71.332407
       },
-      "trailhead": {
-        "name": "Davis Path trailhead parking (Rt. 302)",
-        "lat": 44.118449,
-        "lon": -71.353747
-      },
       "notes": "Walk-around view in all directions. Often combined with Resolution and Stairs.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/crawford.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/mount-crawford-via-davis-path-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Davis Path",
+          "recommended": true,
+          "round_trip_mi": 5,
+          "gain_ft": 2100,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Davis Path trailhead parking (Rt. 302)",
+            "lat": 44.118449,
+            "lon": -71.353747
+          }
         }
       ]
     },
@@ -679,12 +827,6 @@
       "range": "Middle Connecticut River",
       "prominence_ft": 859,
       "isolation_mi": 3.6,
-      "route": {
-        "name": "Appalachian Trail / Cross Rivendell Trail",
-        "round_trip_mi": 5.2,
-        "gain_ft": 1730,
-        "difficulty": "Medium"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "868617",
@@ -694,17 +836,31 @@
         "lat": 43.885739,
         "lon": -72.023475
       },
-      "trailhead": {
-        "name": "Mt. Cube trailhead (Cross Rivendell Trail)",
-        "lat": 43.886969,
-        "lon": -72.048087
-      },
       "notes": "Two summit knobs with interesting rock and wide views. Coordinates are the main summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Cube&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cube.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/mount-cube-via-the-appalachian-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Appalachian Trail / Cross Rivendell Trail",
+          "recommended": true,
+          "round_trip_mi": 5.2,
+          "gain_ft": 1730,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Mt. Cube trailhead (Cross Rivendell Trail)",
+            "lat": 43.886969,
+            "lon": -72.048087
+          }
         }
       ]
     },
@@ -724,12 +880,6 @@
       "range": "Mahoosuc",
       "prominence_ft": 605,
       "isolation_mi": 1.3,
-      "route": {
-        "name": "Mahoosuc Trail / Centennial Trail",
-        "round_trip_mi": 5,
-        "gain_ft": 1650,
-        "difficulty": "Easier"
-      },
       "view_rating": 6,
       "gnis": {
         "id": "872023",
@@ -739,17 +889,31 @@
         "lat": 44.415662,
         "lon": -71.159855
       },
-      "trailhead": {
-        "name": "Centennial Trail trailhead",
-        "lat": 44.399633,
-        "lon": -71.189024
-      },
       "notes": "Pond and cliffs. Ledges with view of Gorham.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Hayes&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/hayes.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-hayes-via-mahoosuc-trail--2",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mahoosuc Trail / Centennial Trail",
+          "recommended": true,
+          "round_trip_mi": 5,
+          "gain_ft": 1650,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Centennial Trail trailhead",
+            "lat": 44.399633,
+            "lon": -71.189024
+          }
         }
       ]
     },
@@ -769,12 +933,6 @@
       "range": "Sandwich",
       "prominence_ft": 1200,
       "isolation_mi": 2.8,
-      "route": {
-        "name": "Wentworth Trail",
-        "round_trip_mi": 4.4,
-        "gain_ft": 1700,
-        "difficulty": "Easier"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872089",
@@ -784,19 +942,52 @@
         "lat": 43.845627,
         "lon": -71.471825
       },
-      "trailhead": {
-        "name": "Mead Base Camp (Wentworth Trail)",
-        "lat": 43.828917,
-        "lon": -71.48399
-      },
       "notes": "Long ledgy summit with views in a few different directions.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Israel&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/israel.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/mount-israel-via-wentworth-trail",
+          "note": "Route page and recent reviews"
         }
-      ]
+      ],
+      "routes": [
+        {
+          "name": "Wentworth Trail",
+          "recommended": true,
+          "round_trip_mi": 4.4,
+          "gain_ft": 1700,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Mead Base Camp (Wentworth Trail)",
+            "lat": 43.828917,
+            "lon": -71.48399
+          }
+        },
+        {
+          "name": "Guinea Pond Trail and Mead Trail",
+          "round_trip_mi": 7.2,
+          "gain_ft": 1440,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Guinea Pond Trail, Sandwich Notch Road",
+            "lat": 43.848328,
+            "lon": -71.518412
+          },
+          "note": "Figures are the author's, revised for the 2024 Guinea Pond Trail relocation."
+        }
+      ],
+      "review": {
+        "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
+        "date": "2026-08",
+        "issue": "The Forest Service relocated about a mile of the Guinea Pond Trail to escape persistent beaver flooding. The new line starts 0.7 mi from Sandwich Notch Road and runs parallel to the old one but higher up the slope.",
+        "resolution": "Added the Guinea Pond Trail and Mead Trail approach with the author's revised figures: 7.2 mi round trip and 1,440 ft of gain.",
+        "caveat": "The trail line drawn on the map comes from OpenStreetMap, which still measures this approach at about 6.0 mi round trip and so appears to predate the relocation. The map may show the old alignment until OpenStreetMap catches up."
+      }
     },
     {
       "id": 18,
@@ -814,12 +1005,6 @@
       "range": "Kearsarge Area",
       "prominence_ft": 210,
       "isolation_mi": 18.5,
-      "route": {
-        "name": "Barlow Trail / Winslow Trail",
-        "round_trip_mi": 2.9,
-        "gain_ft": 1100,
-        "difficulty": "Easier"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "867821",
@@ -829,17 +1014,36 @@
         "lat": 43.383447,
         "lon": -71.85709
       },
-      "trailhead": {
-        "name": "Winslow State Park",
-        "lat": 43.390012,
-        "lon": -71.868036
-      },
       "notes": "Great starter peak. Expansive ledgy summit with fire tower.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Kearsarge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/kearsarge.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Kearsarge000603.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/winslow-trail-and-barlow-trail-loop",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Barlow Trail / Winslow Trail",
+          "recommended": true,
+          "round_trip_mi": 2.9,
+          "gain_ft": 1100,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Winslow State Park",
+            "lat": 43.390012,
+            "lon": -71.868036
+          }
         }
       ]
     },
@@ -859,12 +1063,6 @@
       "range": "Kearsarge North Area",
       "prominence_ft": 1758,
       "isolation_mi": 6.7,
-      "route": {
-        "name": "Mt. Kearsarge North Trail",
-        "round_trip_mi": 6.2,
-        "gain_ft": 2600,
-        "difficulty": "Medium"
-      },
       "view_rating": 10,
       "gnis": {
         "id": "872126",
@@ -874,17 +1072,31 @@
         "lat": 44.105745,
         "lon": -71.093939
       },
-      "trailhead": {
-        "name": "Mt. Kearsarge North trailhead (Hurricane Mtn. Rd.)",
-        "lat": 44.075319,
-        "lon": -71.109213
-      },
       "notes": "Enclosed fire tower with 360-degree views.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Kearsarge%20North&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/kearsarge_north.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-kearsarge-north--2",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mt. Kearsarge North Trail",
+          "recommended": true,
+          "round_trip_mi": 6.2,
+          "gain_ft": 2600,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Mt. Kearsarge North trailhead (Hurricane Mtn. Rd.)",
+            "lat": 44.075319,
+            "lon": -71.109213
+          }
         }
       ]
     },
@@ -904,12 +1116,6 @@
       "range": "Monadnock Area",
       "prominence_ft": 2149,
       "isolation_mi": 41.2,
-      "route": {
-        "name": "Old Toll Road / White Arrow Trail",
-        "round_trip_mi": 5.6,
-        "gain_ft": 1700,
-        "difficulty": "Easier"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "868516",
@@ -919,17 +1125,36 @@
         "lat": 42.86133,
         "lon": -72.10828
       },
-      "trailhead": {
-        "name": "Old Toll Road / Halfway House trailhead",
-        "lat": 42.835194,
-        "lon": -72.113923
-      },
       "notes": "Southernmost peak on the list. One of the most-hiked mountains in the world. The name is Abenaki for a mountain that stands alone; geologists later borrowed it as the word for any such peak.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Monadnock&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/monadnock.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Monadnock071112.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/mount-monadnock-via-white-dot-and-white-cross-trails",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Old Toll Road / White Arrow Trail",
+          "recommended": true,
+          "round_trip_mi": 5.6,
+          "gain_ft": 1700,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Old Toll Road / Halfway House trailhead",
+            "lat": 42.835194,
+            "lon": -72.113923
+          }
         }
       ]
     },
@@ -949,12 +1174,6 @@
       "range": "Presidential",
       "prominence_ft": 184,
       "isolation_mi": 1.2,
-      "route": {
-        "name": "Mt. Langdon Trail / Mt. Parker Trail",
-        "round_trip_mi": 7.8,
-        "gain_ft": 2540,
-        "difficulty": "Harder"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872455",
@@ -964,17 +1183,31 @@
         "lat": 44.123401,
         "lon": -71.298407
       },
-      "trailhead": {
-        "name": "Mt. Langdon trailhead",
-        "lat": 44.084144,
-        "lon": -71.286277
-      },
       "notes": "Remote view of the Rocky Branch valley.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Parker&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/parker.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-parker-via-mount-langdon-and-mount-parker-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mt. Langdon Trail / Mt. Parker Trail",
+          "recommended": true,
+          "round_trip_mi": 7.8,
+          "gain_ft": 2540,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Mt. Langdon trailhead",
+            "lat": 44.084144,
+            "lon": -71.286277
+          }
         }
       ]
     },
@@ -994,12 +1227,6 @@
       "range": "Sandwich",
       "prominence_ft": 978,
       "isolation_mi": 2.1,
-      "route": {
-        "name": "Old Paugus Trail / Big Rock Cave Trail",
-        "round_trip_mi": 8.4,
-        "gain_ft": 2100,
-        "difficulty": "Medium"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872465",
@@ -1009,17 +1236,31 @@
         "lat": 43.946339,
         "lon": -71.328008
       },
-      "trailhead": {
-        "name": "Old Paugus Trail trailhead",
-        "lat": 43.90846,
-        "lon": -71.34133
-      },
       "notes": "Viewpoints from the ledgy knob south of the true summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Paugus&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/paugus.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-paugus-via-kelley-trail-and-old-mast-road",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Old Paugus Trail / Big Rock Cave Trail",
+          "recommended": true,
+          "round_trip_mi": 8.4,
+          "gain_ft": 2100,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Old Paugus Trail trailhead",
+            "lat": 43.90846,
+            "lon": -71.34133
+          }
         }
       ]
     },
@@ -1039,12 +1280,6 @@
       "range": "Kinsman",
       "prominence_ft": 137,
       "isolation_mi": 0.6,
-      "route": {
-        "name": "Mt. Pemigewasset Trail",
-        "round_trip_mi": 3.6,
-        "gain_ft": 1250,
-        "difficulty": "Easier"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872479",
@@ -1054,17 +1289,36 @@
         "lat": 44.097844,
         "lon": -71.698972
       },
-      "trailhead": {
-        "name": "Flume Visitor Center parking",
-        "lat": 44.097091,
-        "lon": -71.681277
-      },
       "notes": "The Indian Head profile. Easy forest climb to open ledges.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Pemigewasset&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/pemigewasset.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Pemigewasset000429.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-pemigewasset-trail-indian-head",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mt. Pemigewasset Trail",
+          "recommended": true,
+          "round_trip_mi": 3.6,
+          "gain_ft": 1250,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Flume Visitor Center parking",
+            "lat": 44.097091,
+            "lon": -71.681277
+          }
         }
       ]
     },
@@ -1084,12 +1338,6 @@
       "range": "Presidential",
       "prominence_ft": 355,
       "isolation_mi": 0.6,
-      "route": {
-        "name": "Davis Path / Mt. Parker Trail",
-        "round_trip_mi": 8.4,
-        "gain_ft": 2600,
-        "difficulty": "Harder"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "872565",
@@ -1099,17 +1347,31 @@
         "lat": 44.147549,
         "lon": -71.314021
       },
-      "trailhead": {
-        "name": "Davis Path trailhead parking (Rt. 302)",
-        "lat": 44.118449,
-        "lon": -71.353747
-      },
       "notes": "Views are from the south knob. Wild sub-alpine ridge.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/parker.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-parker-via-mount-langdon-and-mount-parker-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Davis Path / Mt. Parker Trail",
+          "recommended": true,
+          "round_trip_mi": 8.4,
+          "gain_ft": 2600,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Davis Path trailhead parking (Rt. 302)",
+            "lat": 44.118449,
+            "lon": -71.353747
+          }
         }
       ]
     },
@@ -1129,33 +1391,43 @@
       "range": "Ossipee",
       "prominence_ft": 2340,
       "isolation_mi": 14.1,
-      "route": {
-        "name": "Mt. Shaw Trail / Big Ball Mtn. (from Castle in the Clouds)",
-        "round_trip_mi": 7.3,
-        "gain_ft": 2750,
-        "difficulty": "Harder",
-        "recommended": true
-      },
       "routes": [
         {
           "name": "Mt. Shaw Trail / Big Ball Mtn. (from Castle in the Clouds)",
+          "recommended": true,
           "round_trip_mi": 7.3,
           "gain_ft": 2750,
           "difficulty": "Harder",
-          "recommended": true
+          "trailhead": {
+            "name": "Castle in the Clouds hiker parking",
+            "lat": 43.731882,
+            "lon": -71.324821,
+            "address": "586 Ossipee Park Rd, Moultonborough, NH 03254"
+          }
         },
         {
           "name": "Mt. Roberts loop via Castle in the Clouds roads",
           "round_trip_mi": 6.8,
           "gain_ft": 2500,
-          "difficulty": "Medium"
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Castle in the Clouds hiker parking",
+            "lat": 43.731882,
+            "lon": -71.324821,
+            "address": "586 Ossipee Park Rd, Moultonborough, NH 03254"
+          }
         }
       ],
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Shaw&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/shaw.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-shaw-black-snout",
+          "note": "Route page and recent reviews"
         }
       ],
       "view_rating": 8,
@@ -1166,12 +1438,6 @@
       "summit": {
         "lat": 43.743861,
         "lon": -71.274002
-      },
-      "trailhead": {
-        "name": "Castle in the Clouds hiker parking",
-        "lat": 43.731882,
-        "lon": -71.324821,
-        "address": "586 Ossipee Park Rd, Moultonborough, NH 03254"
       },
       "notes": "Highest of the Ossipee Range. Grassy carriage road on the summit. Distance and climbing are measured from the Castle in the Clouds lot, the reliable public parking; the trail network here is larger than most maps show, and many hikers take in Mt. Roberts from the same lot."
     },
@@ -1191,12 +1457,6 @@
       "range": "Mahoosuc",
       "prominence_ft": 675,
       "isolation_mi": 2.8,
-      "route": {
-        "name": "Success Trail",
-        "round_trip_mi": 5.5,
-        "gain_ft": 1950,
-        "difficulty": "Harder"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "872754",
@@ -1206,17 +1466,31 @@
         "lat": 44.471448,
         "lon": -71.038965
       },
-      "trailhead": {
-        "name": "Success Trail trailhead",
-        "lat": 44.484276,
-        "lon": -71.076564
-      },
       "notes": "Wild remote trail, summit bog, and the 1954 DC-3 crash site nearby.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Success&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/success.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-success-via-appalachian-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Success Trail",
+          "recommended": true,
+          "round_trip_mi": 5.5,
+          "gain_ft": 1950,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Success Trail trailhead",
+            "lat": 44.484276,
+            "lon": -71.076564
+          }
         }
       ]
     },
@@ -1236,12 +1510,6 @@
       "range": "Moat",
       "prominence_ft": 1591,
       "isolation_mi": 4,
-      "route": {
-        "name": "Mt. Tremont Trail",
-        "round_trip_mi": 5.6,
-        "gain_ft": 2550,
-        "difficulty": "Medium"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "872828",
@@ -1251,17 +1519,36 @@
         "lat": 44.053397,
         "lon": -71.356966
       },
-      "trailhead": {
-        "name": "Mt. Tremont trailhead",
-        "lat": 44.076241,
-        "lon": -71.337898
-      },
       "notes": "Brook and cascades. Outstanding foliage view.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Tremont&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/tremont.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Tremont070922.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-tremont-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mt. Tremont Trail",
+          "recommended": true,
+          "round_trip_mi": 5.6,
+          "gain_ft": 2550,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Mt. Tremont trailhead",
+            "lat": 44.076241,
+            "lon": -71.337898
+          }
         }
       ]
     },
@@ -1281,12 +1568,6 @@
       "range": "Presidential",
       "prominence_ft": 170,
       "isolation_mi": 0.8,
-      "route": {
-        "name": "Webster-Jackson Trail",
-        "round_trip_mi": 5,
-        "gain_ft": 2100,
-        "difficulty": "Medium"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "872876",
@@ -1296,17 +1577,36 @@
         "lat": 44.194772,
         "lon": -71.388165
       },
-      "trailhead": {
-        "name": "Webster-Jackson trailhead (Rt. 302)",
-        "lat": 44.214377,
-        "lon": -71.407629
-      },
       "notes": "Bugle Cliff and cascades. Scenic loop with 4,000-footer Mt. Jackson.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Webster%20and%20Jackson&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/webster.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/WebsterJackson991031.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mt-jackson-webster-loop",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Webster-Jackson Trail",
+          "recommended": true,
+          "round_trip_mi": 5,
+          "gain_ft": 2100,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Webster-Jackson trailhead (Rt. 302)",
+            "lat": 44.214377,
+            "lon": -71.407629
+          }
         }
       ]
     },
@@ -1326,12 +1626,6 @@
       "range": "Willey",
       "prominence_ft": 285,
       "isolation_mi": 0.5,
-      "route": {
-        "name": "Mt. Willard Trail",
-        "round_trip_mi": 3.2,
-        "gain_ft": 900,
-        "difficulty": "Easier"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "872947",
@@ -1341,17 +1635,31 @@
         "lat": 44.203957,
         "lon": -71.41309
       },
-      "trailhead": {
-        "name": "Crawford Notch Station (Crawford Depot)",
-        "lat": 44.217878,
-        "lon": -71.411294
-      },
       "notes": "Easiest hike on the list. Incomparable view down Crawford Notch.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Willard&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/willard.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-willard",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mt. Willard Trail",
+          "recommended": true,
+          "round_trip_mi": 3.2,
+          "gain_ft": 900,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Crawford Notch Station (Crawford Depot)",
+            "lat": 44.217878,
+            "lon": -71.411294
+          }
         }
       ]
     },
@@ -1371,12 +1679,6 @@
       "range": "Baldface",
       "prominence_ft": 1260,
       "isolation_mi": 3.6,
-      "route": {
-        "name": "Baldface Circle Trail",
-        "round_trip_mi": 9.9,
-        "gain_ft": 3600,
-        "difficulty": "Harder"
-      },
       "view_rating": 10,
       "gnis": {
         "id": "872388",
@@ -1386,17 +1688,31 @@
         "lat": 44.242863,
         "lon": -71.087086
       },
-      "trailhead": {
-        "name": "Baldface Circle Trail trailhead",
-        "lat": 44.238144,
-        "lon": -71.016066
-      },
       "notes": "Vast expanses of steep ledges. Usually looped with South Baldface.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Baldfaces&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/baldface.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/baldface-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Baldface Circle Trail",
+          "recommended": true,
+          "round_trip_mi": 9.9,
+          "gain_ft": 3600,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Baldface Circle Trail trailhead",
+            "lat": 44.238144,
+            "lon": -71.016066
+          }
         }
       ]
     },
@@ -1416,12 +1732,6 @@
       "range": "Baldface",
       "prominence_ft": 963,
       "isolation_mi": 2.5,
-      "route": {
-        "name": "Doublehead Ski Trail / Old Path",
-        "round_trip_mi": 3.6,
-        "gain_ft": 1450,
-        "difficulty": "Medium"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "872397",
@@ -1431,17 +1741,31 @@
         "lat": 44.16773,
         "lon": -71.130166
       },
-      "trailhead": {
-        "name": "Doublehead trailhead",
-        "lat": 44.161524,
-        "lon": -71.150788
-      },
       "notes": "Counts as one entry. North 3,051 ft; South 2,939 ft. Rentable summit cabin on North.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Doublehead%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/doublehead.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/recording/doublehead-ski-trail-to-north-and-south-doublehead-00430c0--2",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Doublehead Ski Trail / Old Path",
+          "recommended": true,
+          "round_trip_mi": 3.6,
+          "gain_ft": 1450,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Doublehead trailhead",
+            "lat": 44.161524,
+            "lon": -71.150788
+          }
         }
       ]
     },
@@ -1461,12 +1785,6 @@
       "range": "Moat",
       "prominence_ft": 1176,
       "isolation_mi": 4.4,
-      "route": {
-        "name": "Moat Mountain Trail / Red Ridge loop",
-        "round_trip_mi": 10.2,
-        "gain_ft": 2800,
-        "difficulty": "Harder"
-      },
       "view_rating": 10,
       "gnis": {
         "id": "872402",
@@ -1476,17 +1794,36 @@
         "lat": 44.043114,
         "lon": -71.214634
       },
-      "trailhead": {
-        "name": "South Moat Mountain trailhead",
-        "lat": 43.993839,
-        "lon": -71.18361
-      },
       "notes": "Long interesting ridge walk with wide open summits.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=South%20and%20North%20Moat%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/moat.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/MoatNorth080920.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/moat-mountain-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Moat Mountain Trail / Red Ridge loop",
+          "recommended": true,
+          "round_trip_mi": 10.2,
+          "gain_ft": 2800,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "South Moat Mountain trailhead",
+            "lat": 43.993839,
+            "lon": -71.18361
+          }
         }
       ]
     },
@@ -1506,12 +1843,6 @@
       "range": "Eastern Nash Stream",
       "prominence_ft": 800,
       "isolation_mi": 1.4,
-      "route": {
-        "name": "Percy Peaks Trail",
-        "round_trip_mi": 4.4,
-        "gain_ft": 2200,
-        "difficulty": "Harder"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "1916321",
@@ -1521,17 +1852,36 @@
         "lat": 44.663141,
         "lon": -71.435115
       },
-      "trailhead": {
-        "name": "Percy Peaks Trail trailhead (Nash Stream Road)",
-        "lat": 44.66566,
-        "lon": -71.4577
-      },
       "notes": "Extremely steep slabs. Beautiful flat open summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=North%20Percy%20Peak&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/percy.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/NorthPercy050924.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/percy-peaks-loop",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Percy Peaks Trail",
+          "recommended": true,
+          "round_trip_mi": 4.4,
+          "gain_ft": 2200,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Percy Peaks Trail trailhead (Nash Stream Road)",
+            "lat": 44.66566,
+            "lon": -71.4577
+          }
         }
       ]
     },
@@ -1551,12 +1901,6 @@
       "range": "Sandwich",
       "prominence_ft": 240,
       "isolation_mi": 0.7,
-      "route": {
-        "name": "Downes Brook / Mt. Potash Trail",
-        "round_trip_mi": 4.4,
-        "gain_ft": 1400,
-        "difficulty": "Easier"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "872522",
@@ -1566,17 +1910,31 @@
         "lat": 43.982042,
         "lon": -71.390636
       },
-      "trailhead": {
-        "name": "Downes Brook / Mt. Potash parking (Kancamagus Hwy)",
-        "lat": 43.99422,
-        "lon": -71.3694
-      },
       "notes": "River crossing. Many ledges with wilderness views.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Potash%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/potash.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/potash-mountain",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Downes Brook / Mt. Potash Trail",
+          "recommended": true,
+          "round_trip_mi": 4.4,
+          "gain_ft": 1400,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Downes Brook / Mt. Potash parking (Kancamagus Hwy)",
+            "lat": 43.99422,
+            "lon": -71.3694
+          }
         }
       ]
     },
@@ -1596,12 +1954,6 @@
       "range": "Sandwich",
       "prominence_ft": 1213,
       "isolation_mi": 4.9,
-      "route": {
-        "name": "Sandwich Dome + Jennings Peak",
-        "round_trip_mi": 8.7,
-        "gain_ft": 2850,
-        "difficulty": "Harder"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872622",
@@ -1611,17 +1963,31 @@
         "lat": 43.90046,
         "lon": -71.49819
       },
-      "trailhead": {
-        "name": "Sandwich Mountain trailhead",
-        "lat": 43.938322,
-        "lon": -71.511518
-      },
       "notes": "Highest on the list and New England's tallest sub-4,000-foot mountain.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Sandwich%20Dome&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sandwich.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/jennings-peak-and-sandwich-mountain-trail-loop",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Sandwich Dome + Jennings Peak",
+          "recommended": true,
+          "round_trip_mi": 8.7,
+          "gain_ft": 2850,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Sandwich Mountain trailhead",
+            "lat": 43.938322,
+            "lon": -71.511518
+          }
         }
       ]
     },
@@ -1641,12 +2007,6 @@
       "range": "Carter",
       "prominence_ft": 445,
       "isolation_mi": 1.1,
-      "route": {
-        "name": "Rattle River Trail / Kenduskeag Trail",
-        "round_trip_mi": 11.4,
-        "gain_ft": 3100,
-        "difficulty": "Harder"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "872647",
@@ -1656,17 +2016,31 @@
         "lat": 44.353171,
         "lon": -71.098784
       },
-      "trailhead": {
-        "name": "Rattle River trailhead (Rt. 2)",
-        "lat": 44.400813,
-        "lon": -71.109484
-      },
       "notes": "Alpine bogs and wide open ledges. Long day.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Shelburne%20Moriah%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/shelburne.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-moriah-and-shelburne-moriah-via-rattle-river--2",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Rattle River Trail / Kenduskeag Trail",
+          "recommended": true,
+          "round_trip_mi": 11.4,
+          "gain_ft": 3100,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Rattle River trailhead (Rt. 2)",
+            "lat": 44.400813,
+            "lon": -71.109484
+          }
         }
       ]
     },
@@ -1686,12 +2060,6 @@
       "range": "Middle Connecticut River",
       "prominence_ft": 2188,
       "isolation_mi": 10,
-      "route": {
-        "name": "Lambert Ridge Trail (AT)",
-        "round_trip_mi": 7.5,
-        "gain_ft": 2440,
-        "difficulty": "Harder"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "869960",
@@ -1701,17 +2069,31 @@
         "lat": 43.825626,
         "lon": -72.032308
       },
-      "trailhead": {
-        "name": "Lambert Ridge trailhead parking",
-        "lat": 43.797077,
-        "lon": -72.071473
-      },
       "notes": "Ledges on Lambert Ridge. Views come from the fire tower.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Smarts%20%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/smarts.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/smarts-mountain-via-appalachian-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Lambert Ridge Trail (AT)",
+          "recommended": true,
+          "round_trip_mi": 7.5,
+          "gain_ft": 2440,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Lambert Ridge trailhead parking",
+            "lat": 43.797077,
+            "lon": -72.071473
+          }
         }
       ]
     },
@@ -1731,12 +2113,6 @@
       "range": "Baldface",
       "prominence_ft": 300,
       "isolation_mi": 1,
-      "route": {
-        "name": "Baldface Circle Trail",
-        "round_trip_mi": 9.9,
-        "gain_ft": 3600,
-        "difficulty": "Harder"
-      },
       "view_rating": 10,
       "gnis": {
         "id": "872692",
@@ -1746,17 +2122,31 @@
         "lat": 44.230742,
         "lon": -71.078078
       },
-      "trailhead": {
-        "name": "Baldface Circle Trail trailhead",
-        "lat": 44.238144,
-        "lon": -71.016066
-      },
       "notes": "Steep ledge climb out of the woods. Emerald Pool at the base.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Baldfaces&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/baldface.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/baldface-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Baldface Circle Trail",
+          "recommended": true,
+          "round_trip_mi": 9.9,
+          "gain_ft": 3600,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Baldface Circle Trail trailhead",
+            "lat": 44.238144,
+            "lon": -71.016066
+          }
         }
       ]
     },
@@ -1776,12 +2166,6 @@
       "range": "Moat",
       "prominence_ft": 80,
       "isolation_mi": 0.4,
-      "route": {
-        "name": "Moat Mountain Trail",
-        "round_trip_mi": 7.8,
-        "gain_ft": 2150,
-        "difficulty": "Harder"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "872703",
@@ -1791,17 +2175,36 @@
         "lat": 44.017496,
         "lon": -71.193491
       },
-      "trailhead": {
-        "name": "Moat Mountain trailhead (south, Passaconaway Rd.)",
-        "lat": 43.993746,
-        "lon": -71.183666
-      },
       "notes": "Open ledgy summit; shortest approach to the Moat ridge.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=South%20and%20North%20Moat%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/smoat.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/MoatSouth090228.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/south-and-middle-moat-mountain",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Moat Mountain Trail",
+          "recommended": true,
+          "round_trip_mi": 7.8,
+          "gain_ft": 2150,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Moat Mountain trailhead (south, Passaconaway Rd.)",
+            "lat": 43.993746,
+            "lon": -71.183666
+          }
         }
       ]
     },
@@ -1821,12 +2224,6 @@
       "range": "Presidential",
       "prominence_ft": 528,
       "isolation_mi": 1.9,
-      "route": {
-        "name": "Davis Path",
-        "round_trip_mi": 9.2,
-        "gain_ft": 2800,
-        "difficulty": "Harder"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872727",
@@ -1836,17 +2233,31 @@
         "lat": 44.155067,
         "lon": -71.318408
       },
-      "trailhead": {
-        "name": "Davis Path trailhead parking (Rt. 302)",
-        "lat": 44.118449,
-        "lon": -71.353747
-      },
       "notes": "The Giant Stairs. Wide directional view from the cliff top.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/stairs.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-crawford-stairs-mtn-and-mount-resolution",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Davis Path",
+          "recommended": true,
+          "round_trip_mi": 9.2,
+          "gain_ft": 2800,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Davis Path trailhead parking (Rt. 302)",
+            "lat": 44.118449,
+            "lon": -71.353747
+          }
         }
       ]
     },
@@ -1866,12 +2277,6 @@
       "range": "Stinson-Carr-Kineo",
       "prominence_ft": 1470,
       "isolation_mi": 3.9,
-      "route": {
-        "name": "Stinson Mountain Trail",
-        "round_trip_mi": 3.6,
-        "gain_ft": 1400,
-        "difficulty": "Easier"
-      },
       "view_rating": 6,
       "gnis": {
         "id": "872744",
@@ -1881,17 +2286,36 @@
         "lat": 43.834682,
         "lon": -71.779109
       },
-      "trailhead": {
-        "name": "Stinson Mountain trailhead",
-        "lat": 43.849281,
-        "lon": -71.800853
-      },
       "notes": "Short forest climb to a rocky summit with fire tower footings.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stinson%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/stinson.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Stinson080209.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/stinson-mountain-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Stinson Mountain Trail",
+          "recommended": true,
+          "round_trip_mi": 3.6,
+          "gain_ft": 1400,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Stinson Mountain trailhead",
+            "lat": 43.849281,
+            "lon": -71.800853
+          }
         }
       ]
     },
@@ -1911,12 +2335,6 @@
       "range": "Western Nash Stream",
       "prominence_ft": 600,
       "isolation_mi": 3.3,
-      "route": {
-        "name": "Sugarloaf Trail",
-        "round_trip_mi": 4.2,
-        "gain_ft": 2200,
-        "difficulty": "Medium"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "870264",
@@ -1926,17 +2344,36 @@
         "lat": 44.74425,
         "lon": -71.467833
       },
-      "trailhead": {
-        "name": "Sugarloaf Mountain Trail trailhead (Nash Stream Road)",
-        "lat": 44.73733,
-        "lon": -71.43998
-      },
       "notes": "Old fire warden road and cabin. Beautiful open summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Sugarloaf%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/sugarloaf4.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/SugarloafNashStream060806.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/recording/sugarloaf-mountain-trail-in-nash-stream-forest-nh",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Sugarloaf Trail",
+          "recommended": true,
+          "round_trip_mi": 4.2,
+          "gain_ft": 2200,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Sugarloaf Mountain Trail trailhead (Nash Stream Road)",
+            "lat": 44.73733,
+            "lon": -71.43998
+          }
         }
       ]
     },
@@ -1956,12 +2393,6 @@
       "range": "Lincoln-Waterville Area",
       "prominence_ft": 154,
       "isolation_mi": 1.1,
-      "route": {
-        "name": "Welch-Dickey Loop Trail",
-        "round_trip_mi": 4.4,
-        "gain_ft": 1800,
-        "difficulty": "Medium"
-      },
       "view_rating": 9,
       "gnis": {
         "id": "871785",
@@ -1971,17 +2402,36 @@
         "lat": 43.923024,
         "lon": -71.578652
       },
-      "trailhead": {
-        "name": "Welch-Dickey Loop trailhead parking",
-        "lat": 43.90448,
-        "lon": -71.588652
-      },
       "notes": "Counts as one entry. Dickey 2,722 ft; Welch 2,598 ft. Coordinates are Dickey.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Welch%20and%20Dickey%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/welch.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/WelchDickey030719.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/welch-and-dickey-loop-trail--4",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Welch-Dickey Loop Trail",
+          "recommended": true,
+          "round_trip_mi": 4.4,
+          "gain_ft": 1800,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Welch-Dickey Loop trailhead parking",
+            "lat": 43.90448,
+            "lon": -71.588652
+          }
         }
       ]
     },
@@ -2001,12 +2451,6 @@
       "range": "Pliny",
       "prominence_ft": 157,
       "isolation_mi": 0.7,
-      "route": {
-        "name": "Starr King Trail",
-        "round_trip_mi": 7.2,
-        "gain_ft": 2600,
-        "difficulty": "Easier"
-      },
       "view_rating": 3,
       "gnis": {
         "id": "870151",
@@ -2016,17 +2460,31 @@
         "lat": 44.434637,
         "lon": -71.433058
       },
-      "trailhead": {
-        "name": "Starr King trailhead",
-        "lat": 44.418494,
-        "lon": -71.466857
-      },
       "notes": "Retired June 2025 after losing most of its view. Pair it with 4,000-footer Waumbek.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Waumbek&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/waumbek.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-waumbek-and-mount-starr-king-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Starr King Trail",
+          "recommended": true,
+          "round_trip_mi": 7.2,
+          "gain_ft": 2600,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Starr King trailhead",
+            "lat": 44.418494,
+            "lon": -71.466857
+          }
         }
       ]
     },
@@ -2046,12 +2504,6 @@
       "range": "Cherry-Dartmouth",
       "prominence_ft": 1555,
       "isolation_mi": 4.3,
-      "route": {
-        "name": "Mt. Martha + Owls Head",
-        "round_trip_mi": 6.4,
-        "gain_ft": 2450,
-        "difficulty": "Harder"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "868282",
@@ -2061,17 +2513,36 @@
         "lat": 44.330895,
         "lon": -71.499247
       },
-      "trailhead": {
-        "name": "Owl's Head trailhead",
-        "lat": 44.360459,
-        "lon": -71.487881
-      },
       "notes": "Retired June 2025, flipped for neighboring Owlshead. Fire tower footings on the summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Cherry%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cherry.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/MarthaOwlsHeadNH090818.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/recording/cherry-mountain-trail-to-mt-martha-owls-head-jefferson-nh",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mt. Martha + Owls Head",
+          "recommended": true,
+          "round_trip_mi": 6.4,
+          "gain_ft": 2450,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Owl's Head trailhead",
+            "lat": 44.360459,
+            "lon": -71.487881
+          }
         }
       ]
     },
@@ -2091,12 +2562,6 @@
       "range": "Kinsman",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Appalachian Trail from Kinsman Notch",
-        "round_trip_mi": null,
-        "gain_ft": null,
-        "difficulty": null
-      },
       "view_rating": null,
       "gnis": {
         "id": "872962",
@@ -2106,17 +2571,36 @@
         "lat": 44.075984,
         "lon": -71.750277
       },
-      "trailhead": {
-        "name": "Beaver Brook trailhead (Kinsman Notch)",
-        "lat": 44.040389,
-        "lon": -71.792889
-      },
       "notes": "Retired in 2010, replaced by Mt. Roberts.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Roberts&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/wolf.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Wolf020817.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/recording/mount-wolf-and-kinsman-ridge-via-appalachian-trail-0a5c79b",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Appalachian Trail from Kinsman Notch",
+          "recommended": true,
+          "round_trip_mi": null,
+          "gain_ft": null,
+          "difficulty": null,
+          "trailhead": {
+            "name": "Beaver Brook trailhead (Kinsman Notch)",
+            "lat": 44.040389,
+            "lon": -71.792889
+          }
         }
       ]
     },
@@ -2136,12 +2620,6 @@
       "range": "Stinson-Carr-Kineo",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Three Ponds Trail",
-        "round_trip_mi": null,
-        "gain_ft": null,
-        "difficulty": null
-      },
       "view_rating": null,
       "gnis": {
         "id": "871620",
@@ -2151,17 +2629,31 @@
         "lat": 43.88485,
         "lon": -71.843549
       },
-      "trailhead": {
-        "name": "Three Ponds Trail trailhead",
-        "lat": 43.885481,
-        "lon": -71.795976
-      },
       "notes": "The first peak ever retired, in 2001.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Carr%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/carr.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/carr-mountain-via-carr-mountain-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Three Ponds Trail",
+          "recommended": true,
+          "round_trip_mi": null,
+          "gain_ft": null,
+          "difficulty": null,
+          "trailhead": {
+            "name": "Three Ponds Trail trailhead",
+            "lat": 43.885481,
+            "lon": -71.795976
+          }
         }
       ]
     },
@@ -2181,12 +2673,6 @@
       "range": "Baldface",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Royce Trail / Basin Rim Trail",
-        "round_trip_mi": null,
-        "gain_ft": null,
-        "difficulty": null
-      },
       "view_rating": null,
       "gnis": {
         "id": "872897",
@@ -2196,17 +2682,36 @@
         "lat": 44.302357,
         "lon": -71.018329
       },
-      "trailhead": {
-        "name": "Spruce Hill parking lot",
-        "lat": 44.305199,
-        "lon": -70.98992
-      },
       "notes": "Retired May 2020.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=East%20and%20West%20Royce&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/royce.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Royce070728.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/maine/west-and-east-royce-mountains-via-the-royce-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Royce Trail / Basin Rim Trail",
+          "recommended": true,
+          "round_trip_mi": null,
+          "gain_ft": null,
+          "difficulty": null,
+          "trailhead": {
+            "name": "Spruce Hill parking lot",
+            "lat": 44.305199,
+            "lon": -70.98992
+          }
         }
       ]
     },
@@ -2226,12 +2731,6 @@
       "range": "Sandwich",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Old Mast Road / Kelley Trail",
-        "round_trip_mi": null,
-        "gain_ft": null,
-        "difficulty": null
-      },
       "view_rating": null,
       "gnis": {
         "id": "872036",
@@ -2241,17 +2740,31 @@
         "lat": 43.936115,
         "lon": -71.370813
       },
-      "trailhead": {
-        "name": "Ferncroft trailhead",
-        "lat": 43.913967,
-        "lon": -71.357562
-      },
       "notes": "Retired May 2020.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Wonalancet%20and%20Hibbard%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/passaconaway.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mt-passaconaway-loop-via-mt-wonalancet-and-hibbard-mountain",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Old Mast Road / Kelley Trail",
+          "recommended": true,
+          "round_trip_mi": null,
+          "gain_ft": null,
+          "difficulty": null,
+          "trailhead": {
+            "name": "Ferncroft trailhead",
+            "lat": 43.913967,
+            "lon": -71.357562
+          }
         }
       ]
     },
@@ -2271,12 +2784,6 @@
       "range": "Benton",
       "prominence_ft": 52,
       "isolation_mi": 0.4,
-      "route": {
-        "name": "Blueberry Mountain Trail",
-        "round_trip_mi": 5,
-        "gain_ft": 1400,
-        "difficulty": "Easier"
-      },
       "view_rating": 5,
       "gnis": {
         "id": "871545",
@@ -2286,17 +2793,36 @@
         "lat": 44.019414,
         "lon": -71.90501
       },
-      "trailhead": {
-        "name": "Blueberry Mountain north trailhead",
-        "lat": 44.040703,
-        "lon": -71.938402
-      },
       "notes": "Retired June 2025; only limited views remain. Replaced by Bald Peak.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Blueberry%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/blueberry.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/BlueberryBenton070901.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/blueberry-mountain-trail--3",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Blueberry Mountain Trail",
+          "recommended": true,
+          "round_trip_mi": 5,
+          "gain_ft": 1400,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Blueberry Mountain north trailhead",
+            "lat": 44.040703,
+            "lon": -71.938402
+          }
         }
       ]
     },
@@ -2316,12 +2842,6 @@
       "range": "Sandwich",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Square Ledge Trail",
-        "round_trip_mi": null,
-        "gain_ft": null,
-        "difficulty": null
-      },
       "view_rating": null,
       "gnis": {
         "id": "872723",
@@ -2331,17 +2851,36 @@
         "lat": 43.95274,
         "lon": -71.362838
       },
-      "trailhead": {
-        "name": "Oliverian Brook trailhead",
-        "lat": 43.993911,
-        "lon": -71.350326
-      },
       "notes": "Retired May 2020. Not to be confused with Square Ledge in Pinkham Notch.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Square%20Ledge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/square.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/SquareLedge071117.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/square-ledge-via-oliverian-brook-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Square Ledge Trail",
+          "recommended": true,
+          "round_trip_mi": null,
+          "gain_ft": null,
+          "difficulty": null,
+          "trailhead": {
+            "name": "Oliverian Brook trailhead",
+            "lat": 43.993911,
+            "lon": -71.350326
+          }
         }
       ]
     },
@@ -2361,12 +2900,6 @@
       "range": "Baldface",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Black Mountain Ski Trail",
-        "round_trip_mi": null,
-        "gain_ft": null,
-        "difficulty": null
-      },
       "view_rating": null,
       "gnis": {
         "id": "871522",
@@ -2376,17 +2909,31 @@
         "lat": 44.2253,
         "lon": -71.155628
       },
-      "trailhead": {
-        "name": "Black Mountain Ski Trail trailhead",
-        "lat": 44.19531,
-        "lon": -71.193112
-      },
       "notes": "Added 2001 to replace Carr Mountain, retired May 2020. The middle peak is not separately mapped, so the summit pin is the main Black Mountain summit on the same ridge.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Black%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/black2.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/Black080828.php",
+          "note": "Trail report with photos and directions"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Black Mountain Ski Trail",
+          "recommended": true,
+          "round_trip_mi": null,
+          "gain_ft": null,
+          "difficulty": null,
+          "trailhead": {
+            "name": "Black Mountain Ski Trail trailhead",
+            "lat": 44.19531,
+            "lon": -71.193112
+          }
         }
       ]
     },
@@ -2406,12 +2953,6 @@
       "range": "Ossipee",
       "prominence_ft": 112,
       "isolation_mi": 0.5,
-      "route": {
-        "name": "Mt. Roberts Trail",
-        "round_trip_mi": 5.5,
-        "gain_ft": 1350,
-        "difficulty": "Easier"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "869543",
@@ -2421,18 +2962,32 @@
         "lat": 43.756336,
         "lon": -71.325968
       },
-      "trailhead": {
-        "name": "Castle in the Clouds hiker parking",
-        "lat": 43.731882,
-        "lon": -71.324821,
-        "address": "586 Ossipee Park Rd, Moultonborough, NH 03254"
-      },
       "notes": "Replaced Mt. Wolf in 2010. Lake views from an extended ledge walk.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Roberts&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/roberts.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-roberts-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mt. Roberts Trail",
+          "recommended": true,
+          "round_trip_mi": 5.5,
+          "gain_ft": 1350,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Castle in the Clouds hiker parking",
+            "lat": 43.731882,
+            "lon": -71.324821,
+            "address": "586 Ossipee Park Rd, Moultonborough, NH 03254"
+          }
         }
       ]
     },
@@ -2452,12 +3007,6 @@
       "range": "Squam",
       "prominence_ft": 40,
       "isolation_mi": 0.2,
-      "route": {
-        "name": "Morgan + Percival loop",
-        "round_trip_mi": 5.5,
-        "gain_ft": 1500,
-        "difficulty": "Easier"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "872325",
@@ -2467,17 +3016,36 @@
         "lat": 43.803901,
         "lon": -71.566167
       },
-      "trailhead": {
-        "name": "Mt. Morgan trailhead (Rt. 113)",
-        "lat": 43.789336,
-        "lon": -71.549021
-      },
       "notes": "Ladders and caves on the loop. Panoramic Squam Lake views.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Morgan%20and%20Percival&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/percival.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/MorganPercival080217.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-morgan-and-mount-percival-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Morgan + Percival loop",
+          "recommended": true,
+          "round_trip_mi": 5.5,
+          "gain_ft": 1500,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Mt. Morgan trailhead (Rt. 113)",
+            "lat": 43.789336,
+            "lon": -71.549021
+          }
         }
       ]
     },
@@ -2497,12 +3065,6 @@
       "range": "Squam",
       "prominence_ft": 72,
       "isolation_mi": 0.4,
-      "route": {
-        "name": "Morgan + Percival loop",
-        "round_trip_mi": 5.5,
-        "gain_ft": 1500,
-        "difficulty": "Easier"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "872486",
@@ -2512,17 +3074,36 @@
         "lat": 43.809625,
         "lon": -71.557098
       },
-      "trailhead": {
-        "name": "Mt. Percival trailhead (Rt. 113)",
-        "lat": 43.792049,
-        "lon": -71.544696
-      },
       "notes": "Boulder cave scramble option near the summit.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Morgan%20and%20Percival&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/percival.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/MorganPercival080217.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/mount-morgan-and-mount-percival-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Morgan + Percival loop",
+          "recommended": true,
+          "round_trip_mi": 5.5,
+          "gain_ft": 1500,
+          "difficulty": "Easier",
+          "trailhead": {
+            "name": "Mt. Percival trailhead (Rt. 113)",
+            "lat": 43.792049,
+            "lon": -71.544696
+          }
         }
       ]
     },
@@ -2542,33 +3123,66 @@
       "range": "Presidential",
       "prominence_ft": 780,
       "isolation_mi": 1.7,
-      "route": {
-        "name": "Pine Mountain Trail (from Gorham)",
-        "round_trip_mi": 5.4,
-        "gain_ft": 1650,
-        "difficulty": "Medium",
-        "recommended": true
-      },
       "routes": [
+        {
+          "name": "Pine Mountain Road and Pine Mountain Trail",
+          "recommended": true,
+          "round_trip_mi": 2.7,
+          "gain_ft": 800,
+          "difficulty": "Easier",
+          "derived": true,
+          "trailhead": {
+            "name": "Pine Link Trail parking, Pinkham B Road",
+            "lat": 44.353966,
+            "lon": -71.231311
+          }
+        },
         {
           "name": "Pine Mountain Trail (from Gorham)",
           "round_trip_mi": 5.4,
           "gain_ft": 1650,
           "difficulty": "Medium",
-          "recommended": true
-        },
-        {
-          "name": "Pine Mountain Road spur (private, shorter access)",
-          "round_trip_mi": 3.5,
-          "gain_ft": 1200,
-          "difficulty": "Easier"
+          "trailhead": {
+            "name": "Promenade Street trailhead, Gorham",
+            "lat": 44.386003,
+            "lon": -71.180484,
+            "address": "Promenade St, Gorham, NH 03581"
+          }
         }
       ],
+      "review": {
+        "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
+        "date": "2026-08",
+        "issue": "The stored recommendation started in Gorham on the assumption that the shorter approach was closed to hikers. The road up to the Horton Center is private to vehicles only; walking in is welcome, and that is the usual way up.",
+        "needs": "Confirmation of which approach the guidebook treats as standard.",
+        "access": {
+          "drive": "Pinkham B Road and Dolly Copp Road are both public; they are two named stretches of the same through route between Route 2 and Route 16.",
+          "park": "Pine Link Trail lot at 44.353966, -71.231311, directly opposite the gated road.",
+          "walk": "Pine Mtn Horton Center Road is tagged private in OpenStreetMap and gated, and is the 'Pine Mountain Road' the Forest Service lists as a system route.",
+          "directions_from": "NH Family Hikes trailhead directions, cross-checked against OpenStreetMap road names and access tags"
+        },
+        "measured": {
+          "south_one_way_mi": 1.37,
+          "south_round_trip_mi": 2.74,
+          "south_gain_ft": 817,
+          "south_legs": [
+            "Pine Mtn Horton Center Road 0.89 mi",
+            "Pine Mountain Trail 0.48 mi"
+          ],
+          "north_round_trip_mi": 5.75,
+          "note": "Straight up and back. The stored 3.5 mi figure is close to this plus the ledge loop."
+        }
+      },
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Pine%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/pine.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/pine-mountain-trail-from-gorham",
+          "note": "Route page and recent reviews"
         }
       ],
       "view_rating": 9,
@@ -2580,13 +3194,7 @@
         "lat": 44.365875,
         "lon": -71.215187
       },
-      "trailhead": {
-        "name": "Promenade Street trailhead, Gorham",
-        "lat": 44.386003,
-        "lon": -71.180484,
-        "address": "Promenade St, Gorham, NH 03581"
-      },
-      "notes": "Many expansive ledges facing the Northern Presidentials. This is the route the Over the Hill Hikers recommend; a much shorter approach (about 3.5 mi round trip) starts from Pine Mountain Road off Pinkham B Road, but that road is private."
+      "notes": "Many expansive ledges facing the Northern Presidentials. The short way in leaves Pinkham B Road at the Pine Link Trail parking, opposite the gated road up to the Horton Center: that road is private and closed to public driving, but walkers are welcome."
     },
     {
       "id": 57,
@@ -2604,12 +3212,6 @@
       "range": "Pilot",
       "prominence_ft": 495,
       "isolation_mi": 1.5,
-      "route": {
-        "name": "Mill Brook Trail / Kilkenny Ridge Trail",
-        "round_trip_mi": 8.4,
-        "gain_ft": 1880,
-        "difficulty": "Medium"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "869583",
@@ -2619,17 +3221,31 @@
         "lat": 44.550082,
         "lon": -71.361878
       },
-      "trailhead": {
-        "name": "Mill Brook Trailhead, Berlin Fish Hatchery",
-        "lat": 44.506445,
-        "lon": -71.333849
-      },
       "notes": "Table-like ledge with excellent views over a remote northern forest. Reached by a spur off York Pond Road through the fish hatchery; the road is seasonal and the hatchery gate is signed 8am-4pm.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Rogers%20Ledge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/rogersledge.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/roger-s-ledge-via-kilkenny-ridge-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Mill Brook Trail / Kilkenny Ridge Trail",
+          "recommended": true,
+          "round_trip_mi": 8.4,
+          "gain_ft": 1880,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Mill Brook Trailhead, Berlin Fish Hatchery",
+            "lat": 44.506445,
+            "lon": -71.333849
+          }
         }
       ]
     },
@@ -2649,12 +3265,6 @@
       "range": "Moat",
       "prominence_ft": 495,
       "isolation_mi": 1,
-      "route": {
-        "name": "Attitash Trail",
-        "round_trip_mi": 4,
-        "gain_ft": 1420,
-        "difficulty": "Medium"
-      },
       "view_rating": 7,
       "gnis": {
         "id": "872771",
@@ -2664,17 +3274,31 @@
         "lat": 44.03184,
         "lon": -71.262466
       },
-      "trailhead": {
-        "name": "Attitash trailhead",
-        "lat": 44.043657,
-        "lon": -71.275965
-      },
       "notes": "Sub-alpine ledges with great views. Nice cascades.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Table%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/table.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/table-mountain-via-attitash-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Attitash Trail",
+          "recommended": true,
+          "round_trip_mi": 4,
+          "gain_ft": 1420,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Attitash trailhead",
+            "lat": 44.043657,
+            "lon": -71.275965
+          }
         }
       ]
     },
@@ -2694,18 +3318,21 @@
       "range": "Kinsman",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Mount Kinsman Trail",
-        "round_trip_mi": 4.5,
-        "gain_ft": 1450,
-        "difficulty": "Easier",
-        "derived": true
-      },
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Bald%20Peak&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/kinsman.html",
+          "note": "Covered as part of the Mount Kinsman Trail report"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/BaldPeakKinsman090328.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/trail/us/new-hampshire/north-kinsman-and-south-kinsman-trail-via-lonesome-lake-and-appalachian-trail",
+          "note": "Route page and recent reviews"
         }
       ],
       "view_rating": 8,
@@ -2718,12 +3345,22 @@
         "lat": 44.147991,
         "lon": -71.751761
       },
-      "trailhead": {
-        "name": "Mt. Kinsman Trailhead",
-        "lat": 44.16527,
-        "lon": -71.765746
-      },
-      "notes": "Added June 2025, replacing Blueberry Mtn. Dramatic lookout on the trail to the Kinsmans. Reached by a 0.2 mi spur off the Mount Kinsman Trail."
+      "notes": "Added June 2025, replacing Blueberry Mtn. Dramatic lookout on the trail to the Kinsmans. Reached by a 0.2 mi spur off the Mount Kinsman Trail.",
+      "routes": [
+        {
+          "name": "Mount Kinsman Trail",
+          "recommended": true,
+          "round_trip_mi": 4.5,
+          "gain_ft": 1450,
+          "difficulty": "Easier",
+          "derived": true,
+          "trailhead": {
+            "name": "Mt. Kinsman Trailhead",
+            "lat": 44.16527,
+            "lon": -71.765746
+          }
+        }
+      ]
     },
     {
       "id": 60,
@@ -2741,13 +3378,6 @@
       "range": "Jackson",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Iron Mountain Trail",
-        "round_trip_mi": 4.4,
-        "gain_ft": 850,
-        "difficulty": "Easier",
-        "derived": true
-      },
       "view_rating": 8,
       "view_rating_imputed": true,
       "gnis": {
@@ -2758,17 +3388,37 @@
         "lat": 44.134156,
         "lon": -71.23904
       },
-      "trailhead": {
-        "name": "Iron Mountain Trail trailhead (end of Iron Mountain Rd.)",
-        "lat": 44.143342,
-        "lon": -71.234956
-      },
       "notes": "Removed 2020, returned June 2025 after the worn trail was rerouted.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Iron%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/iron.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/IronNH090903.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/trail/us/new-hampshire/iron-mountain-trail",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Iron Mountain Trail",
+          "recommended": true,
+          "round_trip_mi": 4.4,
+          "gain_ft": 850,
+          "difficulty": "Easier",
+          "derived": true,
+          "trailhead": {
+            "name": "Iron Mountain Trail trailhead (end of Iron Mountain Rd.)",
+            "lat": 44.143342,
+            "lon": -71.234956
+          }
         }
       ]
     },
@@ -2788,12 +3438,6 @@
       "range": "Cherry-Dartmouth",
       "prominence_ft": null,
       "isolation_mi": null,
-      "route": {
-        "name": "Owl's Head Trail",
-        "round_trip_mi": 4.8,
-        "gain_ft": 2000,
-        "difficulty": "Medium"
-      },
       "view_rating": 8,
       "gnis": {
         "id": "868957",
@@ -2803,20 +3447,39 @@
         "lat": 44.33869,
         "lon": -71.492201
       },
-      "trailhead": {
-        "name": "Owl's Head trailhead",
-        "lat": 44.3602,
-        "lon": -71.488044
-      },
       "notes": "Added June 2025, flipped with neighboring Mt. Martha for its better view.",
       "sources": [
         {
-          "label": "NH Family Hikes",
-          "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Owlshead&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "label": "NH Mountain Hiking",
+          "url": "https://www.nhmountainhiking.com/cherry.html",
+          "note": "Trail report, route stats and GPS track"
+        },
+        {
+          "label": "Hike New England",
+          "url": "https://www.hikenewengland.com/MarthaOwlsHeadNH090818.php",
+          "note": "Trail report with photos and directions"
+        },
+        {
+          "label": "AllTrails",
+          "url": "https://www.alltrails.com/explore/recording/cherry-mountain-trail-to-mt-martha-owls-head-jefferson-nh",
+          "note": "Route page and recent reviews"
+        }
+      ],
+      "routes": [
+        {
+          "name": "Owl's Head Trail",
+          "recommended": true,
+          "round_trip_mi": 4.8,
+          "gain_ft": 2000,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Owl's Head trailhead",
+            "lat": 44.3602,
+            "lon": -71.488044
+          }
         }
       ]
     }
-  ]
+  ],
+  "schema_notes": "Each peak carries a routes[] array. A route owns its own name, distance, gain, difficulty and trailhead; exactly one is marked recommended, and that is the one the peak is summarised by. There is no peak-level route or trailhead."
 }
-
