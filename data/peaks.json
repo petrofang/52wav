@@ -85,10 +85,11 @@
       "prominence_ft": 80,
       "isolation_mi": 0.3,
       "route": {
-        "name": "Eagle Crag & Mt. Meader",
-        "round_trip_mi": 11.1,
-        "gain_ft": 3000,
-        "difficulty": "Harder"
+        "name": "Baldface Circle Trail via Emerald Pool",
+        "round_trip_mi": 7.2,
+        "gain_ft": 2500,
+        "difficulty": "Medium",
+        "derived": true
       },
       "view_rating": 8,
       "gnis": {
@@ -100,33 +101,25 @@
         "lon": -71.071628
       },
       "trailhead": {
-        "name": "Wild River / Basin Trailhead",
-        "lat": 44.305983,
-        "lon": -71.064541
+        "name": "Baldface Circle Trail trailhead",
+        "lat": 44.238144,
+        "lon": -71.016066
       },
-      "notes": "Open ledges at the north end of the Baldface ridge, above the Wild River valley.",
+      "notes": "Open ledges at the north end of the Baldface ridge, above the Wild River valley. Reached from Route 113 in North Chatham on the same trailhead as the Baldfaces and Eastman Mtn., passing Emerald Pool early on.",
       "review": {
         "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
         "date": "2026-08",
-        "issue": "Eagle Crag is not closely tied to Mt. Meader beyond sharing the range. The stored route, mileage, gain and source link all describe a Meader Ridge traverse, and Mt. Meader is not on the 52 With a View list at all.",
-        "needs": "A standalone Eagle Crag route with its own trailhead, distance and gain, verified against the book.",
-        "evidence": {
-          "source": "USFS National Forest System Trails (EDW_TrailNFSPublish_01), queried 2026-08",
-          "trails_at_summit": [
-            "Baldface Circle Trail",
-            "Eagle Link",
-            "Meader Ridge Trail",
-            "Bicknell Ridge Trail"
-          ],
-          "trail_lengths_mi": {
-            "Baldface Circle Trail": 7.36,
-            "Bicknell Ridge Trail": 2.2,
-            "Eagle Link": 2.45,
-            "Meader Ridge Trail": 1.86,
-            "Mount Meader Trail": 2.41
-          },
-          "reading": "Eagle Crag sits on the Baldface Circle Trail, sharing the Rt. 113 trailhead with North and South Baldface and Eastman Mtn. Meader Ridge Trail carries on north to Mt. Meader, which is how the two came to be paired, but it is a continuation rather than the way in.",
-          "caveat": "These are whole-trail lengths from the Forest Service GIS, not the distance from any particular trailhead."
+        "issue": "The stored route described a Mt. Meader traverse, which inflated the distance and gain and pointed the trailhead at Wild River. Mt. Meader is not on the 52 With a View list.",
+        "resolution": "Replaced with the shortest way to the summit: Emerald Pool Trail to Baldface Circle Trail to the Meader Ridge Trail junction, from the Route 113 trailhead. Distance and gain are measured from OpenStreetMap trail geometry and USGS elevations, so they are flagged derived until the guidebook figure is available.",
+        "measured": {
+          "one_way_mi": 3.59,
+          "round_trip_mi": 7.18,
+          "gain_ft": 2513,
+          "legs": [
+            "Emerald Pool Trail 0.72 mi",
+            "Baldface Circle Trail 2.72 mi",
+            "Meader Ridge Trail 0.15 mi"
+          ]
         }
       },
       "sources": [
