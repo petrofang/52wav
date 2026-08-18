@@ -714,18 +714,25 @@
     return `http://www.nhfamilyhikes.com/hikes.php?hike=${hikeParam}&from=${sourceParam}`;
   }
 
+  // The book is the guide to this list; everything else is a third-party writeup.
+  const OFFICIAL_GUIDE = {
+    label: "52 With a View: A Hiker's Guide",
+    url: 'https://www.kenmacgray.org/52/',
+    note: 'Ken MacGray, 3rd edition (2025) \u2014 the guidebook for this list',
+  };
+
   function fallbackSources(p) {
     const q = encodeURIComponent(`${p.name} New Hampshire hike`);
     return [
       {
         label: 'NH Family Hikes',
         url: nhFamilyHikesUrl(p),
-        note: 'Peak page and hike notes',
+        note: 'One hiker\u2019s page for this peak',
       },
       {
         label: 'New England Waterfalls',
         url: 'https://www.newenglandwaterfalls.com/52withaview.php',
-        note: 'Alternate-route guide and standard route options',
+        note: 'Another route writeup',
       },
       {
         label: 'TrailsNH',
@@ -751,7 +758,7 @@
         .filter(Boolean)
       : [];
 
-    return (fromData.length ? fromData : fallbackSources(p)).slice(0, 3);
+    return [OFFICIAL_GUIDE, ...(fromData.length ? fromData : fallbackSources(p)).slice(0, 3)];
   }
 
   function routeChoices(p) {
@@ -1062,7 +1069,8 @@
           <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">Route options</p>
           <ul class="mt-2 space-y-2">${routeMarkup}</ul>
 
-          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Hiker writeups and conditions</p>
+          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Further reading</p>
+          <p class="mt-1 text-xs text-stone-500">The guidebook is the reference for this list. The rest are other people&rsquo;s writeups, linked for convenience rather than endorsed.</p>
           <div class="mt-2 grid gap-2">${sourceMarkup}</div>
         </div>
       </article>`;

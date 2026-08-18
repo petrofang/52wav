@@ -59,7 +59,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Black%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -99,12 +99,18 @@
         "lat": 44.305983,
         "lon": -71.064541
       },
-      "notes": "Commonly paired with Mt. Meader. Scenic gorge and open ledges.",
+      "notes": "Open ledges at the north end of the Baldface ridge, above the Wild River valley.",
+      "review": {
+        "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
+        "date": "2026-08",
+        "issue": "Eagle Crag is not closely tied to Mt. Meader beyond sharing the range. The stored route, mileage, gain and source link all describe a Meader Ridge traverse, and Mt. Meader is not on the 52 With a View list at all.",
+        "needs": "A standalone Eagle Crag route with its own trailhead, distance and gain, verified against the book."
+      },
       "sources": [
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Meader%20Ridge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -149,7 +155,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Eastman%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -194,7 +200,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Hedgehog%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -239,7 +245,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Horn&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -284,7 +290,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Imp%20Face&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -329,7 +335,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -374,7 +380,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Magalloway%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -416,7 +422,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Three%20Sisters&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -461,7 +467,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Middle%20and%20North%20Sugarloaf%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -506,7 +512,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Avalon&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -552,7 +558,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Cardigan&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -598,7 +604,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Chocorua&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ],
       "view_rating": 10,
@@ -658,7 +664,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -703,7 +709,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Cube&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -748,7 +754,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Hayes&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -793,7 +799,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Israel&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -838,7 +844,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Kearsarge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -883,7 +889,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Kearsarge%20North&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -928,7 +934,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Monadnock&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -973,7 +979,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Parker&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1018,7 +1024,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Paugus&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1063,7 +1069,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Pemigewasset&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1108,7 +1114,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1154,7 +1160,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Shaw&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ],
       "view_rating": 8,
@@ -1215,7 +1221,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Success&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1260,7 +1266,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Tremont&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1305,7 +1311,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Webster%20and%20Jackson&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1350,7 +1356,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Willard&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1395,7 +1401,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Baldfaces&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1440,7 +1446,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Doublehead%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1485,7 +1491,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=South%20and%20North%20Moat%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1530,7 +1536,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=North%20Percy%20Peak&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1575,7 +1581,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Potash%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1620,7 +1626,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Sandwich%20Dome&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1665,7 +1671,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Shelburne%20Moriah%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1710,7 +1716,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Smarts%20%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1755,7 +1761,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=The%20Baldfaces&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1800,7 +1806,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=South%20and%20North%20Moat%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1845,7 +1851,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stairs%20Mountain%20and%20Mts.%20Resolution%20and%20Crawford&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1890,7 +1896,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Stinson%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1935,7 +1941,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Sugarloaf%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -1980,7 +1986,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Welch%20and%20Dickey%20Mountains&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2025,7 +2031,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Waumbek&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2070,7 +2076,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Cherry%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2115,7 +2121,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Roberts&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2160,7 +2166,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Carr%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2205,7 +2211,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=East%20and%20West%20Royce&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2250,7 +2256,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Wonalancet%20and%20Hibbard%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2295,7 +2301,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Blueberry%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2340,7 +2346,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Square%20Ledge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2385,7 +2391,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Black%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2431,7 +2437,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mt.%20Roberts&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2476,7 +2482,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Morgan%20and%20Percival&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2521,7 +2527,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Mts.%20Morgan%20and%20Percival&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2557,17 +2563,23 @@
           "recommended": true
         },
         {
-          "name": "Pine Mountain Road spur (private, shorter access)",
+          "name": "Pine Mountain Road (walk in; road closed to public driving)",
           "round_trip_mi": 3.5,
           "gain_ft": 1200,
           "difficulty": "Easier"
         }
       ],
+      "review": {
+        "raised_by": "Ken MacGray, author of New Hampshire's 52 With A View: A Hiker's Guide",
+        "date": "2026-08",
+        "issue": "Route selection needed checking. The stored recommendation starts in Gorham on the assumption that the shorter Pine Mountain Road approach was closed to hikers; in fact the road is only closed to public driving and walking in is welcome.",
+        "needs": "Confirmation of which approach the book treats as standard, and whether the Gorham start should remain the recommended route."
+      },
       "sources": [
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Pine%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ],
       "view_rating": 9,
@@ -2585,7 +2597,7 @@
         "lon": -71.180484,
         "address": "Promenade St, Gorham, NH 03581"
       },
-      "notes": "Many expansive ledges facing the Northern Presidentials. This is the route the Over the Hill Hikers recommend; a much shorter approach (about 3.5 mi round trip) starts from Pine Mountain Road off Pinkham B Road, but that road is private."
+      "notes": "Many expansive ledges facing the Northern Presidentials. The shorter approach, about 3.5 mi round trip, follows Pine Mountain Road off Pinkham B Road: the road is private and closed to public driving, but walkers are welcome."
     },
     {
       "id": 57,
@@ -2628,7 +2640,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Rogers%20Ledge&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2673,7 +2685,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Table%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2704,7 +2716,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Bald%20Peak&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ],
       "view_rating": 8,
@@ -2767,7 +2779,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Iron%20Mountain&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     },
@@ -2812,7 +2824,7 @@
         {
           "label": "NH Family Hikes",
           "url": "http://www.nhfamilyhikes.com/hikes.php?hike=Owlshead&from=petrofang.github.io%2F52wav",
-          "note": "Peak page and route notes"
+          "note": "One hiker's page for this peak"
         }
       ]
     }

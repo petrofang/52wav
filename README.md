@@ -141,16 +141,24 @@ what you send to the Over the Hill Hikers to claim the patch.
 
 ## Where the data comes from
 
+The guidebook for this list is **New Hampshire's 52 With A View: A Hiker's Guide** by
+[Ken MacGray](https://www.kenmacgray.org/52/), now in its 3rd edition (2025). It is the
+reference for the list itself. It is a print book, so its contents are not reproduced here;
+where this dataset disagrees with the book, the book is right.
+
 | Field | Source |
 | --- | --- |
-| Peak list, elevations, revision history | [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html) (June 2025 revision; 2019 NH statewide LIDAR) |
-| Distance, gain, difficulty, view rating | [NH Family Hikes](http://www.nhfamilyhikes.com/52WAV.php) |
+| The list, elevations, revision history | [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html) (June 2025 revision; 2019 NH statewide LIDAR), cross-checked against [Ken MacGray's peak list](https://www.kenmacgray.org/52/peaks.shtml) |
+| Distance, gain, difficulty, view rating | [NH Family Hikes](http://www.nhfamilyhikes.com/52WAV.php) — a secondary source, used because it has a page per peak, not because it is authoritative |
 | Summit and trailhead coordinates | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors |
 | Town and county | US Census Bureau geocoder |
 | Landowner and manager | [NH GRANIT](https://www.granit.unh.edu/) Conservation & Public Lands |
 | Official place names | [USGS GNIS](https://www.usgs.gov/tools/geographic-names-information-system-gnis), U.S. Board on Geographic Names |
 | Alternate-route reference | [New England Waterfalls](https://www.newenglandwaterfalls.com/52withaview.php) |
 | Derived distances and elevation profiles | OpenStreetMap trail geometry + USGS 3DEP/NED |
+
+Links to third-party writeups are offered for convenience and are not endorsements. Peaks
+whose route data is known to need checking carry a `review` block in `data/peaks.json`.
 
 ### Live sources used by the summit view
 
