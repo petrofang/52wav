@@ -2950,10 +2950,10 @@
         "official_name": "Black Mountain"
       },
       "summit": {
-        "lat": 44.2253,
-        "lon": -71.155628
+        "lat": 44.1992,
+        "lon": -71.1693
       },
-      "notes": "Added 2001 to replace Carr Mountain, retired May 2020. The middle peak is not separately mapped, so the summit pin is the main Black Mountain summit on the same ridge.",
+      "notes": "Not the Black Mountain in Benton, which is still on the list. The listed summit is the middle bump above the ski area; the true summit further north lost its trail and is now a long scratchy bushwhack. Added in 2001 to replace the closing-in views on Carr Mtn., and retired in 2020 when its own views grew in.",
       "sources": [
         {
           "label": "NH Mountain Hiking",
@@ -2979,7 +2979,8 @@
             "lon": -71.193112
           }
         }
-      ]
+      ],
+      "summit_note": "Coordinate is the middle peak, 2,722 ft on USGS 3DEP, 1.2 mi from the ski area base. The OSM peak node named Black Mountain is the true north summit at 3,302 ft and is not the listed peak."
     },
     {
       "id": 53,
