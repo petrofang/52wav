@@ -145,7 +145,15 @@
             <option value="gain_ft:asc">Least climbing</option>
             <option value="difficulty:asc">Easiest first</option>
             <option value="view_rating:desc">Best views</option>
+            <option id="sort-nearest" value="distance_mi:asc" hidden>Nearest to me</option>
           </select>
+
+          <button id="near-me" type="button" aria-pressed="false"
+            title="Sort by straight-line distance to each trailhead. Your location stays on your device."
+            class="inline-flex items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 shadow-sm hover:bg-stone-50">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 2a5.5 5.5 0 0 0-5.5 5.5c0 3.9 4.6 9.4 5.1 10a.5.5 0 0 0 .8 0c.5-.6 5.1-6.1 5.1-10A5.5 5.5 0 0 0 10 2Zm0 7.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z" clip-rule="evenodd"/></svg>
+            <span id="near-me-label">Near me</span>
+          </button>
 
           <button id="filters-toggle" type="button" aria-expanded="false" aria-controls="filters"
             class="inline-flex items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 shadow-sm hover:bg-stone-50">
@@ -233,6 +241,7 @@
                 <th scope="col" class="cursor-pointer select-none px-3 py-3 text-right font-semibold hover:text-stone-900" data-sort="gain_ft">Ft up <span class="sort-icon"></span></th>
                 <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="difficulty">Effort <span class="sort-icon"></span></th>
                 <th scope="col" class="cursor-pointer select-none px-3 py-3 text-right font-semibold hover:text-stone-900" data-sort="view_rating">View <span class="sort-icon"></span></th>
+                <th id="th-distance" scope="col" hidden title="Straight-line distance to the trailhead, not driving distance" class="cursor-pointer select-none px-3 py-3 text-right font-semibold hover:text-stone-900" data-sort="distance_mi">Away <span class="sort-icon"></span></th>
                 <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="town">Town <span class="sort-icon"></span></th>
                 <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="range">Range <span class="sort-icon"></span></th>
                 <th scope="col" class="cursor-pointer select-none px-3 py-3 font-semibold hover:text-stone-900" data-sort="land">Land <span class="sort-icon"></span></th>

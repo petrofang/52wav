@@ -28,6 +28,10 @@
     filters: el('filters'),
     filtersToggle: el('filters-toggle'),
     filterCount: el('filter-count'),
+    nearMe: el('near-me'),
+    nearMeLabel: el('near-me-label'),
+    sortNearest: el('sort-nearest'),
+    thDistance: el('th-distance'),
     reset: el('reset'),
     resultCount: el('result-count'),
     sourceNote: el('source-note'),
@@ -50,6 +54,8 @@
     completed: new Set(),
     expandedCards: new Set(),
     weather: {},
+    // Held in memory for this visit only: never stored, never sent anywhere.
+    here: null,
     query: '',
     range: '',
     county: '',
@@ -229,6 +235,27 @@
 
   const DIFFICULTY_ORDER = { Easier: 1, Medium: 2, Harder: 3 };
 
+  const milesBetween = (a, b) => {
+    const toRad = Math.PI / 180;
+    const dLat = (b.lat - a.lat) * toRad;
+    const dLon = (b.lon - a.lon) * toRad;
+    const h = Math.sin(dLat / 2) ** 2
+      + Math.cos(a.lat * toRad) * Math.cos(b.lat * toRad) * Math.sin(dLon / 2) ** 2;
+    return 3958.8 * 2 * Math.asin(Math.sqrt(h));
+  };
+
+  // Distance to the trailhead of whichever route is recommended, straight line.
+  function milesAway(p) {
+    if (!state.here) return null;
+    const trailhead = routeTrailhead(recommendedRoute(p));
+    if (!trailhead) return null;
+    return milesBetween(state.here, { lat: Number(trailhead.lat), lon: Number(trailhead.lon) });
+  }
+
+  const awayLabel = (miles) => (miles == null
+    ? ''
+    : `${miles < 10 ? miles.toFixed(1) : Math.round(miles)} mi away`);
+
   function recommendedRoute(p) {
     const routes = Array.isArray(p.routes) ? p.routes : [];
     if (!routes.length) return null;
@@ -243,6 +270,7 @@
       case 'gain_ft': return route?.gain_ft ?? Infinity;
       case 'difficulty': return DIFFICULTY_ORDER[route?.difficulty] ?? 99;
       case 'view_rating': return p.view_rating ?? -1;
+      case 'distance_mi': return milesAway(p) ?? Infinity;
       case 'name': return sortName(p);
       case 'land': return String(p.land?.owner_type ?? '').toLowerCase();
       default: return String(p[key] ?? '').toLowerCase();
@@ -922,6 +950,7 @@
   function card(p) {
     const done = state.completed.has(p.id);
     const r = primaryRoute(p);
+    const away = milesAway(p);
     const expanded = state.expandedCards.has(p.id);
     const routes = routeChoices(p);
     const detailsId = `card-details-${p.id}`;
@@ -1012,6 +1041,7 @@
               ${expanded ? '' : weatherBadge(p)}
             </div>
             <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(locationLine || p.town || '')}</p>
+            ${away != null ? `<p class="mt-0.5 text-xs font-medium text-emerald-800" title="Straight-line distance to the trailhead, not driving distance">${escapeHtml(awayLabel(away))}</p>` : ''}
             ${Number.isFinite(summitLat) && Number.isFinite(summitLon) ? `<p class="mt-0.5 text-xs text-stone-400">${summitLatText}, ${summitLonText}</p>` : ''}
           </div>
           <div class="flex-none font-display text-lg font-semibold text-stone-900">
@@ -1063,6 +1093,7 @@
   function tableRow(p) {
     const done = state.completed.has(p.id);
     const r = primaryRoute(p);
+    const away = milesAway(p);
     const num = (v) => (v ? v.toLocaleString() : '<span class="text-stone-300">&mdash;</span>');
 
     return `
@@ -1081,6 +1112,7 @@
         <td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${num(r.gain_ft)}</td>
         <td class="px-3 py-2.5">${r.difficulty ? badge(r.difficulty, DIFFICULTY_STYLE[r.difficulty]) : ''}</td>
         <td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${p.view_rating ? `${p.view_rating}/10${viewStar(p)}` : '<span class="text-stone-300">&mdash;</span>'}</td>
+        ${state.here ? `<td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${away != null ? escapeHtml(awayLabel(away)) : '<span class="text-stone-300">&mdash;</span>'}</td>` : ''}
         <td class="px-3 py-2.5">
           <div>${escapeHtml(p.town || '')}</div>
           <div class="text-xs text-stone-400">${escapeHtml(p.county || '')} County</div>
@@ -1231,6 +1263,21 @@
     syncSummitView();
   }
 
+  function setNearMeLabel(text, busy = false) {
+    els.nearMeLabel.textContent = text;
+    els.nearMe.disabled = busy;
+  }
+
+  function forgetLocation() {
+    state.here = null;
+    els.sortNearest.hidden = true;
+    els.thDistance.hidden = true;
+    els.nearMe.setAttribute('aria-pressed', 'false');
+    setNearMeLabel('Near me');
+    if (state.sortKey === 'distance_mi') applySort('name', 'asc');
+    render();
+  }
+
   function setToggle(selector, attr, value) {
     document.querySelectorAll(selector).forEach((btn) => {
       const on = btn.dataset[attr] === value;
@@ -1258,7 +1305,7 @@
       counties.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)} County</option>`).join('');
   }
 
-  const SORTABLE = ['name', 'elevation_ft', 'round_trip_mi', 'gain_ft', 'difficulty', 'view_rating', 'town', 'range', 'land', 'status'];
+  const SORTABLE = ['name', 'elevation_ft', 'round_trip_mi', 'gain_ft', 'difficulty', 'view_rating', 'town', 'range', 'land', 'status', 'distance_mi'];
 
   function applySort(key, dir) {
     state.sortKey = key;
@@ -1324,6 +1371,38 @@
       const nowHidden = els.filters.classList.toggle('hidden');
       els.filters.classList.toggle('grid', !nowHidden);
       els.filtersToggle.setAttribute('aria-expanded', String(!nowHidden));
+    });
+
+    els.nearMe.addEventListener('click', () => {
+      if (state.here) {
+        forgetLocation();
+        return;
+      }
+      if (!navigator.geolocation) {
+        setNearMeLabel('Not available', true);
+        return;
+      }
+
+      setNearMeLabel('Locating\u2026', true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          state.here = { lat: position.coords.latitude, lon: position.coords.longitude };
+          els.sortNearest.hidden = false;
+          els.thDistance.hidden = false;
+          els.nearMe.setAttribute('aria-pressed', 'true');
+          setNearMeLabel('Nearest first');
+          els.nearMe.disabled = false;
+          applySort('distance_mi', 'asc');
+          render();
+        },
+        (error) => {
+          const denied = error.code === error.PERMISSION_DENIED;
+          setNearMeLabel(denied ? 'Location blocked' : 'Could not locate');
+          els.nearMe.disabled = false;
+          setTimeout(() => { if (!state.here) setNearMeLabel('Near me'); }, 4000);
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+      );
     });
 
     document.querySelectorAll('.view-btn').forEach((btn) => {
@@ -1445,10 +1524,12 @@
       let sort = 'name:asc';
       try { sort = localStorage.getItem(SORT_KEY) || 'name:asc'; } catch { /* ignore */ }
       const [sortKey, sortDir] = sort.split(':');
+      // "Nearest to me" needs a location, which we never persist, so never restore it.
+      const restorable = SORTABLE.includes(sortKey) && sortKey !== 'distance_mi' ? sortKey : 'name';
 
       buildRangeOptions();
       setView(saved === 'table' ? 'table' : 'cards');
-      applySort(SORTABLE.includes(sortKey) ? sortKey : 'name', sortDir === 'desc' ? 'desc' : 'asc');
+      applySort(restorable, sortDir === 'desc' ? 'desc' : 'asc');
       setToggle('.list-btn', 'list', state.list);
       setToggle('.status-btn', 'status', state.status);
       wire();
