@@ -42,10 +42,8 @@
     statCurrent: el('stat-current'),
     statRetired: el('stat-retired'),
     statMiles: el('stat-miles'),
-    printBtn: el('print-btn'),
     shareBtn: el('share-btn'),
     saveHint: el('save-hint'),
-    printBody: el('print-body'),
   };
 
   const state = {
@@ -1146,61 +1144,6 @@
     });
   }
 
-  // --- print ----------------------------------------------------------------
-
-  // The rules are empty inline-blocks, so they need an explicit height and a tight
-  // line-height; otherwise each one generates a full line box and inflates every row.
-  const dateRule = (w) => `<span style="display:inline-block; width:${w}pt; height:7pt; line-height:7pt; vertical-align:middle; border-bottom:0.75pt solid #a8a29e;"></span>`;
-  const DATE_FIELD = `${dateRule(12)}<span style="color:#a8a29e;">/</span>${dateRule(12)}<span style="color:#a8a29e;">/</span>${dateRule(20)}`;
-
-  function printColumn(list) {
-    return `
-      <table style="width:100%; border-collapse:collapse; font-size:8.5pt;">
-        <tr style="font-size:6.5pt; text-transform:uppercase; letter-spacing:.05em; color:#a8a29e;">
-          <td style="width:11pt;"></td>
-          <td style="width:58pt; padding:0 6pt 1.5pt 0; white-space:nowrap;">M / D / Yr</td>
-          <td style="padding-bottom:1.5pt;">Peak</td>
-          <td style="width:30pt; padding-bottom:1.5pt; text-align:right;">Feet</td>
-        </tr>
-        ${list.map((p) => {
-          const done = state.completed.has(p.id);
-          return `
-            <tr>
-              <td style="width:11pt; padding:1pt 0; vertical-align:top;">
-                <span style="display:inline-block; width:8pt; height:8pt; border:0.75pt solid #57534e; text-align:center; line-height:8pt; font-size:7pt;">${done ? '&#10003;' : ''}</span>
-              </td>
-              <td style="width:58pt; padding:1pt 6pt 1pt 0; vertical-align:top; white-space:nowrap;">${DATE_FIELD}</td>
-              <td style="padding:1pt 3pt 1pt 0; line-height:1.12;">${escapeHtml(displayName(p))}</td>
-              <td style="width:30pt; padding:1pt 0; text-align:right; vertical-align:top; color:#57534e;">${p.elevation_ft.toLocaleString()}</td>
-            </tr>`;
-        }).join('')}
-      </table>`;
-  }
-
-  function printSection(title, list, note) {
-    if (!list.length) return '';
-    const sorted = list.slice().sort((a, b) => sortName(a).localeCompare(sortName(b)));
-    const half = Math.ceil(sorted.length / 2);
-    return `
-      <div class="print-section">
-        <h2 style="font-size:10.5pt; margin:7pt 0 2pt; border-bottom:0.75pt solid #d6d3d1; padding-bottom:1.5pt;">${title}${note ? ` <span style="font-weight:normal; font-size:8pt; color:#78716c;">(${escapeHtml(note)})</span>` : ''}</h2>
-        <div style="display:flex; justify-content:space-between; align-items:stretch;">
-          <div style="flex:0 0 46%; min-width:0;">${printColumn(sorted.slice(0, half))}</div>
-          <div style="border-left:0.5pt solid #e7e5e4;" aria-hidden="true"></div>
-          <div style="flex:0 0 46%; min-width:0;">${printColumn(sorted.slice(half))}</div>
-        </div>
-      </div>`;
-  }
-
-  function renderPrintSheet() {
-    const current = state.peaks.filter((p) => p.status === 'current');
-    const retired = state.peaks.filter((p) => p.status === 'delisted');
-    const revisionYear = String(state.meta?.list_revision || '').slice(0, 4);
-    els.printBody.innerHTML =
-      printSection('The current 52', current, revisionYear && `${revisionYear} revision`) +
-      printSection('Retired peaks — these still count toward your 52', retired);
-  }
-
   // --- render ---------------------------------------------------------------
 
   function renderProgress() {
@@ -1226,7 +1169,7 @@
           : 'The finish line is in sight — save a good one for last.';
     } else if (total >= PATCH_TARGET) {
       headline = 'All 52 — well done!';
-      sub = 'Print the checklist and send it to the Over the Hill Hikers for your patch.';
+      sub = 'Send the official checklist to the Over the Hill Hikers for your patch.';
     }
 
     els.headline.textContent = headline;
@@ -1265,7 +1208,6 @@
 
     syncSortIndicators();
     renderProgress();
-    renderPrintSheet();
     syncSummitView();
   }
 
@@ -1475,17 +1417,6 @@
 
     els.cards.addEventListener('change', onToggleTick);
     els.tableBody.addEventListener('change', onToggleTick);
-
-    // Browsers name a saved PDF after document.title, so give it a tidy filename.
-    const pageTitle = document.title;
-    const restoreTitle = () => { document.title = pageTitle; };
-    window.addEventListener('afterprint', restoreTitle);
-
-    els.printBtn.addEventListener('click', () => {
-      document.title = '52-With-a-View-checklist';
-      window.print();
-      setTimeout(restoreTitle, 1000);
-    });
 
     els.shareBtn.addEventListener('click', async () => {
       const url = `${location.origin}${location.pathname}#p=${encodeProgress([...state.completed])}`;

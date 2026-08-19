@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>52 With a View &mdash; a friendly guide to New Hampshire's best small mountains</title>
-  <meta name="description" content="Browse, filter and print the New Hampshire 52 With a View peak list. Trail distances, elevation gain, drive-to trailheads and a printable checklist.">
+  <meta name="description" content="Browse and filter the New Hampshire 52 With a View peak list. Trail distances, elevation gain, drive-to trailheads and a 3D view of every summit.">
   <meta name="theme-color" content="#047857">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,6 @@
 
   <style>
     body { -webkit-font-smoothing: antialiased; }
-    .print-sheet { display: none; }
 
     /* Slow drift across an overscanned satellite tile, standing in for a real orbit. */
     @keyframes summit-orbit {
@@ -54,21 +53,12 @@
     @media (prefers-reduced-motion: reduce) {
       article[data-expanded="true"] .summit-orbit { animation: none; }
     }
-
-    @media print {
-      @page { size: letter; margin: 0.55in 0.5in 0.45in; }
-      .no-print { display: none !important; }
-      .print-sheet { display: block !important; }
-      body { background: #fff !important; }
-      .print-section { break-inside: avoid; page-break-inside: avoid; }
-      .print-certify { break-inside: avoid; page-break-inside: avoid; }
-    }
   </style>
 </head>
 
 <body class="min-h-full bg-stone-50 text-stone-800">
 
-  <div class="no-print">
+  <div>
     <header class="border-b border-stone-200 bg-gradient-to-b from-emerald-50 to-stone-50">
       <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div class="flex items-start gap-4">
@@ -99,13 +89,8 @@
               <p id="progress-sub" class="mt-1 text-sm text-stone-500">Tick a peak once you've stood on top.</p>
             </div>
             <div class="flex flex-wrap gap-2">
-              <button id="print-btn" type="button"
+              <a id="checklist-btn" href="https://www.kenmacgray.org/52/52wav_checklist_2025.pdf" target="_blank" rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
-                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3a1 1 0 0 0-1 1v3H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h1v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2h1a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a1 1 0 0 0-1-1H5Zm1 4V5h8v2H6Zm8 6H6v3h8v-3Z"/></svg>
-                Print or save PDF
-              </button>
-              <a id="official-checklist" href="https://www.kenmacgray.org/52/52wav_checklist_2025.pdf" target="_blank" rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
                 <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M4 3a2 2 0 0 1 2-2h5.586A2 2 0 0 1 13 1.586L16.414 5A2 2 0 0 1 17 6.414V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V3Zm7 0v3a1 1 0 0 0 1 1h3l-4-4Zm-4 8a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2H8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2H8Z"/></svg>
                 Official checklist
               </a>
@@ -280,11 +265,9 @@
           <span class="font-medium text-stone-700">Your ticks stay yours.</span>
           There is no account and no tracking &mdash; checkmarks live in this browser only. Use
           <span class="font-medium">Save my progress</span> to turn them into a link you can bookmark or email yourself,
-          which is the safest way to carry a multi-year list between phones and computers. The checklist prints on a single
-          page; choose <span class="font-medium">Save as PDF</span> in your print dialog if you would rather keep a copy on
-          your computer. It carries the address for claiming your patch, or use the
+          which is the safest way to carry a multi-year list between phones and computers. To claim your patch, print the
           <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.kenmacgray.org/52/52wav_checklist_2025.pdf" target="_blank" rel="noopener noreferrer">official checklist</a>
-          if you would rather send that.
+          and post it with a stamped addressed envelope and $5 to the address on the form.
         </p>
         <p class="mt-4 max-w-3xl">
           <span class="font-medium text-stone-700">Please take the data.</span>
@@ -305,41 +288,6 @@
         </p>
       </div>
     </footer>
-  </div>
-
-  <div class="print-sheet">
-    <div style="font-family: Georgia, serif; color: #1c1917;">
-      <h1 style="font-size: 17pt; margin: 0 0 1pt;">New Hampshire 52 With a View</h1>
-      <p style="margin: 0 0 8pt; font-size: 8pt; color: #57534e;">
-        The official list kept by the Over the Hill Hikers.
-        Any 52 peaks, current or retired, count toward the patch.
-      </p>
-      <p style="margin: 0 0 4pt; font-size: 9.5pt;">
-        Name <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 210pt;"></span>
-      </p>
-      <div id="print-body"></div>
-
-      <div class="print-certify" style="margin-top: 7pt; border-top: 1pt solid #78716c; padding-top: 4pt;">
-        <p style="margin: 0 0 5pt; font-size: 9pt;">
-          <strong>To claim your patch</strong>, send this sheet with a self-addressed stamped envelope and $5
-          (well-concealed cash, no cheques) to Catherine Crooker, 277 Elm Hill Rd., Center Sandwich, NH 03227.
-          Questions: catherinecrooker@gmail.com
-        </p>
-        <p style="margin: 0 0 4pt; font-size: 9.5pt;">
-          Address <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 180pt;"></span>
-          &nbsp;Town <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 105pt;"></span>
-          &nbsp;Zip <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 60pt;"></span>
-        </p>
-        <p style="margin: 0; font-size: 9.5pt;">
-          Which peak did you finish on? <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 230pt;"></span>
-        </p>
-      </div>
-
-      <p style="margin-top: 7pt; font-size: 7.5pt; color: #78716c;">
-        Elevations from the 2019 New Hampshire statewide LIDAR survey. Write dates as month / day / year.
-        Any 52 of the current and delisted peaks count. The official checklist is at kenmacgray.org/52
-      </p>
-    </div>
   </div>
 
   <script src="config.js"></script>
