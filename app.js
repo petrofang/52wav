@@ -567,13 +567,15 @@
           layout: { 'line-cap': 'round', 'line-join': 'round' },
           paint: { 'line-color': '#1c1917', 'line-width': 6, 'line-opacity': 0.55, 'line-blur': 1 }
         });
+        // Red is the usual map convention for a trail; the dark casing carries the contrast,
+        // since red alone sits close to forest green for red-blind viewers.
         map.addLayer({
           id: 'route-line',
           type: 'line',
           source: 'trails',
           filter: ['==', ['get', 'role'], 'route'],
           layout: { 'line-cap': 'round', 'line-join': 'round' },
-          paint: { 'line-color': '#fbbf24', 'line-width': 3, 'line-opacity': 1 }
+          paint: { 'line-color': '#ef4444', 'line-width': 3, 'line-opacity': 1 }
         });
       })
       .catch(() => {
