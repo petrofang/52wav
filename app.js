@@ -718,7 +718,10 @@
     'www.alltrails.com': 'assets/icons/sources/alltrails.png',
   };
 
-  function sourceIcon(url) {
+  function sourceIcon(url, badge) {
+    if (badge) {
+      return `<span class="flex h-4 w-4 flex-none items-center justify-center rounded-sm bg-emerald-200/70 text-[9px] font-bold text-emerald-900" aria-hidden="true">${escapeHtml(badge)}</span>`;
+    }
     let host = '';
     try { host = new URL(url).hostname; } catch { host = ''; }
     const icon = SOURCE_ICONS[host];
@@ -728,11 +731,12 @@
     return `<span class="flex h-4 w-4 flex-none items-center justify-center rounded-sm bg-emerald-200/70 text-[9px] font-bold text-emerald-900" aria-hidden="true">${escapeHtml((host.replace(/^www\./, '')[0] || '?').toUpperCase())}</span>`;
   }
 
-  // The book is the guide to this list; everything else is a third-party writeup.
+  // Listed first because it is the book about these peaks, not because it endorses this app.
   const OFFICIAL_GUIDE = {
     label: "52 With a View: A Hiker's Guide",
     url: 'https://www.kenmacgray.org/52/',
-    note: 'Ken MacGray, 3rd edition (2025) \u2014 the guidebook for this list',
+    note: 'Ken MacGray, 3rd edition (2025)',
+    badge: '52',
   };
 
   function fallbackSources(p) {
@@ -988,7 +992,7 @@
     const sourceMarkup = sourceLinks.map((src) => `
       <a class="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 transition hover:bg-emerald-100"
          target="_blank" rel="noopener noreferrer" href="${escapeHtml(src.url)}">
-        ${sourceIcon(src.url)}
+        ${sourceIcon(src.url, src.badge)}
         <span class="min-w-0">
           <span class="block font-medium">${escapeHtml(src.label)}</span>
           ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
@@ -1082,7 +1086,7 @@
           <ul class="mt-2 space-y-2">${routeMarkup}</ul>
 
           <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Further reading</p>
-          <p class="mt-1 text-xs text-stone-500">The guidebook is the reference for this list. The rest are other people&rsquo;s writeups, linked for convenience rather than endorsed.</p>
+          <p class="mt-1 text-xs text-stone-500">Other people&rsquo;s books and writeups, linked for convenience.</p>
           <div class="mt-2 grid gap-2">${sourceMarkup}</div>
         </div>
       </article>`;
