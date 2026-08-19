@@ -59,6 +59,18 @@ jobs:
                   if th.get("lat") is None or th.get("lon") is None:
                       problems.append(f"{p['name']}: route '{r.get('name')}' has no trailhead")
 
+          # Peak sources reference the top-level registry by id, so a typo there would
+          # silently drop the link's label rather than showing anything wrong.
+          registry = {s.get("id") for s in data.get("sources", []) if s.get("id")}
+          if not registry:
+              problems.append("top-level sources registry is missing or has no ids")
+          for p in peaks:
+              for s in p.get("sources", []):
+                  if s.get("source") not in registry:
+                      problems.append(f"{p['name']}: source id '{s.get('source')}' is not in the registry")
+                  if not s.get("url"):
+                      problems.append(f"{p['name']}: source '{s.get('source')}' has no url")
+
           if problems:
               sys.exit("Dataset is not publishable:\n  " + "\n  ".join(problems))
           current = sum(1 for p in peaks if p["status"] == "current")

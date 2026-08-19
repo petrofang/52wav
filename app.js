@@ -732,13 +732,26 @@
     return `<span class="flex h-4 w-4 flex-none items-center justify-center rounded-sm bg-emerald-200/70 text-[9px] font-bold text-emerald-900" aria-hidden="true">${escapeHtml((host.replace(/^www\./, '')[0] || '?').toUpperCase())}</span>`;
   }
 
-  // Listed first because it is the book about these peaks, not because it endorses this app.
-  const OFFICIAL_GUIDE = {
-    label: "52 With a View: A Hiker's Guide",
-    url: 'https://www.kenmacgray.org/52/',
-    note: 'Ken MacGray, 3rd edition (2025)',
-    badge: '52',
-  };
+  // Peaks reference the top-level sources registry by id, so labels live in exactly one place.
+  let sourceById = new Map();
+
+  function indexSources() {
+    const list = Array.isArray(state.meta?.sources) ? state.meta.sources : [];
+    sourceById = new Map(list.filter((s) => s && s.id).map((s) => [s.id, s]));
+  }
+
+  function officialGuide() {
+    const ref = sourceById.get('macgray-guide');
+    if (!ref) return null;
+    const url = safeExternalUrl(ref.url);
+    if (!url) return null;
+    return {
+      label: ref.card_label || ref.title || ref.publisher,
+      url,
+      note: ref.link_note || '',
+      badge: ref.badge,
+    };
+  }
 
   function fallbackSources(p) {
     const q = encodeURIComponent(`${p.name} New Hampshire hike`);
@@ -760,19 +773,23 @@
     const fromData = Array.isArray(p.sources)
       ? p.sources
         .map((s) => {
-          const label = (s?.label || s?.name || s?.title || '').trim();
           const url = safeExternalUrl(s?.url || s?.href);
-          if (!label || !url) return null;
+          if (!url) return null;
+          const ref = sourceById.get(s?.source);
+          const label = (ref?.card_label || ref?.publisher || s?.label || s?.name || '').trim();
+          if (!label) return null;
           return {
             label,
             url,
-            note: String(s?.note || '').trim(),
+            note: String(s?.note || ref?.link_note || '').trim(),
           };
         })
         .filter(Boolean)
       : [];
 
-    return [OFFICIAL_GUIDE, ...(fromData.length ? fromData : fallbackSources(p)).slice(0, 4)];
+    const guide = officialGuide();
+    const rest = (fromData.length ? fromData : fallbackSources(p)).slice(0, 4);
+    return guide ? [guide, ...rest] : rest;
   }
 
   function routeChoices(p) {
@@ -1495,6 +1512,7 @@
       const restorable = SORTABLE.includes(sortKey) && sortKey !== 'distance_mi' ? sortKey : 'name';
 
       buildRangeOptions();
+      indexSources();
       renderSources();
       setView(saved === 'table' ? 'table' : 'cards');
       applySort(restorable, sortDir === 'desc' ? 'desc' : 'asc');
