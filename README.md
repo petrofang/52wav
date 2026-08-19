@@ -141,10 +141,11 @@ what you send to the Over the Hill Hikers to claim the patch.
 
 ## Where the data comes from
 
-The guidebook for this list is **New Hampshire's 52 With A View: A Hiker's Guide** by
-[Ken MacGray](https://www.kenmacgray.org/52/), now in its 3rd edition (2025). It is the
-reference for the list itself. It is a print book, so its contents are not reproduced here;
-where this dataset disagrees with the book, the book is right.
+**New Hampshire's 52 With A View: A Hiker's Guide** by
+[Ken MacGray](https://www.kenmacgray.org/52/), now in its 3rd edition (2025), is the published
+book covering these peaks, and it is linked from every card. This project is independent of it.
+It is a print book, so its contents are not reproduced here; where this dataset disagrees with
+the book, the book is right.
 
 | Field | Source |
 | --- | --- |

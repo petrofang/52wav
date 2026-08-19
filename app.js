@@ -28,6 +28,10 @@
     filters: el('filters'),
     filtersToggle: el('filters-toggle'),
     filterCount: el('filter-count'),
+    geoNote: el('geo-note'),
+    geoNoteText: el('geo-note-text'),
+    geoClear: el('geo-clear'),
+    thDistance: el('th-distance'),
     reset: el('reset'),
     resultCount: el('result-count'),
     sourceNote: el('source-note'),
@@ -50,6 +54,8 @@
     completed: new Set(),
     expandedCards: new Set(),
     weather: {},
+    // Held in memory for this visit only: never stored, never sent anywhere.
+    here: null,
     query: '',
     range: '',
     county: '',
@@ -229,6 +235,27 @@
 
   const DIFFICULTY_ORDER = { Easier: 1, Medium: 2, Harder: 3 };
 
+  const milesBetween = (a, b) => {
+    const toRad = Math.PI / 180;
+    const dLat = (b.lat - a.lat) * toRad;
+    const dLon = (b.lon - a.lon) * toRad;
+    const h = Math.sin(dLat / 2) ** 2
+      + Math.cos(a.lat * toRad) * Math.cos(b.lat * toRad) * Math.sin(dLon / 2) ** 2;
+    return 3958.8 * 2 * Math.asin(Math.sqrt(h));
+  };
+
+  // Distance to the trailhead of whichever route is recommended, straight line.
+  function milesAway(p) {
+    if (!state.here) return null;
+    const trailhead = routeTrailhead(recommendedRoute(p));
+    if (!trailhead) return null;
+    return milesBetween(state.here, { lat: Number(trailhead.lat), lon: Number(trailhead.lon) });
+  }
+
+  const awayLabel = (miles) => (miles == null
+    ? ''
+    : `${miles < 10 ? miles.toFixed(1) : Math.round(miles).toLocaleString()} mi away`);
+
   function recommendedRoute(p) {
     const routes = Array.isArray(p.routes) ? p.routes : [];
     if (!routes.length) return null;
@@ -243,6 +270,7 @@
       case 'gain_ft': return route?.gain_ft ?? Infinity;
       case 'difficulty': return DIFFICULTY_ORDER[route?.difficulty] ?? 99;
       case 'view_rating': return p.view_rating ?? -1;
+      case 'distance_mi': return milesAway(p) ?? Infinity;
       case 'name': return sortName(p);
       case 'land': return String(p.land?.owner_type ?? '').toLowerCase();
       default: return String(p[key] ?? '').toLowerCase();
@@ -539,13 +567,15 @@
           layout: { 'line-cap': 'round', 'line-join': 'round' },
           paint: { 'line-color': '#1c1917', 'line-width': 6, 'line-opacity': 0.55, 'line-blur': 1 }
         });
+        // Red is the usual map convention for a trail; the dark casing carries the contrast,
+        // since red alone sits close to forest green for red-blind viewers.
         map.addLayer({
           id: 'route-line',
           type: 'line',
           source: 'trails',
           filter: ['==', ['get', 'role'], 'route'],
           layout: { 'line-cap': 'round', 'line-join': 'round' },
-          paint: { 'line-color': '#fbbf24', 'line-width': 3, 'line-opacity': 1 }
+          paint: { 'line-color': '#ef4444', 'line-width': 3, 'line-opacity': 1 }
         });
       })
       .catch(() => {
@@ -690,7 +720,10 @@
     'www.alltrails.com': 'assets/icons/sources/alltrails.png',
   };
 
-  function sourceIcon(url) {
+  function sourceIcon(url, badge) {
+    if (badge) {
+      return `<span class="flex h-4 w-4 flex-none items-center justify-center rounded-sm bg-emerald-200/70 text-[9px] font-bold text-emerald-900" aria-hidden="true">${escapeHtml(badge)}</span>`;
+    }
     let host = '';
     try { host = new URL(url).hostname; } catch { host = ''; }
     const icon = SOURCE_ICONS[host];
@@ -700,11 +733,12 @@
     return `<span class="flex h-4 w-4 flex-none items-center justify-center rounded-sm bg-emerald-200/70 text-[9px] font-bold text-emerald-900" aria-hidden="true">${escapeHtml((host.replace(/^www\./, '')[0] || '?').toUpperCase())}</span>`;
   }
 
-  // The book is the guide to this list; everything else is a third-party writeup.
+  // Listed first because it is the book about these peaks, not because it endorses this app.
   const OFFICIAL_GUIDE = {
     label: "52 With a View: A Hiker's Guide",
     url: 'https://www.kenmacgray.org/52/',
-    note: 'Ken MacGray, 3rd edition (2025) \u2014 the guidebook for this list',
+    note: 'Ken MacGray, 3rd edition (2025)',
+    badge: '52',
   };
 
   function fallbackSources(p) {
@@ -922,6 +956,7 @@
   function card(p) {
     const done = state.completed.has(p.id);
     const r = primaryRoute(p);
+    const away = milesAway(p);
     const expanded = state.expandedCards.has(p.id);
     const routes = routeChoices(p);
     const detailsId = `card-details-${p.id}`;
@@ -959,7 +994,7 @@
     const sourceMarkup = sourceLinks.map((src) => `
       <a class="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 transition hover:bg-emerald-100"
          target="_blank" rel="noopener noreferrer" href="${escapeHtml(src.url)}">
-        ${sourceIcon(src.url)}
+        ${sourceIcon(src.url, src.badge)}
         <span class="min-w-0">
           <span class="block font-medium">${escapeHtml(src.label)}</span>
           ${src.note ? `<span class="block text-xs text-emerald-800/90">${escapeHtml(src.note)}</span>` : ''}
@@ -1012,6 +1047,7 @@
               ${expanded ? '' : weatherBadge(p)}
             </div>
             <p class="mt-0.5 text-sm text-stone-500">${escapeHtml(locationLine || p.town || '')}</p>
+            ${away != null ? `<p class="mt-0.5 text-xs font-medium text-emerald-800" title="Straight-line distance to the trailhead, not driving distance">${escapeHtml(awayLabel(away))}</p>` : ''}
             ${Number.isFinite(summitLat) && Number.isFinite(summitLon) ? `<p class="mt-0.5 text-xs text-stone-400">${summitLatText}, ${summitLonText}</p>` : ''}
           </div>
           <div class="flex-none font-display text-lg font-semibold text-stone-900">
@@ -1052,7 +1088,7 @@
           <ul class="mt-2 space-y-2">${routeMarkup}</ul>
 
           <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-stone-500">Further reading</p>
-          <p class="mt-1 text-xs text-stone-500">The guidebook is the reference for this list. The rest are other people&rsquo;s writeups, linked for convenience rather than endorsed.</p>
+          <p class="mt-1 text-xs text-stone-500">Other people&rsquo;s books and writeups, linked for convenience.</p>
           <div class="mt-2 grid gap-2">${sourceMarkup}</div>
         </div>
       </article>`;
@@ -1063,6 +1099,7 @@
   function tableRow(p) {
     const done = state.completed.has(p.id);
     const r = primaryRoute(p);
+    const away = milesAway(p);
     const num = (v) => (v ? v.toLocaleString() : '<span class="text-stone-300">&mdash;</span>');
 
     return `
@@ -1081,6 +1118,7 @@
         <td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${num(r.gain_ft)}</td>
         <td class="px-3 py-2.5">${r.difficulty ? badge(r.difficulty, DIFFICULTY_STYLE[r.difficulty]) : ''}</td>
         <td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${p.view_rating ? `${p.view_rating}/10${viewStar(p)}` : '<span class="text-stone-300">&mdash;</span>'}</td>
+        ${state.here ? `<td class="whitespace-nowrap px-3 py-2.5 text-right tabular-nums">${away != null ? escapeHtml(awayLabel(away)) : '<span class="text-stone-300">&mdash;</span>'}</td>` : ''}
         <td class="px-3 py-2.5">
           <div>${escapeHtml(p.town || '')}</div>
           <div class="text-xs text-stone-400">${escapeHtml(p.county || '')} County</div>
@@ -1231,6 +1269,61 @@
     syncSummitView();
   }
 
+  function setGeoNote(text, clearable = false) {
+    els.geoNoteText.textContent = text;
+    els.geoClear.hidden = !clearable;
+    els.geoNote.hidden = false;
+  }
+
+  function requestLocation() {
+    const previous = `${state.sortKey}:${state.sortDir}`;
+    const revert = (message) => {
+      els.sort.value = previous;
+      setGeoNote(message);
+    };
+
+    if (!navigator.geolocation) {
+      revert('This browser cannot share a location, so peaks are sorted as before.');
+      return;
+    }
+
+    setGeoNote('Finding your location\u2026');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        state.here = { lat: position.coords.latitude, lon: position.coords.longitude };
+        els.thDistance.hidden = false;
+        applySort('distance_mi', 'asc');
+        render();
+        describeLocation();
+      },
+      (error) => {
+        revert(error.code === error.PERMISSION_DENIED
+          ? 'Location permission was blocked, so peaks are sorted as before.'
+          : 'Could not find your location, so peaks are sorted as before.');
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    );
+  }
+
+  function describeLocation() {
+    const distances = state.peaks.map(milesAway).filter((n) => n != null);
+    const nearest = distances.length ? Math.min(...distances) : null;
+    // Every peak is in New Hampshire, so a distant visitor deserves to be told rather than
+    // handed a list sorted by thousands of meaningless miles.
+    setGeoNote(nearest != null && nearest > 500
+      ? `These peaks are all in New Hampshire, USA, and the closest trailhead is about ${Math.round(nearest).toLocaleString()} mi from you.`
+      : 'Distances are straight line to each trailhead, not driving distance.', true);
+  }
+
+  function forgetLocation() {
+    state.here = null;
+    els.thDistance.hidden = true;
+    els.geoNote.hidden = true;
+    els.geoClear.hidden = true;
+    if (state.sortKey === 'distance_mi') applySort('name', 'asc');
+    render();
+  }
+
   function setToggle(selector, attr, value) {
     document.querySelectorAll(selector).forEach((btn) => {
       const on = btn.dataset[attr] === value;
@@ -1258,7 +1351,7 @@
       counties.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)} County</option>`).join('');
   }
 
-  const SORTABLE = ['name', 'elevation_ft', 'round_trip_mi', 'gain_ft', 'difficulty', 'view_rating', 'town', 'range', 'land', 'status'];
+  const SORTABLE = ['name', 'elevation_ft', 'round_trip_mi', 'gain_ft', 'difficulty', 'view_rating', 'town', 'range', 'land', 'status', 'distance_mi'];
 
   function applySort(key, dir) {
     state.sortKey = key;
@@ -1305,6 +1398,7 @@
 
     els.sort.addEventListener('change', (e) => {
       const [key, dir] = e.target.value.split(':');
+      if (key === 'distance_mi' && !state.here) { requestLocation(); return; }
       applySort(key, dir);
       render();
     });
@@ -1319,6 +1413,8 @@
         render();
       });
     });
+
+    els.geoClear.addEventListener('click', forgetLocation);
 
     els.filtersToggle.addEventListener('click', () => {
       const nowHidden = els.filters.classList.toggle('hidden');
@@ -1445,10 +1541,12 @@
       let sort = 'name:asc';
       try { sort = localStorage.getItem(SORT_KEY) || 'name:asc'; } catch { /* ignore */ }
       const [sortKey, sortDir] = sort.split(':');
+      // "Nearest to me" needs a location, which we never persist, so never restore it.
+      const restorable = SORTABLE.includes(sortKey) && sortKey !== 'distance_mi' ? sortKey : 'name';
 
       buildRangeOptions();
       setView(saved === 'table' ? 'table' : 'cards');
-      applySort(SORTABLE.includes(sortKey) ? sortKey : 'name', sortDir === 'desc' ? 'desc' : 'asc');
+      applySort(restorable, sortDir === 'desc' ? 'desc' : 'asc');
       setToggle('.list-btn', 'list', state.list);
       setToggle('.status-btn', 'status', state.status);
       wire();
