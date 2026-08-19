@@ -1816,7 +1816,15 @@
         "lat": 44.16773,
         "lon": -71.130166
       },
-      "notes": "Counts as one entry. North 3,051 ft; South 2,939 ft. Rentable summit cabin on North.",
+      "secondary_summits": [
+        {
+          "name": "South Doublehead",
+          "lat": 44.161509,
+          "lon": -71.131852,
+          "elevation_ft": 2939
+        }
+      ],
+      "notes": "Counts as one entry. North 3,051 ft; South 2,939 ft. The main coordinate is North, the higher of the two. Rentable summit cabin on North.",
       "sources": [
         {
           "source": "nh-mountain-hiking",
@@ -2448,7 +2456,15 @@
         "lat": 43.923024,
         "lon": -71.578652
       },
-      "notes": "Counts as one entry. Dickey 2,722 ft; Welch 2,598 ft. Coordinates are Dickey.",
+      "secondary_summits": [
+        {
+          "name": "Welch Mountain",
+          "lat": 43.919172,
+          "lon": -71.575706,
+          "elevation_ft": 2598
+        }
+      ],
+      "notes": "Counts as one entry. Dickey 2,722 ft; Welch 2,598 ft. The main coordinate is Dickey, the higher of the two.",
       "sources": [
         {
           "source": "nh-mountain-hiking",
@@ -3496,5 +3512,5 @@
       ]
     }
   ],
-  "schema_notes": "Each peak carries a routes[] array. A route owns its own name, distance, gain, difficulty and trailhead; exactly one is marked recommended, and that is the one the peak is summarised by. There is no peak-level route or trailhead. A peak's sources[] entries reference the top-level sources registry by id; each carries the peak-specific url, and a note only when it differs from that source's link_note."
+  "schema_notes": "Each peak carries a routes[] array. A route owns its own name, distance, gain, difficulty and trailhead; exactly one is marked recommended, and that is the one the peak is summarised by. There is no peak-level route or trailhead. A peak's sources[] entries reference the top-level sources registry by id; each carries the peak-specific url, and a note only when it differs from that source's link_note. A peak that covers more than one named summit carries secondary_summits[]; the peak's own summit is the higher one, and elevation_ft matches it."
 }

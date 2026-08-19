@@ -71,6 +71,15 @@ jobs:
                   if not s.get("url"):
                       problems.append(f"{p['name']}: source '{s.get('source')}' has no url")
 
+          # An entry covering two summits keeps the second one here, and the peak's own
+          # summit must be the higher of them.
+          for p in peaks:
+              for s in p.get("secondary_summits", []):
+                  if s.get("lat") is None or s.get("lon") is None or not s.get("name"):
+                      problems.append(f"{p['name']}: secondary summit is missing a name or coordinates")
+                  elif s.get("elevation_ft") and s["elevation_ft"] > p["elevation_ft"]:
+                      problems.append(f"{p['name']}: secondary summit {s['name']} is higher than the peak")
+
           if problems:
               sys.exit("Dataset is not publishable:\n  " + "\n  ".join(problems))
           current = sum(1 for p in peaks if p["status"] == "current")
