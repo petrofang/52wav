@@ -566,14 +566,15 @@
         {
           "name": "Sugarloaf Trail",
           "recommended": true,
-          "round_trip_mi": 3.4,
-          "gain_ft": 1100,
+          "round_trip_mi": 2.8,
+          "gain_ft": 900,
           "difficulty": "Easier",
           "trailhead": {
             "name": "Sugarloaf Trailhead (Zealand Rd.)",
             "lat": 44.25472,
             "lon": -71.504129
-          }
+          },
+          "note": "Middle Sugarloaf only. Adding the short side trip to North Sugarloaf makes it 3.4 mi and 1100 ft."
         }
       ]
     },
@@ -1251,16 +1252,30 @@
       ],
       "routes": [
         {
-          "name": "Old Paugus Trail / Big Rock Cave Trail",
+          "name": "Kelley Trail / Lawrence Trail / Old Mast Rd. loop",
           "recommended": true,
-          "round_trip_mi": 8.4,
-          "gain_ft": 2100,
+          "round_trip_mi": 8.5,
+          "gain_ft": 2450,
           "difficulty": "Medium",
           "trailhead": {
-            "name": "Old Paugus Trail trailhead",
+            "name": "Ferncroft trailhead (Old Mast Rd.)",
+            "lat": 43.914145,
+            "lon": -71.357149
+          },
+          "note": "Counter-clockwise loop from Ferncroft. The drawn line follows the ascent; the descent returns on Old Mast Rd."
+        },
+        {
+          "name": "Cabin Trail / Big Rock Cave Trail / Old Paugus Trail / Lawrence Trail loop",
+          "recommended": false,
+          "round_trip_mi": 8.2,
+          "gain_ft": 3000,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Cabin Trail trailhead (Paugus Mill Rd.)",
             "lat": 43.90846,
             "lon": -71.34133
-          }
+          },
+          "note": "Counter-clockwise loop. Steeper than the standard approach."
         }
       ]
     },
@@ -1311,7 +1326,7 @@
         {
           "name": "Mt. Pemigewasset Trail",
           "recommended": true,
-          "round_trip_mi": 3.6,
+          "round_trip_mi": 3.8,
           "gain_ft": 1250,
           "difficulty": "Easier",
           "trailhead": {
@@ -1319,6 +1334,19 @@
             "lat": 44.097091,
             "lon": -71.681277
           }
+        },
+        {
+          "name": "Indian Head Trail",
+          "recommended": false,
+          "round_trip_mi": 3.8,
+          "gain_ft": 1550,
+          "difficulty": "Medium",
+          "trailhead": {
+            "name": "Indian Head Trail parking (US-3)",
+            "lat": 44.081457,
+            "lon": -71.68622
+          },
+          "note": "Signed trailhead parking off US-3, about 0.2 mi south of the Indian Head Resort."
         }
       ]
     },
@@ -2813,16 +2841,17 @@
       ],
       "routes": [
         {
-          "name": "Blueberry Mountain Trail",
+          "name": "Blueberry Mountain Trail (southeast approach)",
           "recommended": true,
-          "round_trip_mi": 5,
-          "gain_ft": 1400,
+          "round_trip_mi": 4.8,
+          "gain_ft": 1310,
           "difficulty": "Easier",
           "trailhead": {
-            "name": "Blueberry Mountain north trailhead",
+            "name": "Long Pond Rd. at High St.",
             "lat": 44.040703,
             "lon": -71.938402
-          }
+          },
+          "note": "Figures include the 0.7 mi road walk each way from the High St. junction. If Long Pond Rd. is drivable to the formal trailhead, subtract 1.4 mi and 210 ft."
         }
       ]
     },
