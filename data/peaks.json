@@ -5,16 +5,110 @@
   "canonical": "https://github.com/petrofang/52wav/blob/main/data/peaks.json",
   "compiled_by": "Giles Cooper (https://github.com/petrofang)",
   "license": "ODbL-1.0 — free to use with attribution; derived databases share alike. Contains OpenStreetMap-derived coordinates.",
-  "attribution": {
-    "peak_list_and_elevations": "Over the Hill Hikers, 52 With a View (June 2025 revision); elevations from the 2019 NH statewide LIDAR survey",
-    "route_stats_and_view_ratings": "NH Family Hikes (nhfamilyhikes.com)",
-    "coordinates": "OpenStreetMap contributors",
-    "official_names": "USGS Geographic Names Information System (GNIS), U.S. Board on Geographic Names",
-    "routes": "Standard-route mileage and elevation gain cross-checked against newenglandwaterfalls.com (Greg Parsons)",
-    "town_and_county": "US Census Bureau geocoder",
-    "land_ownership": "NH GRANIT Conservation and Public Lands",
-    "derived_distance_and_gain": "OpenStreetMap trail geometry with USGS 3DEP/NED elevations"
-  },
+  "sources": [
+    {
+      "publisher": "Over the Hill Hikers",
+      "title": "The official 52 With a View list (June 2025 revision)",
+      "url": "https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html",
+      "used_for": "The list itself, summit elevations from the 2019 New Hampshire statewide LIDAR survey, and revision history."
+    },
+    {
+      "publisher": "MacGray, K. (2025)",
+      "title": "New Hampshire's 52 With A View: A Hiker's Guide (3rd ed.)",
+      "url": "https://www.kenmacgray.org/52/",
+      "used_for": "Route names, distances and elevation gain. A print book; its contents are not reproduced here."
+    },
+    {
+      "publisher": "NH Family Hikes",
+      "url": "http://www.nhfamilyhikes.com/52WAV.php",
+      "used_for": "The original distance, gain and effort figures, and the view ratings, which are theirs alone."
+    },
+    {
+      "publisher": "Parsons, G.",
+      "title": "New England Waterfalls",
+      "url": "https://www.newenglandwaterfalls.com/52withaview.php",
+      "used_for": "Cross-check on standard routes and alternates."
+    },
+    {
+      "publisher": "NH Mountain Hiking",
+      "url": "https://www.nhmountainhiking.com/hike/lists/52view.html",
+      "used_for": "Per-peak trail reports with measured route figures."
+    },
+    {
+      "publisher": "Hike New England",
+      "url": "https://www.hikenewengland.com/",
+      "used_for": "Trail reports with photographs, linked where one exists for a peak."
+    },
+    {
+      "publisher": "AllTrails",
+      "url": "https://www.alltrails.com/",
+      "used_for": "Linked for recent trip reports. No AllTrails data is stored here."
+    },
+    {
+      "publisher": "OpenStreetMap contributors",
+      "url": "https://www.openstreetmap.org/copyright",
+      "used_for": "Summit and trailhead coordinates, and the trail geometry drawn on each summit view.",
+      "license": "ODbL"
+    },
+    {
+      "publisher": "U.S. Geological Survey",
+      "title": "3D Elevation Program (3DEP) and the National Map",
+      "url": "https://www.usgs.gov/3d-elevation-program",
+      "used_for": "Elevations behind derived distances and climbs."
+    },
+    {
+      "publisher": "U.S. Geological Survey",
+      "title": "Geographic Names Information System (GNIS), U.S. Board on Geographic Names",
+      "url": "https://www.usgs.gov/tools/geographic-names-information-system-gnis",
+      "used_for": "Official place names and federal name ids."
+    },
+    {
+      "publisher": "NH GRANIT",
+      "title": "Conservation and Public Lands",
+      "url": "https://www.granit.unh.edu/",
+      "used_for": "Landowner and managing agency."
+    },
+    {
+      "publisher": "U.S. Census Bureau",
+      "title": "Geocoder",
+      "url": "https://geocoding.geo.census.gov/",
+      "used_for": "Town and county for each summit."
+    },
+    {
+      "publisher": "Esri",
+      "title": "World Imagery",
+      "url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+      "used_for": "The satellite picture on each card and in the summit view.",
+      "fetched_live": true
+    },
+    {
+      "publisher": "Mapzen and AWS Open Data",
+      "title": "Terrain Tiles",
+      "url": "https://registry.opendata.aws/terrain-tiles/",
+      "used_for": "The elevation model that gives the summit view its shape.",
+      "fetched_live": true
+    },
+    {
+      "publisher": "Open-Meteo",
+      "url": "https://open-meteo.com/",
+      "used_for": "Summit temperature, cloud and precipitation.",
+      "fetched_live": true
+    },
+    {
+      "publisher": "RainViewer",
+      "url": "https://www.rainviewer.com/",
+      "used_for": "The radar layer over the summit view.",
+      "fetched_live": true
+    },
+    {
+      "publisher": "MapLibre GL JS",
+      "url": "https://maplibre.org/",
+      "used_for": "Draws the summit view.",
+      "license": "BSD-3-Clause",
+      "fetched_live": true
+    }
+  ],
+  "compiled_notice": "Artificial intelligence was used to aggregate these sources, so this dataset may contain errors. Check anything that matters against a primary source, above all the guidebook listed in sources.",
   "id_policy": "Ids are permanent surrogate keys, NOT positions on the list. They are ordered by the year a peak joined: 1-51 are the original 1990 list, 52 joined in 2001, 53 in 2010, 54-58 in 2020, 59-61 in 2025. Never renumber, never reuse. A peak keeps its id when the list is revised, when it is retired, and if it is later restored (see id 60, retired 2020 and restored 2025). New peaks take next_id. Saved progress links encode these ids, so renumbering would corrupt every hiker's saved list.",
   "next_id": 62,
   "peaks": [

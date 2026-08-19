@@ -34,6 +34,12 @@
   <style>
     body { -webkit-font-smoothing: antialiased; }
 
+    /* The source list is built from peaks.json, and Tailwind's JIT does not reliably
+       generate classes for nodes created in script, so style it here instead. */
+    #sources-list li + li { margin-top: 0.5rem; }
+    #sources-list a { text-decoration: underline; text-decoration-color: #d6d3d1; text-underline-offset: 2px; }
+    #sources-list a:hover { color: #292524; text-decoration-color: #78716c; }
+
     /* Slow drift across an overscanned satellite tile, standing in for a real orbit. */
     @keyframes summit-orbit {
       0%   { transform: scale(1.18) translate3d(-2.2%, 1.2%, 0); }
@@ -298,93 +304,7 @@
           The imagery, terrain, weather and radar at the end of this list are fetched by your browser when you open a
           peak, so those services see your IP address the way any website you visit would. Nothing is stored.
         </p>
-        <ul class="mt-2 max-w-3xl space-y-2">
-          <li>
-            Over the Hill Hikers. <em>The official 52 With a View list</em> (June 2025 revision).
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html" target="_blank" rel="noopener noreferrer">overthehillhikers.blogspot.com</a>
-            &mdash; the list itself, summit elevations from the 2019 New Hampshire statewide LIDAR survey, and revision history.
-          </li>
-          <li>
-            MacGray, K. (2025). <em>New Hampshire's 52 With A View: A Hiker's Guide</em> (3rd ed.).
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.kenmacgray.org/52/" target="_blank" rel="noopener noreferrer">kenmacgray.org</a>
-            &mdash; route names, distances and elevation gain. A print book; its contents are not reproduced here.
-          </li>
-          <li>
-            NH Family Hikes.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="http://www.nhfamilyhikes.com/52WAV.php" target="_blank" rel="noopener noreferrer">nhfamilyhikes.com</a>
-            &mdash; the original distance, gain and effort figures, and the view ratings, which are theirs alone.
-          </li>
-          <li>
-            Parsons, G. <em>New England Waterfalls</em>.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.newenglandwaterfalls.com/52withaview.php" target="_blank" rel="noopener noreferrer">newenglandwaterfalls.com</a>
-            &mdash; cross-check on standard routes and alternates.
-          </li>
-          <li>
-            NH Mountain Hiking.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.nhmountainhiking.com/hike/lists/52view.html" target="_blank" rel="noopener noreferrer">nhmountainhiking.com</a>
-            &mdash; per-peak trail reports with measured route figures.
-          </li>
-          <li>
-            Hike New England.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.hikenewengland.com/" target="_blank" rel="noopener noreferrer">hikenewengland.com</a>
-            &mdash; trail reports with photographs, linked where one exists for a peak.
-          </li>
-          <li>
-            AllTrails.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.alltrails.com/" target="_blank" rel="noopener noreferrer">alltrails.com</a>
-            &mdash; linked for recent trip reports. No AllTrails data is stored here.
-          </li>
-          <li>
-            OpenStreetMap contributors.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">openstreetmap.org</a>
-            &mdash; summit and trailhead coordinates, and the trail geometry drawn on each summit view. Licensed ODbL.
-          </li>
-          <li>
-            U.S. Geological Survey. <em>3D Elevation Program (3DEP) and the National Map</em>.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.usgs.gov/3d-elevation-program" target="_blank" rel="noopener noreferrer">usgs.gov</a>
-            &mdash; elevations behind derived distances and climbs.
-          </li>
-          <li>
-            U.S. Geological Survey. <em>Geographic Names Information System (GNIS)</em>, U.S. Board on Geographic Names.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.usgs.gov/tools/geographic-names-information-system-gnis" target="_blank" rel="noopener noreferrer">usgs.gov</a>
-            &mdash; official place names and federal name ids.
-          </li>
-          <li>
-            NH GRANIT. <em>Conservation and Public Lands</em>.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.granit.unh.edu/" target="_blank" rel="noopener noreferrer">granit.unh.edu</a>
-            &mdash; landowner and managing agency.
-          </li>
-          <li>
-            U.S. Census Bureau. <em>Geocoder</em>.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://geocoding.geo.census.gov/" target="_blank" rel="noopener noreferrer">census.gov</a>
-            &mdash; town and county for each summit.
-          </li>
-          <li>
-            Esri. <em>World Imagery</em>.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank" rel="noopener noreferrer">arcgis.com</a>
-            &mdash; the satellite picture on each card and in the summit view.
-          </li>
-          <li>
-            Mapzen and AWS Open Data. <em>Terrain Tiles</em>.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener noreferrer">registry.opendata.aws</a>
-            &mdash; the elevation model that gives the summit view its shape.
-          </li>
-          <li>
-            Open-Meteo.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">open-meteo.com</a>
-            &mdash; summit temperature, cloud and precipitation.
-          </li>
-          <li>
-            RainViewer.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.rainviewer.com/" target="_blank" rel="noopener noreferrer">rainviewer.com</a>
-            &mdash; the radar layer over the summit view.
-          </li>
-          <li>
-            MapLibre GL JS.
-            <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://maplibre.org/" target="_blank" rel="noopener noreferrer">maplibre.org</a>
-            &mdash; draws the summit view. BSD-3-Clause.
-          </li>
-        </ul>
+        <ul id="sources-list" class="mt-2 max-w-3xl"></ul>
 
         <p id="source-note" class="mt-6 text-xs text-stone-400">&nbsp;</p>
         <p class="mt-1 text-xs text-stone-400">

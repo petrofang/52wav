@@ -1,4 +1,4 @@
-const CACHE_NAME = '52wav-v8';
+const CACHE_NAME = '52wav-v9';
 const POSTER_CACHE = '52wav-posters-v1';
 const POSTER_LIMIT = 80;
 const APP_SHELL = [

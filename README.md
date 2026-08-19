@@ -141,42 +141,26 @@ what you send to the Over the Hill Hikers to claim the patch.
 
 ## Where the data comes from
 
+**The source list lives in [`data/peaks.json`](data/peaks.json), under the top-level `sources`
+key.** That is the one place it is maintained: the app's Sources section is rendered from it at
+runtime, so the page and the dataset cannot drift apart. Each entry records the publisher, a
+URL, what it was used for, and a licence where one applies.
+
+Artificial intelligence was used to aggregate those sources, so the dataset may contain errors.
+The same warning is carried in the JSON as `compiled_notice`, so it travels with the data.
+
 **New Hampshire's 52 With A View: A Hiker's Guide** by
 [Ken MacGray](https://www.kenmacgray.org/52/), now in its 3rd edition (2025), is the published
 book covering these peaks, and it is linked from every card. This project is independent of it.
 It is a print book, so its contents are not reproduced here; where this dataset disagrees with
 the book, the book is right.
 
-| Field | Source |
-| --- | --- |
-| The list, elevations, revision history | [Over the Hill Hikers](https://overthehillhikers.blogspot.com/p/official-52-with-view-list.html) (June 2025 revision; 2019 NH statewide LIDAR), cross-checked against [Ken MacGray's peak list](https://www.kenmacgray.org/52/peaks.shtml) |
-| Distance, gain, difficulty, view rating | [NH Family Hikes](http://www.nhfamilyhikes.com/52WAV.php) — where the stored figures came from. No longer linked from the cards, but the numbers are still theirs, and the view ratings are theirs alone |
-| Trail reports and route stats | [NH Mountain Hiking](https://www.nhmountainhiking.com/hike/lists/52view.html) — linked from every card; detailed per-peak reports with measured route figures |
-| Trail reports with photos | [Hike New England](https://www.hikenewengland.com/) — linked where a report exists for the peak |
-| Route pages and recent reviews | [AllTrails](https://www.alltrails.com/) — linked only; no AllTrails data is stored here |
-| Summit and trailhead coordinates | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors |
-| Town and county | US Census Bureau geocoder |
-| Landowner and manager | [NH GRANIT](https://www.granit.unh.edu/) Conservation & Public Lands |
-| Official place names | [USGS GNIS](https://www.usgs.gov/tools/geographic-names-information-system-gnis), U.S. Board on Geographic Names |
-| Alternate-route reference | [New England Waterfalls](https://www.newenglandwaterfalls.com/52withaview.php) |
-| Derived distances and elevation profiles | OpenStreetMap trail geometry + USGS 3DEP/NED |
-
 Links to third-party writeups are offered for convenience and are not endorsements. Peaks
 whose route data is known to need checking carry a `review` block in `data/peaks.json`.
 
-### Live sources used by the summit view
-
-These are fetched in the browser when a peak card is expanded. Nothing is stored, and none of
-them needs an API key.
-
-| Layer | Source |
-| --- | --- |
-| Satellite imagery | [Esri World Imagery](https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer) |
-| Terrain elevation | [Terrain Tiles on AWS Open Data](https://registry.opendata.aws/terrain-tiles/) (Mapzen Terrarium encoding) |
-| Trail lines | [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, baked into `data/trails/` — see below |
-| Precipitation radar | [RainViewer](https://www.rainviewer.com/api.html) |
-| Temperature and cloud cover | [Open-Meteo](https://open-meteo.com/) |
-| 3D rendering | [MapLibre GL JS](https://maplibre.org/) (loaded on demand from unpkg) |
+Five of the sources are marked `fetched_live`: they are requested by the browser when a peak
+card is expanded, rather than baked into the dataset. Nothing is stored, and none of them needs
+an API key.
 
 The elevation tiles contain occasional corrupt pixels that decode as spikes of over a
 kilometre, so each tile is passed through a median filter in the browser before it reaches the

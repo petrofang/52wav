@@ -44,6 +44,7 @@
     statMiles: el('stat-miles'),
     shareBtn: el('share-btn'),
     saveHint: el('save-hint'),
+    sourcesList: el('sources-list'),
   };
 
   const state = {
@@ -1146,6 +1147,24 @@
 
   // --- render ---------------------------------------------------------------
 
+  function renderSources() {
+    const list = Array.isArray(state.meta?.sources) ? state.meta.sources : [];
+    if (!els.sourcesList || !list.length) return;
+    els.sourcesList.innerHTML = list.map((s) => {
+      const url = safeExternalUrl(s.url);
+      if (!url) return '';
+      let host = '';
+      try { host = new URL(url).hostname.replace(/^www\./, ''); } catch { host = url; }
+      const bits = [];
+      if (s.publisher) bits.push(`${escapeHtml(s.publisher)}.`);
+      if (s.title) bits.push(`<em>${escapeHtml(s.title)}</em>.`);
+      bits.push(`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(host)}</a>`);
+      if (s.used_for) bits.push(`&mdash; ${escapeHtml(s.used_for)}`);
+      if (s.license) bits.push(`Licensed ${escapeHtml(s.license)}.`);
+      return `<li>${bits.join(' ')}</li>`;
+    }).join('');
+  }
+
   function renderProgress() {
     const current = state.peaks.filter((p) => p.status === 'current');
     const currentDone = current.filter((p) => state.completed.has(p.id)).length;
@@ -1476,6 +1495,7 @@
       const restorable = SORTABLE.includes(sortKey) && sortKey !== 'distance_mi' ? sortKey : 'name';
 
       buildRangeOptions();
+      renderSources();
       setView(saved === 'table' ? 'table' : 'cards');
       applySort(restorable, sortDir === 'desc' ? 'desc' : 'asc');
       setToggle('.list-btn', 'list', state.list);
