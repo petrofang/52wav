@@ -104,6 +104,11 @@
                 <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3a1 1 0 0 0-1 1v3H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h1v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2h1a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a1 1 0 0 0-1-1H5Zm1 4V5h8v2H6Zm8 6H6v3h8v-3Z"/></svg>
                 Print or save PDF
               </button>
+              <a id="official-checklist" href="https://www.kenmacgray.org/52/52wav_checklist_2025.pdf" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M4 3a2 2 0 0 1 2-2h5.586A2 2 0 0 1 13 1.586L16.414 5A2 2 0 0 1 17 6.414V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V3Zm7 0v3a1 1 0 0 0 1 1h3l-4-4Zm-4 8a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2H8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2H8Z"/></svg>
+                Official checklist
+              </a>
               <button id="share-btn" type="button"
                 class="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
                 <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.7 11.3a3.5 3.5 0 0 1 0-4.9l2.8-2.8a3.5 3.5 0 0 1 4.9 4.9l-1.2 1.2a1 1 0 0 1-1.4-1.4l1.2-1.2a1.5 1.5 0 1 0-2.1-2.1l-2.8 2.8a1.5 1.5 0 0 0 0 2.1 1 1 0 1 1-1.4 1.4Z"/><path d="M11.3 8.7a3.5 3.5 0 0 1 0 4.9l-2.8 2.8a3.5 3.5 0 0 1-4.9-4.9l1.2-1.2a1 1 0 0 1 1.4 1.4l-1.2 1.2a1.5 1.5 0 1 0 2.1 2.1l2.8-2.8a1.5 1.5 0 0 0 0-2.1 1 1 0 0 1 1.4-1.4Z"/></svg>
@@ -277,7 +282,9 @@
           <span class="font-medium">Save my progress</span> to turn them into a link you can bookmark or email yourself,
           which is the safest way to carry a multi-year list between phones and computers. The checklist prints on a single
           page; choose <span class="font-medium">Save as PDF</span> in your print dialog if you would rather keep a copy on
-          your computer. When you finish, send it to the Over the Hill Hikers for your patch.
+          your computer. It carries the address for claiming your patch, or use the
+          <a class="underline decoration-stone-300 underline-offset-2 hover:text-stone-800" href="https://www.kenmacgray.org/52/52wav_checklist_2025.pdf" target="_blank" rel="noopener noreferrer">official checklist</a>
+          if you would rather send that.
         </p>
         <p class="mt-4 max-w-3xl">
           <span class="font-medium text-stone-700">Please take the data.</span>
@@ -313,18 +320,24 @@
       <div id="print-body"></div>
 
       <div class="print-certify" style="margin-top: 7pt; border-top: 1pt solid #78716c; padding-top: 4pt;">
-        <p style="margin: 0 0 6pt; font-size: 9pt;">
-          I certify that I have personally hiked to the summit of each peak ticked above, on the dates recorded.
+        <p style="margin: 0 0 5pt; font-size: 9pt;">
+          <strong>To claim your patch</strong>, send this sheet with a self-addressed stamped envelope and $5
+          (well-concealed cash, no cheques) to Catherine Crooker, 277 Elm Hill Rd., Center Sandwich, NH 03227.
+          Questions: catherinecrooker@gmail.com
+        </p>
+        <p style="margin: 0 0 4pt; font-size: 9.5pt;">
+          Address <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 180pt;"></span>
+          &nbsp;Town <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 105pt;"></span>
+          &nbsp;Zip <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 60pt;"></span>
         </p>
         <p style="margin: 0; font-size: 9.5pt;">
-          Signed <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 230pt;"></span>
-          &nbsp;&nbsp;Date finished <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 105pt;"></span>
+          Which peak did you finish on? <span style="display:inline-block; border-bottom: 0.75pt solid #78716c; width: 230pt;"></span>
         </p>
       </div>
 
       <p style="margin-top: 7pt; font-size: 7.5pt; color: #78716c;">
         Elevations from the 2019 New Hampshire statewide LIDAR survey. Write dates as month / day / year.
-        Send the finished sheet to the Over the Hill Hikers to claim your patch.
+        Any 52 of the current and delisted peaks count. The official checklist is at kenmacgray.org/52
       </p>
     </div>
   </div>
