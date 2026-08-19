@@ -69,3 +69,6 @@ testing/test-results/
 
 # Local one-off testing workspace
 /testing/
+
+# Local scratch: side projects built from this data, not published from this repo
+/scratch/
