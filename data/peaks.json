@@ -127,17 +127,17 @@
       ],
       "routes": [
         {
-          "name": "Baldface Circle Trail via Emerald Pool",
+          "name": "Baldface Circle Trail / Meader Ridge Trail / Bicknell Ridge Trail",
           "recommended": true,
-          "round_trip_mi": 7.2,
+          "round_trip_mi": 8.1,
           "gain_ft": 2500,
-          "difficulty": "Medium",
-          "derived": true,
+          "difficulty": "Harder",
           "trailhead": {
             "name": "Baldface Circle Trail trailhead",
             "lat": 44.238144,
             "lon": -71.016066
-          }
+          },
+          "note": "Counter-clockwise loop from ME-113 in Chatham. The drawn line follows the ascent."
         }
       ]
     },
@@ -2619,16 +2619,29 @@
       ],
       "routes": [
         {
-          "name": "Appalachian Trail from Kinsman Notch",
+          "name": "Kinsman Ridge Trail (Appalachian Trail)",
           "recommended": true,
-          "round_trip_mi": null,
-          "gain_ft": null,
-          "difficulty": null,
+          "round_trip_mi": 9.2,
+          "gain_ft": 3150,
+          "difficulty": "Harder",
           "trailhead": {
             "name": "Beaver Brook trailhead (Kinsman Notch)",
             "lat": 44.040389,
             "lon": -71.792889
           }
+        },
+        {
+          "name": "Reel Brook Trail / Kinsman Ridge Trail (Appalachian Trail)",
+          "recommended": false,
+          "round_trip_mi": 9.6,
+          "gain_ft": 2500,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Reel Brook Trail trailhead (NH-116)",
+            "lat": 44.124171,
+            "lon": -71.78484
+          },
+          "note": "Reached by a rough side road off NH-116, about 3.7 mi north of NH-112."
         }
       ]
     },
@@ -2672,11 +2685,11 @@
       ],
       "routes": [
         {
-          "name": "Three Ponds Trail",
+          "name": "Three Ponds Trail / Carr Mountain Trail",
           "recommended": true,
-          "round_trip_mi": null,
-          "gain_ft": null,
-          "difficulty": null,
+          "round_trip_mi": 5.8,
+          "gain_ft": 2600,
+          "difficulty": "Medium",
           "trailhead": {
             "name": "Three Ponds Trail trailhead",
             "lat": 43.885481,
@@ -2730,16 +2743,17 @@
       ],
       "routes": [
         {
-          "name": "Royce Trail / Basin Rim Trail",
+          "name": "East Royce Trail / Royce Connector / Royce Trail",
           "recommended": true,
-          "round_trip_mi": null,
-          "gain_ft": null,
-          "difficulty": null,
+          "round_trip_mi": 5.2,
+          "gain_ft": 1850,
+          "difficulty": "Medium",
           "trailhead": {
             "name": "Spruce Hill parking lot",
             "lat": 44.305199,
             "lon": -70.98992
-          }
+          },
+          "note": "Continuing to the East Royce ledges makes it 5.8 mi and 2310 ft."
         }
       ]
     },
@@ -2783,11 +2797,11 @@
       ],
       "routes": [
         {
-          "name": "Old Mast Road / Kelley Trail",
+          "name": "Old Mast Rd. / Wonalancet Range Trail",
           "recommended": true,
-          "round_trip_mi": null,
-          "gain_ft": null,
-          "difficulty": null,
+          "round_trip_mi": 5.6,
+          "gain_ft": 2140,
+          "difficulty": "Medium",
           "trailhead": {
             "name": "Ferncroft trailhead",
             "lat": 43.913967,
@@ -2900,16 +2914,17 @@
       ],
       "routes": [
         {
-          "name": "Square Ledge Trail",
+          "name": "Oliverian Brook Trail / Square Ledge Branch Trail / Square Ledge Trail / Passaconaway Cutoff",
           "recommended": true,
-          "round_trip_mi": null,
-          "gain_ft": null,
-          "difficulty": null,
+          "round_trip_mi": 8.4,
+          "gain_ft": 1550,
+          "difficulty": "Harder",
           "trailhead": {
             "name": "Oliverian Brook trailhead",
             "lat": 43.993911,
             "lon": -71.350326
-          }
+          },
+          "note": "Clockwise loop. The drawn line follows the ascent."
         }
       ]
     },
@@ -2953,11 +2968,11 @@
       ],
       "routes": [
         {
-          "name": "Black Mountain Ski Trail",
+          "name": "Black Mountain Ski Trail / Black Mountain Summit Spur",
           "recommended": true,
-          "round_trip_mi": null,
-          "gain_ft": null,
-          "difficulty": null,
+          "round_trip_mi": 3.4,
+          "gain_ft": 1500,
+          "difficulty": "Easier",
           "trailhead": {
             "name": "Black Mountain Ski Trail trailhead",
             "lat": 44.19531,
@@ -3154,17 +3169,17 @@
       "isolation_mi": 1.7,
       "routes": [
         {
-          "name": "Pine Mountain Road and Pine Mountain Trail",
+          "name": "Pine Mountain Rd. / Ledge Trail / Pine Mountain Trail / Pine Mountain Loop",
           "recommended": true,
-          "round_trip_mi": 2.7,
-          "gain_ft": 800,
+          "round_trip_mi": 4.0,
+          "gain_ft": 1000,
           "difficulty": "Easier",
-          "derived": true,
           "trailhead": {
             "name": "Pine Link Trail parking, Pinkham B Road",
             "lat": 44.353966,
             "lon": -71.231311
-          }
+          },
+          "note": "Counter-clockwise loop. The drawn line follows the ascent."
         },
         {
           "name": "Pine Mountain Trail (from Gorham)",
