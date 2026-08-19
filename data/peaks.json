@@ -809,15 +809,43 @@
           }
         },
         {
-          "name": "Piper Trail / Liberty Trail loop",
-          "round_trip_mi": 9.2,
-          "gain_ft": 2600,
+          "name": "Piper Trail",
+          "recommended": false,
+          "round_trip_mi": 8.4,
+          "gain_ft": 2700,
           "difficulty": "Harder",
           "trailhead": {
-            "name": "Champney Falls trailhead",
-            "lat": 43.989911,
-            "lon": -71.29912
-          }
+            "name": "Piper Trail parking (NH-16, Albany)",
+            "lat": 43.940489,
+            "lon": -71.228927
+          },
+          "note": "Longer south-eastern approach. The lot is on NH-16 in Albany, 6.2 mi south of the eastern end of NH-112, the Kancamagus."
+        },
+        {
+          "name": "Piper Trail / Nickerson Ledge Trail / Middle Sister Trail / Champney Falls Trail",
+          "recommended": false,
+          "round_trip_mi": 9.5,
+          "gain_ft": 3390,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Piper Trail parking (NH-16, Albany)",
+            "lat": 43.940489,
+            "lon": -71.228927
+          },
+          "note": "Counter-clockwise loop from the Piper Trail parking area, traversing the Three Sisters."
+        },
+        {
+          "name": "Brook Trail / Liberty Trail",
+          "recommended": false,
+          "round_trip_mi": 7.4,
+          "gain_ft": 2750,
+          "difficulty": "Harder",
+          "trailhead": {
+            "name": "Paugus Rd. (WMNF Forest Rd. 68), Albany",
+            "lat": 43.918915,
+            "lon": -71.295489
+          },
+          "note": "Clockwise loop, descending the Liberty Trail. Both trails leave the parking area on Paugus Rd., WMNF Forest Rd. 68, off Fowlers Mill Rd. 1.2 mi north of NH-113A in Tamworth."
         }
       ],
       "sources": [
@@ -2490,7 +2518,8 @@
             "name": "Welch-Dickey Loop trailhead parking",
             "lat": 43.90448,
             "lon": -71.588652
-          }
+          },
+          "note": "Counter-clockwise over both summits. Turning back at one of them shortens it: Welch alone is 3.8 mi and 1,550 ft, Dickey alone 4.2 mi and 1,650 ft."
         }
       ]
     },
