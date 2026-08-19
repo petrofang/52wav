@@ -28,9 +28,9 @@
     filters: el('filters'),
     filtersToggle: el('filters-toggle'),
     filterCount: el('filter-count'),
-    nearMe: el('near-me'),
-    nearMeLabel: el('near-me-label'),
-    sortNearest: el('sort-nearest'),
+    geoNote: el('geo-note'),
+    geoNoteText: el('geo-note-text'),
+    geoClear: el('geo-clear'),
     thDistance: el('th-distance'),
     reset: el('reset'),
     resultCount: el('result-count'),
@@ -254,7 +254,7 @@
 
   const awayLabel = (miles) => (miles == null
     ? ''
-    : `${miles < 10 ? miles.toFixed(1) : Math.round(miles)} mi away`);
+    : `${miles < 10 ? miles.toFixed(1) : Math.round(miles).toLocaleString()} mi away`);
 
   function recommendedRoute(p) {
     const routes = Array.isArray(p.routes) ? p.routes : [];
@@ -1263,17 +1263,57 @@
     syncSummitView();
   }
 
-  function setNearMeLabel(text, busy = false) {
-    els.nearMeLabel.textContent = text;
-    els.nearMe.disabled = busy;
+  function setGeoNote(text, clearable = false) {
+    els.geoNoteText.textContent = text;
+    els.geoClear.hidden = !clearable;
+    els.geoNote.hidden = false;
+  }
+
+  function requestLocation() {
+    const previous = `${state.sortKey}:${state.sortDir}`;
+    const revert = (message) => {
+      els.sort.value = previous;
+      setGeoNote(message);
+    };
+
+    if (!navigator.geolocation) {
+      revert('This browser cannot share a location, so peaks are sorted as before.');
+      return;
+    }
+
+    setGeoNote('Finding your location\u2026');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        state.here = { lat: position.coords.latitude, lon: position.coords.longitude };
+        els.thDistance.hidden = false;
+        applySort('distance_mi', 'asc');
+        render();
+        describeLocation();
+      },
+      (error) => {
+        revert(error.code === error.PERMISSION_DENIED
+          ? 'Location permission was blocked, so peaks are sorted as before.'
+          : 'Could not find your location, so peaks are sorted as before.');
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    );
+  }
+
+  function describeLocation() {
+    const distances = state.peaks.map(milesAway).filter((n) => n != null);
+    const nearest = distances.length ? Math.min(...distances) : null;
+    // Every peak is in New Hampshire, so a distant visitor deserves to be told rather than
+    // handed a list sorted by thousands of meaningless miles.
+    setGeoNote(nearest != null && nearest > 500
+      ? `These peaks are all in New Hampshire, USA, and the closest trailhead is about ${Math.round(nearest).toLocaleString()} mi from you.`
+      : 'Distances are straight line to each trailhead, not driving distance.', true);
   }
 
   function forgetLocation() {
     state.here = null;
-    els.sortNearest.hidden = true;
     els.thDistance.hidden = true;
-    els.nearMe.setAttribute('aria-pressed', 'false');
-    setNearMeLabel('Near me');
+    els.geoNote.hidden = true;
+    els.geoClear.hidden = true;
     if (state.sortKey === 'distance_mi') applySort('name', 'asc');
     render();
   }
@@ -1352,6 +1392,7 @@
 
     els.sort.addEventListener('change', (e) => {
       const [key, dir] = e.target.value.split(':');
+      if (key === 'distance_mi' && !state.here) { requestLocation(); return; }
       applySort(key, dir);
       render();
     });
@@ -1367,42 +1408,12 @@
       });
     });
 
+    els.geoClear.addEventListener('click', forgetLocation);
+
     els.filtersToggle.addEventListener('click', () => {
       const nowHidden = els.filters.classList.toggle('hidden');
       els.filters.classList.toggle('grid', !nowHidden);
       els.filtersToggle.setAttribute('aria-expanded', String(!nowHidden));
-    });
-
-    els.nearMe.addEventListener('click', () => {
-      if (state.here) {
-        forgetLocation();
-        return;
-      }
-      if (!navigator.geolocation) {
-        setNearMeLabel('Not available', true);
-        return;
-      }
-
-      setNearMeLabel('Locating\u2026', true);
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          state.here = { lat: position.coords.latitude, lon: position.coords.longitude };
-          els.sortNearest.hidden = false;
-          els.thDistance.hidden = false;
-          els.nearMe.setAttribute('aria-pressed', 'true');
-          setNearMeLabel('Nearest first');
-          els.nearMe.disabled = false;
-          applySort('distance_mi', 'asc');
-          render();
-        },
-        (error) => {
-          const denied = error.code === error.PERMISSION_DENIED;
-          setNearMeLabel(denied ? 'Location blocked' : 'Could not locate');
-          els.nearMe.disabled = false;
-          setTimeout(() => { if (!state.here) setNearMeLabel('Near me'); }, 4000);
-        },
-        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
-      );
     });
 
     document.querySelectorAll('.view-btn').forEach((btn) => {
