@@ -307,10 +307,26 @@
 
   const mapsSearch = (lat, lon) => `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
   const mapsDirections = (lat, lon) => `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=driving`;
-  const googleEarthView = (lat, lon) => {
+  // Compass bearing you would walk to get from one point to the other.
+  const bearingDeg = (from, to) => {
+    const rad = Math.PI / 180;
+    const lat1 = from.lat * rad;
+    const lat2 = to.lat * rad;
+    const dLon = (to.lon - from.lon) * rad;
+    const y = Math.sin(dLon) * Math.cos(lat2);
+    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+    return ((Math.atan2(y, x) / rad) + 360) % 360;
+  };
+
+  // The Google Earth project holding the 52 With a View layer. Appending it to the camera
+  // position opens Earth on the peak with the summits and routes already loaded.
+  const EARTH_PROJECT = 'CgRCAggBMikKJwolCiExUUlJTXd6a0QxbzExUV9zb3V1VHB2dzVwejU4MWtrMmYgAToDCgEwQgIIAEoHCMSox2AQAQ';
+  const googleEarthView = (lat, lon, from) => {
     const la = Number(lat).toFixed(8);
     const lo = Number(lon).toFixed(8);
-    return `https://earth.google.com/web/@${la},${lo},900a,2200d,35y,0h,84t,0r`;
+    // Look the way the walk does, from the trailhead toward the summit.
+    const heading = from ? bearingDeg(from, { lat: Number(lat), lon: Number(lon) }) : 0;
+    return `https://earth.google.com/web/@${la},${lo},900a,2200d,35y,${heading.toFixed(2)}h,84t,0r/data=${EARTH_PROJECT}`;
   };
   const satellitePreviewImage = (lat, lon) => {
     const la = Number(lat);
@@ -1028,7 +1044,9 @@
     const summitLatText = Number.isFinite(summitLat) ? summitLat.toFixed(6) : '&mdash;';
     const summitLonText = Number.isFinite(summitLon) ? summitLon.toFixed(6) : '&mdash;';
     const earthUrl = Number.isFinite(summitLat) && Number.isFinite(summitLon)
-      ? safeExternalUrl(googleEarthView(summitLat, summitLon))
+      ? safeExternalUrl(googleEarthView(summitLat, summitLon, routeTrailhead(r)
+        ? { lat: Number(routeTrailhead(r).lat), lon: Number(routeTrailhead(r).lon) }
+        : null))
       : null;
     const satelliteImageUrl = Number.isFinite(summitLat) && Number.isFinite(summitLon)
       ? safeExternalUrl(satellitePreviewImage(summitLat, summitLon))
